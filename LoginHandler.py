@@ -9,13 +9,15 @@ class LoginHandler:
         return
 
     def checkLogin(self, loginData):
+        if not loginData[0] in self.userData:
+            return False
         if (self.userData[loginData[0]] == loginData[1]):
             return True #if the user credentials check out, it will clear the login
         else:
-            return "Invalid login"
+            return False
             
     def newUser(self, newUserData):
-        if not (newUserData[0] in self.userData):
+        if not newUserData[0] in self.userData:
             self.userData.update(newUserData)
             return True
         else:

@@ -26,20 +26,31 @@ class EventHandler:
     
     # Add user to event RSVPList
     def addRSVP(self, eventName, userName):
-        if not (eventName in self.eventNames):
+        if not eventName in self.eventNames:
+            print("Event not found")
             return False
         else:
-            return self.events[eventName].addRSVP(userName)
+            for event in self.events:
+                if event.getName() == eventName:
+                    return event.addRSVP(userName)
     
     # Remove user from event RSVPList
     def removeRSVP(self, eventName, userName):
-        # TODO
-        return True
+        if not eventName in self.eventNames:
+            print("Event not found")
+            return False
+        else:
+            for event in self.events:
+                if event.getName() == eventName:
+                    return event.removeRSVP(userName)
     
     # Create a new event
     def addEvent(self, name, time, tags):
         if (name in self.eventNames):
+            print(f"Event ({name}) already exists")
             return False
         else:
+            
             # TODO
+            print(f"Successfully created {name} event")
             return True

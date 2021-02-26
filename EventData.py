@@ -19,12 +19,19 @@ class EventData:
         self.RSVPList = RSVPList
     
     def addRSVP(self, username):
-        if (username in self.RSVPList):
+        if username in self.RSVPList:
+            print("Already in event")
             return False
         else:
             self.RSVPList.append(username)
+            print(f"Successfully joined {self.name}")
             return True
     
     def removeRSVP(self, username):
-        # TODO
-        return True
+        if not username in self.RSVPList:
+            print("Not in event")
+            return False
+        else:
+            self.RSVPList.remove(username)
+            print(f"Successfully left {self.name}")
+            return True

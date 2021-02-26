@@ -48,6 +48,7 @@ if __name__ == "__main__": #Don't really need, but is basically main()
             username = getInput("Username: ")
             password = getInput("Password: ")
             if LoginHandler.checkLogin([username, password]):
+                print(f"Successfully logged in as {username}")
                 user = username
             else:
                 print("Invalid username or password")
