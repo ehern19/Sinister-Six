@@ -1,0 +1,2 @@
+Event1 construction physical_labor
+Event2 tag1 tag2
