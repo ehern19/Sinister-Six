@@ -32,6 +32,22 @@ class DataIO:
     def getUserData(self):
         return self.userData
 
+    # Set methods to store data in DataIO object
+    def setEventNames(self, names):
+        self.eventNames = names
+    
+    def setEventTimes(self, times):
+        self.eventTimes = times
+
+    def setEventTags(self, tags):
+        self.eventTags = tags
+
+    def setEventRSVPs(self, RSVPLists):
+        self.eventRSVPs = RSVPLists
+
+    def setUserData(self, users):
+        self.userData = users
+
     # Load event names from .txt
     def _loadEventNames(self):
         with open(self.databasePath + self.eventNameFile, 'r') as nameFile:

@@ -3,6 +3,10 @@
 class LoginHandler:
     def __init__(self):
         self.userData = {}
+
+    # Return dictionary of user data {user:[data]}
+    def getAllUsers(self):
+        return self.userData
     
     def loadUsers(self, userData):
         self.userData = userData

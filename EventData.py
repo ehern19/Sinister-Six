@@ -14,6 +14,9 @@ class EventData:
     
     def getTags(self):
         return self.tags
+
+    def getRSVPList(self):
+        return self.RSVPList
     
     def loadRSVPList(self, RSVPList):
         self.RSVPList = RSVPList
@@ -35,3 +38,7 @@ class EventData:
             self.RSVPList.remove(username)
             print(f"Successfully left {self.name}")
             return True
+
+    # Printing for debugging
+    def printAllData(self):
+        print(f"Event: {self.name}\n\tTime: {self.time}\n\tTags: {self.tags}\n\tRSVP List: {self.RSVPList}\n")

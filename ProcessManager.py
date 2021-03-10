@@ -7,7 +7,7 @@ from LoginHandler import *
   
 # Instantiate objects
 def onStartup():
-    global DataIO 
+    global DataIO
     DataIO = DataIO()
     global EventHandler
     EventHandler = EventHandler()
@@ -19,14 +19,19 @@ def onStartup():
 
 # Load data into each object as necessary
 def loadData():
-    EventHandler.loadEvents(DataIO.loadEventNames(), DataIO.loadEventTimes(), DataIO.loadEventTags())
-    EventHandler.loadRSVPLists(DataIO.loadRSVPLists())
-    LoginHandler.loadUsers(DataIO.loadUsers())
+    DataIO.loadAll()
+    EventHandler.loadEvents(DataIO.getEventNames(), DataIO.getEventTimes(), DataIO.getEventTags())
+    EventHandler.loadRSVPLists(DataIO.getEventRSVPs())
+    LoginHandler.loadUsers(DataIO.getUserData())
 
 # Save data from each object to .txt files
 def saveData():
-    #TODO
-    return
+    DataIO.setEventNames(EventHandler.getAllEvents())
+    DataIO.setEventTimes(EventHandler.getAllEventTimes())
+    DataIO.setEventTags(EventHandler.getAllEventTags())
+    DataIO.setEventRSVPs(EventHandler.getAllRSVPLists())
+    DataIO.setUserData(LoginHandler.getAllUsers())
+    DataIO.saveAll()
 
 # Get input from WebsiteUI
 def getInput(moreInfo = ""):
@@ -43,6 +48,8 @@ if __name__ == "__main__": #Don't really need, but is basically main()
     print("Welcome to the Volunteer UI")
     while (isOnline):
         option = getInput()
+        changeMade = False
+
         # User login
         if (option == "login" and user == "guest"):
             username = getInput("Username: ")
@@ -62,6 +69,7 @@ if __name__ == "__main__": #Don't really need, but is basically main()
             if (option == "joinEvent"):
                 eventName = getInput("Event: ")
                 if (EventHandler.addRSVP(eventName, user)):
+                    changeMade = True
                     # TODO: Display event data and join confirmation
                     i = 0
                 else:
@@ -72,6 +80,7 @@ if __name__ == "__main__": #Don't really need, but is basically main()
             elif (option == "leaveEvent"):
                 eventName = getInput("Event: ")
                 if (EventHandler.removeRSVP(eventName, user)):
+                    changeMade = True
                     # TODO: Display event data and leave confirmation
                     i = 0
                 else:
@@ -83,13 +92,21 @@ if __name__ == "__main__": #Don't really need, but is basically main()
                 eventName = getInput("Event Name: ")
                 eventTime = getInput("Event Time: ")
                 eventTags = getInput("Event Tags: ")
-                if (EventHandler.addEvent(eventName, eventTime, eventTags)):
+                if (EventHandler.addEvent(eventName, eventTime, eventTags, user)):
+                    changeMade = True
                     # TODO: Display event data and creation confirmation
                     i = 0
                 else:
                     # TODO: Display creation failure
                     i = 0
+
+            # Print all event data
+            elif (option == "print"):
+                EventHandler.printAllEvents()
         else:
             print("Not a valid option")
+        
+        if (changeMade):
+            saveData()
         
 # end main
