@@ -16,9 +16,18 @@ class EventData:
     
     def getTime(self):
         return self.time
+
+    def getDate(self):
+        return self.date
+
+    def getLocation(self):
+        return self.location
     
     def getTags(self):
         return self.tags
+
+    def getOrganizer(self):
+        return self.organizer
 
     def getRSVPList(self):
         return self.RSVPList
