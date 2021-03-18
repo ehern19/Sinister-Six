@@ -1,11 +1,16 @@
-# Event Data
+# Event Data: Stores the data for one event
+
 class EventData:
-    def __init__(self, name, time, tags):
-        self.name = name
-        self.time = time
-        self.tags = tags
-        self.RSVPList = []
+    def __init__(self, eventName, eventTime, eventDate, eventLocation, eventTags, eventRSVP):
+        self.name = eventName
+        self.time = eventTime
+        self.date = eventDate
+        self.location = eventLocation
+        self.tags = eventTags
+        self.organizer = eventRSVP[0]
+        self.RSVP = eventRSVP[1:]
     
+    # Get methods for data stored in object
     def getName(self):
         return self.name
     
@@ -18,27 +23,22 @@ class EventData:
     def getRSVPList(self):
         return self.RSVPList
     
-    def loadRSVPList(self, RSVPList):
-        self.RSVPList = RSVPList
-    
-    def addRSVP(self, username):
-        if username in self.RSVPList:
-            print("Already in event")
+    # Add user to RSVP list (Returns True if successful)
+    def addRSVP(self, user):
+        if user in self.RSVPList:
             return False
         else:
-            self.RSVPList.append(username)
-            print(f"Successfully joined {self.name}")
+            self.RSVPList.append(user)
             return True
     
-    def removeRSVP(self, username):
-        if not username in self.RSVPList:
-            print("Not in event")
+    # Remove user from RSVP list (Returns True if successful)
+    def removeRSVP(self, user):
+        if not user in self.RSVPList:
             return False
         else:
-            self.RSVPList.remove(username)
-            print(f"Successfully left {self.name}")
+            self.RSVPList.remove(user)
             return True
 
     # Printing for debugging
     def printAllData(self):
-        print(f"Event: {self.name}\n\tTime: {self.time}\n\tTags: {self.tags}\n\tRSVP List: {self.RSVPList}\n")
+        print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.date}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVPList}\n")
