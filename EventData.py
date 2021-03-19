@@ -29,25 +29,25 @@ class EventData:
     def getOrganizer(self):
         return self.organizer
 
-    def getRSVPList(self):
-        return self.RSVPList
+    def getRSVP(self):
+        return self.RSVP
     
     # Add user to RSVP list (Returns True if successful)
     def addRSVP(self, user):
-        if user in self.RSVPList:
+        if user in self.RSVP:
             return False
         else:
-            self.RSVPList.append(user)
+            self.RSVP.append(user)
             return True
     
     # Remove user from RSVP list (Returns True if successful)
     def removeRSVP(self, user):
-        if not user in self.RSVPList:
+        if not user in self.RSVP:
             return False
         else:
-            self.RSVPList.remove(user)
+            self.RSVP.remove(user)
             return True
 
     # Printing for debugging
     def printAllData(self):
-        print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.date}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVPList}\n")
+        print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.date}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVP}\n")
