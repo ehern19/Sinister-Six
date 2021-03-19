@@ -6,10 +6,11 @@ from EventData import EventData
 
 # Data is stored as a list of EventData objects
 class EventIO(DataIO):
+    filePath = DataIO.databasePath + DataIO.eventFilename
     # Load Event data from file to memory in object
     def loadData(self):
-        with open(self.databasePath + self.eventFilename, 'r') as file:
-            for line in file:
+        with open(self.filePath, 'r') as inFile:
+            for line in inFile:
                 line = line.strip().split()
 
                 # Replace any '_' with ' '
@@ -23,15 +24,44 @@ class EventIO(DataIO):
                 eventTags = line
                 
                 # Get next line of organizer and RSVPs
-                line = next(file).strip().split()
-                eventOrganizer = line.pop(0)
-                eventRSVP = line
+                eventRSVP = next(inFile).strip().split()
                 
                 # Add new EventData object to this object's data list
-                self.data.append[EventData(eventName, eventTime, eventDate, 
-                                 eventLocation, eventTags, eventOrganizer, 
-                                 eventRSVP)]
+                self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventTags, eventRSVP))
 
     # Save Event data to file from memory in object
     def saveData(self):
-        pass
+        with open(self.filePath, 'w') as outFile:
+            for event in self.data:
+                # Create a list with name, time, date, location, and tags
+                line = []
+                line.append(event.getName())
+                line.append(event.getTime())
+                line.append(event.getDate())
+                line.append(event.getLocation())
+                for tag in event.getTags():
+                    line.append(tag)
+                
+                # Replace any ' ' with '_'
+                line = [entry.replace(' ', '_') for entry in line]
+
+                # Convert to single line string
+                line = ' '.join(line)
+
+                # Print line to file
+                print(line, file=outFile)
+
+                # Repeat with organizer and RSVP
+                line = []
+                line.append(event.getOrganizer())
+                for user in event.getRSVP():
+                    line.append(user)
+                line = ' '.join(line)
+                print(line, file=outFile)
+
+if __name__=="__main__":
+    events = EventIO()
+    events.loadData()
+    for event in events.getData():
+        event.printAllData()
+    events.saveData()
