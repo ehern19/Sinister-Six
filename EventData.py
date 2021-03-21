@@ -1,44 +1,57 @@
-# Event Data
+# Event Data: Stores the data for one event
+
 class EventData:
-    def __init__(self, name, time, tags):
-        self.name = name
-        self.time = time
-        self.tags = tags
-        self.RSVPList = []
+    def __init__(self, newName, newTime, newDate, newLocation, newTags, newRSVP):
+        self.name = newName
+        self.time = newTime
+        self.date = newDate
+        self.location = newLocation
+        self.tags = newTags
+        self.organizer = newRSVP[0]
+        self.RSVP = newRSVP[1:]
     
+    # Get methods for data stored in object
     def getName(self):
         return self.name
     
     def getTime(self):
         return self.time
+
+    def getDate(self):
+        return self.date
+
+    def getLocation(self):
+        return self.location
     
     def getTags(self):
         return self.tags
 
-    def getRSVPList(self):
-        return self.RSVPList
+    def getOrganizer(self):
+        return self.organizer
+
+    def getRSVP(self):
+        return self.RSVP
     
-    def loadRSVPList(self, RSVPList):
-        self.RSVPList = RSVPList
-    
-    def addRSVP(self, username):
-        if username in self.RSVPList:
-            print("Already in event")
+    # Returns True if given event name matches the object's name
+    def isEvent(self, otherName):
+        return otherName == self.name
+
+    # Add user to RSVP list (Returns True if successful)
+    def addRSVP(self, user):
+        if user in self.RSVP:
             return False
         else:
-            self.RSVPList.append(username)
-            print(f"Successfully joined {self.name}")
+            self.RSVP.append(user)
             return True
     
-    def removeRSVP(self, username):
-        if not username in self.RSVPList:
-            print("Not in event")
+    # Remove user from RSVP list (Returns True if successful)
+    def removeRSVP(self, user):
+        if not user in self.RSVP:
             return False
         else:
-            self.RSVPList.remove(username)
-            print(f"Successfully left {self.name}")
+            self.RSVP.remove(user)
             return True
 
     # Printing for debugging
     def printAllData(self):
-        print(f"Event: {self.name}\n\tTime: {self.time}\n\tTags: {self.tags}\n\tRSVP List: {self.RSVPList}\n")
+        print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.date}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVP}\n")
