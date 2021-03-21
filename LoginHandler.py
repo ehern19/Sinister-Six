@@ -1,28 +1,16 @@
-#LoginHandler
+# Login Handler: Stores user data and allows checking if a login is valid
+from UserIO import UserIO
+from UserData import UserData
 
 class LoginHandler:
     def __init__(self):
-        self.userData = {}
+        self.objIO = UserIO()
+        self.objIO.loadData()
+        self.users = self.objIO.getData()
 
-    # Return dictionary of user data {user:[data]}
-    def getAllUsers(self):
-        return self.userData
-    
-    def loadUsers(self, userData):
-        self.userData = userData
-        return
-
-    def checkLogin(self, loginData):
-        if not loginData[0] in self.userData:
-            return False
-        if (self.userData[loginData[0]] == loginData[1]):
-            return True #if the user credentials check out, it will clear the login
-        else:
-            return False
-            
-    def newUser(self, newUserData):
-        if not newUserData[0] in self.userData:
-            self.userData.update(newUserData)
-            return True
-        else:
-            return "Login already exists"
+    # Return True if given username+password match
+    def isValidLogin(self, username, password):
+        for user in self.users:
+            if (user.isUser(username)):
+                return user.checkPassword(password)
+        return False
