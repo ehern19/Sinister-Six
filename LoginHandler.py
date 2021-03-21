@@ -8,7 +8,20 @@ class LoginHandler:
         self.objIO.loadData()
         self.users = self.objIO.getData()
 
-    # Return True if given username+password match
+    # Takes as input a new UserData object, store it in users list, then save to file
+    # Returns True if user is created
+    def newUser(self, newUserData):
+        # Check if user already exists (same exact username)
+        for user in self.users:
+            if (user.isUser(newUserData)):
+                return False
+
+        self.users.append(newUserData)
+        self.objIO.setData(self.users)
+        self.objIO.saveData()
+        return True
+
+    # Return True if given username and password match
     def isValidLogin(self, username, password):
         for user in self.users:
             if (user.isUser(username)):
