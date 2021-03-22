@@ -8,8 +8,8 @@ class UserData:
         self.phone = newPhone
     
     # Get methods for data in object
-    # def getUsername(self):
-    #     return self.username
+    def getUsername(self):
+        return self.username
 
     # def getPassword(self):
     #     return self.password
