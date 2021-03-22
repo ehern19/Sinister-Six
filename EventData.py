@@ -32,9 +32,13 @@ class EventData:
     def getRSVP(self):
         return self.RSVP
     
+    # Returns True if given event matches the object's name
+    def isEvent(self, otherEvent):
+        return otherEvent.getName().lower() == self.name.lower()
+
     # Returns True if given event name matches the object's name
-    def isEvent(self, otherName):
-        return otherName == self.name
+    def isEventname(self, otherName):
+        return otherName.lower() == self.name.lower()
 
     # Add user to RSVP list (Returns True if successful)
     def addRSVP(self, user):

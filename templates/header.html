@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        Volunteers-R-Us
+        {% if(loggedIn) %}
+            <a href="{{ url_for('account') }}">
+                <button>
+                    Account
+                </button>
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}">
+                <button>
+                    Login!
+                </button>
+            </a>
+        {% endif %}
+    </head>
+    <nav>
+        <a href="{{ url_for('index') }}">
+            <button>
+                Home
+            </button>
+        </a>
+        <a href="{{ url_for('events') }}">
+            <button>
+                Events
+            </button>
+        </a>
+    </nav>
+    <body>
+        
