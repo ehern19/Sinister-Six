@@ -30,8 +30,8 @@ class UserIO(DataIO):
                 line = []
                 line.append(user.getUsername())
                 line.append(user.getPassword())
-                line.append(user.getEmail())
                 line.append(user.getPhone())
+                line.append(user.getEmail())
 
                 # Convert to single line string
                 line = ' '.join(line)

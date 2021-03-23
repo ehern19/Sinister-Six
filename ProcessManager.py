@@ -19,6 +19,10 @@ class ProcessManager:
     def passUsername(self, username):
         return self.LHandler.getUser(username)
 
+    def passNewUser(self, username, password, phone, email):
+        newUser = UserData(username, password, phone, email)
+        return self.LHandler.newUser(newUser)
+
     # Takes user input from web page and passes it to EventHandler
     def passRSVP(self, username, eventName):
         return self.EHandler.addRSVP(username, eventName)

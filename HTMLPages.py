@@ -1,5 +1,4 @@
 # HTML Pages: Functions that return the specific HTML pages
-from types import resolve_bases
 from flask import render_template, session
 from EventData import EventData
 from UserData import UserData
@@ -22,6 +21,9 @@ class HTMLPages:
             return self._wrapHTML(render_template("pages/accountPrivate.html", username=user.getUsername()))
         else:
             return self._wrapHTML(render_template("pages/accountPublic.html", username=user.getUsername()))
+
+    def newAccountHTML(self):
+        return self._wrapHTML(render_template("pages/accountNew.html"))
 
     def accountDNEHTML(self, accountName):
         return self._wrapHTML(render_template("pages/accountDNE.html", username=accountName))

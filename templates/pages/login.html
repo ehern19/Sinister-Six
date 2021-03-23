@@ -1,6 +1,6 @@
 <section>
-    <form action="" method="post">
-        <table style="border: 1px solid black;">
+    <table style="border: 1px solid black;">
+        <form action="" method="post">
             <th colspan="2">Login:</th>
             <tr>
                 <td align="right">Username:</td>
@@ -18,6 +18,13 @@
                     {% endif %}
                 </td>
             </tr>
-        </table>
-    </form>
+        </form>
+        <tr>
+            <td colspan="2">
+                No Account? <a href="{{ url_for('newAccount') }}">
+                    Click here to make one!
+                </a>
+            </td>
+        </tr>
+    </table>
 </section>

@@ -1,6 +1,6 @@
 # Flask Website: "Main"
 from flask import Flask, request, session, redirect, url_for
-from datetime import date, time
+from datetime import date
 from ProcessManager import ProcessManager
 from HTMLPages import HTMLPages
 
@@ -21,10 +21,9 @@ def index():
 # If a user is already logged in, redirects to their account page
 @app.route("/login/", methods=["GET", "POST"])
 def login():
-    print(session)
     if ("Username" in session):
         return redirect(url_for("account", user=session["Username"]))
-    if (request.method == "POST"):
+    elif (request.method == "POST"):
         username = request.form.get("username", "null")
         password = request.form.get("password", "null")
         if (PManager.passLogin(username, password)):
@@ -41,7 +40,7 @@ def account():
     if (request.method == "POST"):
         if ("logout" in request.form):
             session.pop("Username", None)
-            redirect(url_for("index"))
+            return redirect(url_for("index"))
 
     accountName = request.args.get("user")
     if (accountName):
@@ -58,6 +57,24 @@ def account():
         return pages.accountHTML(user, True)
     else:
         return redirect(url_for("index"))
+
+@app.route("/newAccount/", methods=["GET", "POST"])
+def newAccount():
+    if ("Username" in session):
+        return redirect(url_for("account", user=session["Username"]))
+    elif (request.method == "POST"):
+        pass
+        username = request.form.get("username")
+        if (not username.isalnum()):
+            return pages.newAccountHTML()
+        password = request.form.get("password")
+        phone = request.form.get("phone")
+        email = request.form.get("email")
+        if (PManager.passNewUser(username, password, phone, email)):
+            session["Username"] = username
+            return redirect(url_for("account", user=username))
+
+    return pages.newAccountHTML()
 
 # Events Page: Displays all events by default
 # TODO: Allow searching events
@@ -82,6 +99,8 @@ def eventDetails():
     event = PManager.getEvent(request.args.get("name"))
     return pages.eventDetailedHTML(event)
 
+# New Event: Form that a user fills out to create a new event
+# Current user is organizer
 @app.route("/newEvent/", methods=["GET", "POST"])
 def newEvent():
     if (not "Username" in session):
