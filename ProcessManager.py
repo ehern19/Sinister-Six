@@ -16,7 +16,6 @@ class ProcessManager:
     def passLogin(self, username, password):
         return self.LHandler.isValidLogin(username, password)
     
-    # Takes username input from web page and passes it to LoginHandler
     def passUsername(self, username):
         return self.LHandler.getUser(username)
 
@@ -27,6 +26,10 @@ class ProcessManager:
     def passLeaveRSVP(self, username, eventName):
         return self.EHandler.removeRSVP(username, eventName)
     
+    def passNewEvent(self, name, time, date, location, tags, organizer):
+        newEvent = EventData(name, time, date, location, tags, [organizer])
+        return self.EHandler.newEvent(newEvent)
+
     # Returns the named event
     def getEvent(self, name):
         return self.EHandler.getEvent(name)

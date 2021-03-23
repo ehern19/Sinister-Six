@@ -1,4 +1,5 @@
 # HTML Pages: Functions that return the specific HTML pages
+from types import resolve_bases
 from flask import render_template, session
 from EventData import EventData
 from UserData import UserData
@@ -58,3 +59,6 @@ class HTMLPages:
                                 loggedIn=("Username" in session)
                                 )
         return self._wrapHTML(retHTML)
+    
+    def newEventHTML(self, todayStr):
+        return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr))

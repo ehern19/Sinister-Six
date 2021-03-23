@@ -1,5 +1,6 @@
 # Flask Website: "Main"
 from flask import Flask, request, session, redirect, url_for
+from datetime import date, time
 from ProcessManager import ProcessManager
 from HTMLPages import HTMLPages
 
@@ -8,6 +9,8 @@ app.secret_key = "secure"
 
 PManager = ProcessManager()
 pages = HTMLPages()
+
+dateObj = date
 
 # Index/Home Page
 @app.route("/", methods=["GET", "POST"])
@@ -56,11 +59,15 @@ def account():
     else:
         return redirect(url_for("index"))
 
+# Events Page: Displays all events by default
+# TODO: Allow searching events
 @app.route("/events/", methods=["GET", "POST"])
 def events():
     eventList = PManager.getAllEvents()
     return pages.eventsHTML(eventList)
 
+# Event Details: Displays a single event's details
+# Allows joining/leaving an event
 @app.route("/eventDetails/", methods=["GET", "POST"])
 def eventDetails():
     eventName = request.args.get("name")
@@ -74,6 +81,22 @@ def eventDetails():
 
     event = PManager.getEvent(request.args.get("name"))
     return pages.eventDetailedHTML(event)
-        
+
+@app.route("/newEvent/", methods=["GET", "POST"])
+def newEvent():
+    if (not "Username" in session):
+        return redirect(url_for("login"))
+    elif (request.method == "POST"):
+        name = request.form.get("name")
+        date = request.form.get("date")
+        time = request.form.get("time")
+        location = request.form.get("location")
+        tags = request.form.getlist("tags")
+        if (PManager.passNewEvent(name, time, date, location, tags, session["Username"])):
+            return redirect(url_for("eventDetails", name=name))
+
+    todayStr = dateObj.today().strftime("%Y-%m-%d")
+    return pages.newEventHTML(todayStr)
+
 if __name__=="__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
