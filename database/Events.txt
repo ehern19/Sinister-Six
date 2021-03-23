@@ -1,2 +1,2 @@
 Event1 10:00 1/1/2025 123_Main_Str.,_Fakeville_Fakeiana,_111111 tag1 tag2 tag_3
-user1 user2 user20
+user1 user2

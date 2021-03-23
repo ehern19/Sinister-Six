@@ -8,9 +8,42 @@ class EventHandler:
         self.objIO.loadData()
         self.events = self.objIO.getData()
     
-    # Return all events
+    # Sends events to EventIO and saves data
+    def saveChanges(self):
+        self.objIO.setData(self.events)
+        self.objIO.saveData()
+    
+    # Returns named event
+    def getEvent(self, name):
+        for event in self.events:
+            if event.isEventname(name):
+                return event
+        return None
+
+    # Returns all events
     def getAllEvents(self):
         return self.events
+    
+    # Add user to event (Returns True if successful)
+    def addRSVP(self, username, eventName):
+        for event in self.events:
+            if event.isEventname(eventName):
+                event.addRSVP(username)
+                self.saveChanges()
+                return True
+        return False
+    
+    # Remove user from event (Returns True if successful)
+    # Will not remove the organizer
+    def removeRSVP(self, username, eventName):
+        for event in self.events:
+            if event.isEventname(eventName):
+                if (event.isOrganizerName(username)):
+                    return False
+                event.removeRSVP(username)
+                self.saveChanges()
+                return True
+        return False
 
     # Take as input a new EventData object, store it in events list, then save to file
     # Returns True if event is created
@@ -21,11 +54,10 @@ class EventHandler:
                 return False
 
         self.events.append(newEvent)
-        self.objIO.setData(self.events)
-        self.objIO.saveData()
+        self.saveChanges()
         return True
 
-    # Return events matching given name (If the name is a substring of the event name)
+    # Returns events matching given name (If the name is a substring of the event name)
     def searchName(self, name):
         retEvents = []
         for event in self.events:
@@ -33,7 +65,7 @@ class EventHandler:
                 retEvents.append(event)
         return retEvents
 
-    # Return all events at given date/time (time not necessary)
+    # Returns all events at given date/time (time not necessary)
     def searchDate(self,date, time=None):
         retEvents = []
         if (time == None):

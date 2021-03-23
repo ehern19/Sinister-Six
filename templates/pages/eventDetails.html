@@ -1,0 +1,21 @@
+<section>
+    <form action="" method="POST">
+        Event: {{name}} <br>
+        Date/Time: {{date}}, {{time}} <br>
+        Location: {{location}} <br>
+        Organizer: {{organizer}}<br>
+        Tags: 
+            {% for tag in tags[:-1] %}
+                {{tag}}, 
+            {% endfor %}
+            {{tags[-1]}}<br>
+        Summary: {{summary}}<br>
+        {% if(loggedIn and not isOrganizer) %}
+            {% if(not inEvent) %}
+                <input type="submit" name="join" value="Join Event">
+            {% else %}
+                <input type="submit" name="leave" value="Leave Event">
+            {% endif %}
+        {% endif %}
+    </form>
+</section>

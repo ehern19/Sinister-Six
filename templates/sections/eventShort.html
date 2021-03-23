@@ -1,0 +1,13 @@
+<section>
+    <form action="/eventDetails/" method="GET">
+        Event: {{name}} <br>
+        Date/Time: {{date}}, {{time}} <br>
+        Location: {{location}} <br>
+        Tags: 
+            {% for tag in tags[:-1] %}
+                {{tag}}, 
+            {% endfor %}
+            {{tags[-1]}}
+        <input type="submit" name="name" value={{name}}>
+    </form>
+</section>

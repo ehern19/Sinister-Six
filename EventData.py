@@ -9,6 +9,7 @@ class EventData:
         self.tags = newTags
         self.organizer = newRSVP[0]
         self.RSVP = newRSVP[1:]
+        self.summary = ""
     
     # Get methods for data stored in object
     def getName(self):
@@ -31,6 +32,9 @@ class EventData:
 
     def getRSVP(self):
         return self.RSVP
+
+    def getSummary(self):
+        return self.summary
     
     # Returns True if given event matches the object's name
     def isEvent(self, otherEvent):
@@ -40,12 +44,16 @@ class EventData:
     def isEventname(self, otherName):
         return otherName.lower() == self.name.lower()
 
+    # Returns True if given user name matches the object's organizer name
+    def isOrganizerName(self, username):
+        return username.lower() == self.organizer.lower()
+
     # Add user to RSVP list (Returns True if successful)
-    def addRSVP(self, user):
-        if user in self.RSVP:
+    def addRSVP(self, username):
+        if username in self.RSVP:
             return False
         else:
-            self.RSVP.append(user)
+            self.RSVP.append(username)
             return True
     
     # Remove user from RSVP list (Returns True if successful)
