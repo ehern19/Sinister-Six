@@ -16,11 +16,11 @@ class UserIO(DataIO):
                 # Separate the line into relevant categories
                 username = line.pop(0)
                 password = line.pop(0)
-                email = line.pop(0)
                 phone = line.pop(0)
+                email = line.pop(0)
 
                 # Add new UserData object to this object's data list
-                self.data.append(UserData(username, password, email, phone))
+                self.data.append(UserData(username, password, phone, email))
         
     # Save User data to file from memory in object
     def saveData(self):

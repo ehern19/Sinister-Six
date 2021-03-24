@@ -14,12 +14,12 @@ class UserData:
     def getPassword(self):
         return self.password
 
-    def getEmail(self):
-        return self.email
-    
     def getPhone(self):
         return self.phone
 
+    def getEmail(self):
+        return self.email
+    
     # Returns True if given user matches the object's username
     def isUser(self, otherUser):
         return otherUser.getUsername().lower() == self.username.lower()
