@@ -2,7 +2,7 @@
     <form action="" method="POST">
         <big>New User</big>
         <br>
-        Username: <input type="text" name="username" placeholder="username" required><br>
+        Username: <input type="text" name="username" pattern="[a-zA-Z0-9]" title="Letters and Numbers Only" placeholder="username" required><br>
         Password: <input type="password" name="password" placeholder="password" required><br>
         Phone Number: <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="123-456-7890" placeholder="123-456-7890" required><br>
         Email: <input type="email" name="email" placeholder="newuser@fakemail.com" required><br>

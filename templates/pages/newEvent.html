@@ -1,6 +1,6 @@
 <section>
     <form action="" method="POST">
-        Event Name: <input type="text" name="name" placeholder="Event Name" required><br>
+        Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]" placeholder="Event Name" required><br>
         Date: <input type="date" name="date" min={{today}} required><br>
         Time (CST): <input type="time" name="time" required><br>
         Location: <input type="text" name="location" placeholder="Town Hall" required><br>

@@ -67,8 +67,6 @@ def newAccount():
         return redirect(url_for("account", user=session["Username"]))
     elif (request.method == "POST"):
         username = request.form.get("username")
-        if (not username.isalnum()):
-            return pages.newAccountHTML()
         password = request.form.get("password")
         phone = request.form.get("phone")
         email = request.form.get("email")
