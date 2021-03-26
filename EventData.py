@@ -1,7 +1,7 @@
 # Event Data: Stores the data for one event
 
 class EventData:
-    def __init__(self, newName, newTime, newDate, newLocation, newZip, newTags, newRSVP):
+    def __init__(self, newName, newTime, newDate, newLocation, newZip, newTags, newRSVP, newSummary):
         self.name = newName
         self.time = newTime
         self.date = newDate
@@ -10,7 +10,7 @@ class EventData:
         self.tags = newTags
         self.organizer = newRSVP[0]
         self.RSVP = newRSVP[1:]
-        self.summary = ""
+        self.summary = newSummary
     
     # Get methods for data stored in object
     def getName(self):

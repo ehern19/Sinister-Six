@@ -1,6 +1,6 @@
 <section>
     <form action="" method="POST">
-        Event: {{name}} <br>
+        Event: {{name}} <br><br>
         Date/Time: {{date}}, {{time}} <br>
         Location: {{location}} <br>
         Organizer: {{organizer}}<br>
@@ -9,7 +9,7 @@
                 {{tag}}, 
             {% endfor %}
             {{tags[-1]}}<br>
-        Summary: {{summary}}<br>
+        Summary:<br> {{summary}}<br><br>
         {% if(loggedIn and not isOrganizer) %}
             {% if(not inEvent) %}
                 <input type="submit" name="join" value="Join Event">

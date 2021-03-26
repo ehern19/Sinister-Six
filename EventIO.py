@@ -26,9 +26,12 @@ class EventIO(DataIO):
                 
                 # Get next line of organizer and RSVPs
                 eventRSVP = next(inFile).strip().split()
+
+                # Get next line of Summary
+                eventSummary = next(inFile).strip()
                 
                 # Add new EventData object to this object's data list
-                self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP))
+                self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
 
     # Save Event data to file from memory in object
     def saveData(self):
@@ -60,6 +63,9 @@ class EventIO(DataIO):
                     line.append(user)
                 line = ' '.join(line)
                 print(line, file=outFile)
+
+                # Print summary directly to file
+                print(event.getSummary(), file=outFile)
 
 if __name__=="__main__":
     events = EventIO()

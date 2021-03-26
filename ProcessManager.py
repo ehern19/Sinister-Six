@@ -30,8 +30,8 @@ class ProcessManager:
     def passLeaveRSVP(self, username, eventName):
         return self.EHandler.removeRSVP(username, eventName)
     
-    def passNewEvent(self, name, time, date, location, zip, tags, organizer):
-        newEvent = EventData(name, time, date, location, zip, tags, [organizer])
+    def passNewEvent(self, name, time, date, location, zip, tags, organizer, summary):
+        newEvent = EventData(name, time, date, location, zip, tags, [organizer], summary)
         return self.EHandler.newEvent(newEvent)
 
     # Returns the named event

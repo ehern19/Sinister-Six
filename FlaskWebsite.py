@@ -83,10 +83,8 @@ def newAccount():
 @app.route("/events/", methods=["GET", "POST"])
 def events():
     if ("searchValue" not in request.args):
-        print("not")
         eventList = PManager.getAllEvents()
     else:
-        print("searching")
         searchType = request.args.get("searchType")
         searchValue = request.args.get("searchValue", "")
         searchDate = request.args.get("searchDate")
@@ -124,7 +122,10 @@ def newEvent():
         location = request.form.get("location")
         zip = request.form.get("zip")
         tags = request.form.getlist("tags")
-        if (PManager.passNewEvent(name, time, date, location, zip, tags, session["Username"])):
+        summary = request.form.get("summary", "")
+        # if (summary == ""):
+        #     summary = "None"
+        if (PManager.passNewEvent(name, time, date, location, zip, tags, session["Username"], summary)):
             return redirect(url_for("eventDetails", name=name))
 
     todayStr = dateObj.today().strftime("%Y-%m-%d")
