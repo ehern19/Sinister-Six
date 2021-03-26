@@ -34,6 +34,9 @@ class ProcessManager:
         newEvent = EventData(name, time, date, location, zip, tags, [organizer], summary)
         return self.EHandler.newEvent(newEvent)
 
+    def passRemEvent(self, event):
+        return self.EHandler.removeEvent(event)
+
     # Returns the named event
     def getEvent(self, name):
         return self.EHandler.getEvent(name)

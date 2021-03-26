@@ -98,6 +98,7 @@ def events():
 @app.route("/eventDetails/", methods=["GET", "POST"])
 def eventDetails():
     eventName = request.args.get("name")
+    event = PManager.getEvent(eventName)
     if (request.method == "POST" and eventName):
         if ("Username" in session):
             username = session["Username"]
@@ -105,8 +106,10 @@ def eventDetails():
                 PManager.passRSVP(username, eventName)
             elif ("leave" in request.form):
                 PManager.passLeaveRSVP(username, eventName)
+            elif ("remove" in request.form):
+                if (PManager.passRemEvent(event)):
+                    return redirect(url_for("events"))
 
-    event = PManager.getEvent(request.args.get("name"))
     return pages.eventDetailedHTML(event)
 
 # New Event: Form that a user fills out to create a new event

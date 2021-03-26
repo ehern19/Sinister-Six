@@ -45,7 +45,7 @@ class EventHandler:
                 return True
         return False
 
-    # Take as input a new EventData object, store it in events list, then save to file
+    # Take as input a new EventData object, stores it in events list, then saves to file
     # Returns True if event is created
     def newEvent(self, newEvent):
         # Check if event already exists (same exact name)
@@ -56,6 +56,15 @@ class EventHandler:
         self.events.append(newEvent)
         self.saveChanges()
         return True
+
+    # Deletes event from memory, then saves to file
+    def removeEvent(self, remEvent):
+        for event in self.events:
+            if event.isEvent(remEvent):
+                self.events.remove(event)
+                self.saveChanges()
+                return True
+        return False
 
     # Returns events matching given name (If the name is a substring of the event name)
     def searchName(self, name):

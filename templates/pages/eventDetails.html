@@ -1,6 +1,9 @@
 <section>
     <form action="" method="POST">
         Event: {{name}} <br><br>
+        {% if(isOrganizer) %}
+            <input type="submit" name="remove" value="Delete Event"><br><br>
+        {% endif %}
         Date/Time: {{date}}, {{time}} <br>
         Location: {{location}} <br>
         Organizer: {{organizer}}<br>
