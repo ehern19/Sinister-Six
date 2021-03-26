@@ -1,17 +1,17 @@
 <section>
     <form action="" method="POST">
-        Event Name: <input type="text" name="name" required><br>
+        Event Name: <input type="text" name="name" placeholder="Event Name" required><br>
         Date: <input type="date" name="date" min={{today}} required><br>
         Time (CST): <input type="time" name="time" required><br>
-        Location: <input type="text" name="location" required><br>
-        Zip Code: <input type="number" name="zip" required><br>
+        Location: <input type="text" name="location" placeholder="Town Hall" required><br>
+        Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345" required><br>
         Tags:<br>
             <input type="checkbox" name="tags" value="tag1">tag1<br>
             <input type="checkbox" name="tags" value="tag2">tag2<br>
             <input type="checkbox" name="tags" value="tag3">tag3<br>
             <input type="checkbox" name="tags" value="tag4">tag4<br>
         Summary:<br>
-        <input type="text" name="summary"><br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here"><br>
         <input type="submit" name="create" value="Create New Event">
     </form>
 </section>
