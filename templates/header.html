@@ -1,34 +1,94 @@
 <!DOCTYPE html>
 <html>
     <head>
-        Volunteers-R-Us
-        {% if(loggedIn) %}
-            <a href="{{ url_for('account') }}">
-                <button>
-                    Account
-                </button>
-            </a>
-        {% else %}
-            <a href="{{ url_for('login') }}">
-                <button>
-                    Login!
-                </button>
-            </a>
-        {% endif %}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            input[type=text], input[type=password], input[type=submit], input[type=email], input[type=tel], input[type=date], input[type=time], input[type=number], input[type=checkbox]
+            {
+                border: 3px solid rgb(253, 208, 35);
+                border-radius: 8px;
+                text-align: center;
+                vertical-align: middle;
+            }
+            table, th, td
+            {
+                text-align: center;
+                color: rgb(253, 208, 35);
+                
+            }
+            table.center
+            {
+            margin-left: auto; 
+            margin-right: auto;
+            }
+            body
+            {
+                text-align: center;
+                background-color: rgb(70, 29, 124);
+                color:rgb(253, 208, 35);
+            }
+            a.new
+            {
+                color:rgb(253, 208, 35);   
+            }
+            a.new:hover
+            {
+                color:rgb(196, 21, 21);   
+            }
+            /*Style buttons*/
+            .btn 
+            {
+                background-color: rgb(70, 29, 124);
+                border: 6px solid rgb(253, 208, 35);
+                border-radius: 8px;
+                color: rgb(253, 208, 35);
+                padding: 10px 30px;
+                font-size: 16px;
+                text-align: center;
+                cursor: pointer;
+            }
+            /* Switch colors on mouse-over */
+            .btn:hover {
+              background-color: rgb(253, 208, 35);
+              border: 5px round  rgb(70, 29, 124);
+              color:  rgb(70, 29, 124);
+              font-size: 20px;
+            }
+        </style>
+        <h1>
+            Volunteers-R-Us
+        </h1>
+        <div class= "nav1">
+            {% if(loggedIn) %}
+                <a href="{{ url_for('account') }}">
+                    <button class="btn">
+                        Account
+                    </button>
+                </a>
+            {% else %}
+                <a href="{{ url_for('login') }}">
+                    <button class="btn">
+                        Login!
+                    </button>
+                </a>
+            {% endif %}
+        </div>
+    <br>
     </head>
-    <nav>
+    <nav class="nav2">
+        
         <a href="{{ url_for('index') }}">
-            <button>
+            <button class="btn">
                 Home
             </button>
         </a>
         <a href="{{ url_for('events') }}">
-            <button>
+            <button class="btn">
                 Events
             </button>
         </a>
         <a href="{{ url_for('newEvent') }}">
-            <button>
+            <button class="btn">
                 New Event
             </button>
         </a>

@@ -1,5 +1,5 @@
-<section>
-    <table style="border: 1px solid black;">
+<div>
+    <table class="center" style="border: 5px solid rgb(253, 208, 35);">
         <form action="" method="post">
             <th colspan="2">Login:</th>
             <tr>
@@ -11,7 +11,7 @@
                 <td align="left"><input type="password" name="password" required></td>
             </tr>
             <tr>
-                <td align="center"><input type="submit" value="Login"></td>
+                <td align="center"><input class="btn" type="submit" value="Login"></td>
                 <td align="left">
                     {% if(failedLogin) %}
                         Invalid username/password.
@@ -21,10 +21,12 @@
         </form>
         <tr>
             <td colspan="2">
-                No Account? <a href="{{ url_for('newAccount') }}">
+                No Account?
+                <br>
+                <a class="new" href="{{ url_for('newAccount') }}">
                     Click here to make one!
                 </a>
             </td>
         </tr>
     </table>
-</section>
+</div>
