@@ -25,6 +25,9 @@ class EventData:
     def getLocation(self):
         return self.location
     
+    def getZip(self):
+        return self.zip
+    
     def getTags(self):
         return self.tags
 

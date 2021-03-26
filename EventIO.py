@@ -40,6 +40,7 @@ class EventIO(DataIO):
                 line.append(event.getTime())
                 line.append(event.getDate())
                 line.append(event.getLocation())
+                line.append(event.getZip())
                 for tag in event.getTags():
                     line.append(tag)
                 
