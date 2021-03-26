@@ -1,11 +1,17 @@
 # Flask Website: "Main"
 from flask import Flask, request, session, redirect, url_for
+from flask_apscheduler import APScheduler, scheduler
 from datetime import date
 from ProcessManager import ProcessManager
 from HTMLPages import HTMLPages
 
 app = Flask(__name__)
 app.secret_key = "secure"
+
+# For automatic timed scripts (removing out-of-date events)
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 
 PManager = ProcessManager()
 pages = HTMLPages()
@@ -132,5 +138,14 @@ def newEvent():
     todayStr = dateObj.today().strftime("%Y-%m-%d")
     return pages.newEventHTML(todayStr)
 
+# Sets up APScheduler to run checkActive() every 12 hours
+def setTasks():
+    app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask")
+
+# Checks all events and removes out-of-date events
+def checkActive():
+    PManager.checkActive()
+
 if __name__=="__main__":
+    setTasks()
     app.run(host="127.0.0.1", port=8080, debug=True)

@@ -1,4 +1,5 @@
 # Event Data: Stores the data for one event
+from datetime import date, datetime
 
 class EventData:
     def __init__(self, newName, newTime, newDate, newLocation, newZip, newTags, newRSVP, newSummary):
@@ -71,6 +72,12 @@ class EventData:
             if (tag not in self.tags):
                 return False
         return True
+
+    # Returns True if the object's date is on or after the current date
+    def isActive(self):
+        now = date.today()
+        objDate = datetime.strptime(self.date, "%Y-%m-%d").date()
+        return now <= objDate
 
     # Add user to RSVP list (Returns True if successful)
     def addRSVP(self, username):

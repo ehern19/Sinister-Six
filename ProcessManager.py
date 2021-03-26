@@ -75,3 +75,7 @@ class ProcessManager:
         username = user.getUsername()
         retEvents = self.EHandler.searchRSVP(username)
         return retEvents
+    
+    # Checks all events and removes out-of-date events
+    def checkActive(self):
+        self.EHandler.checkActive()

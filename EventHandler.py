@@ -115,3 +115,9 @@ class EventHandler:
                 retEvents.append(event)
         
         return retEvents
+    
+    # Checks all events and removes out-of-date events
+    def checkActive(self):
+        for event in self.events:
+            if not event.isActive():
+                self.removeEvent(event)
