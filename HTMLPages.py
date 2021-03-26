@@ -21,7 +21,7 @@ class HTMLPages:
         retHTML = retHTML + self._eventShortHTML(userEvents)
         retHTML = retHTML + render_template("sections/endSection.html")
         if (isUser):
-            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername()) + retHTML
+            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail()) + retHTML
             retHTML = retHTML + render_template("sections/accountEventRSVP.html")
             retHTML = retHTML + self._eventShortHTML(userRSVPEvents)
             retHTML = retHTML + render_template("sections/endSection.html")
@@ -52,7 +52,7 @@ class HTMLPages:
                                                  )
         return retHTML
 
-    def eventDetailedHTML(self, event):
+    def eventDetailedHTML(self, event, trueRSVP):
         if ("Username" in session):
             username = session["Username"]
         else:
@@ -71,14 +71,14 @@ class HTMLPages:
                                 loggedIn=("Username" in session)
                                 )
         if (isOrganizer):
-            retHTML = retHTML + self._RSVPHTML(event.getRSVP())
+            retHTML = retHTML + self._RSVPHTML(trueRSVP)
             retHTML = retHTML + render_template("sections/endSection.html")
         return self._wrapHTML(retHTML)
     
     def _RSVPHTML(self, RSVP):
         retHTML = ""
-        for username in RSVP:
-            retHTML = retHTML + render_template("sections/userRSVP.html", username=username)
+        for user in RSVP:
+            retHTML = retHTML + render_template("sections/userRSVP.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail())
         return retHTML
     
     def newEventHTML(self, todayStr):

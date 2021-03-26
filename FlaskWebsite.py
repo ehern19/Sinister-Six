@@ -109,8 +109,8 @@ def eventDetails():
             elif ("remove" in request.form):
                 if (PManager.passRemEvent(event)):
                     return redirect(url_for("events"))
-
-    return pages.eventDetailedHTML(event)
+    trueRSVP = PManager.passGetRSVP(event)
+    return pages.eventDetailedHTML(event, trueRSVP)
 
 # New Event: Form that a user fills out to create a new event
 # Current user is organizer
