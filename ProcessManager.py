@@ -44,6 +44,9 @@ class ProcessManager:
 
     def passRemEvent(self, event):
         return self.EHandler.removeEvent(event)
+        
+    def passCheckActive(self):
+        self.EHandler.checkActive()
 
     # Returns the named event
     def getEvent(self, name):
@@ -76,6 +79,3 @@ class ProcessManager:
         retEvents = self.EHandler.searchRSVP(username)
         return retEvents
     
-    # Checks all events and removes out-of-date events
-    def checkActive(self):
-        self.EHandler.checkActive()

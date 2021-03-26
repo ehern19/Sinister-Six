@@ -5,6 +5,7 @@ class DataIO:
     # File path/names to read/write data from/to
     databasePath = "database\\"
     eventFilename = "Events.txt"
+    oldEventFilename = "OldEvents.txt"
     userdataFilename = "Userdata.txt"
 
     def __init__(self):

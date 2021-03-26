@@ -144,8 +144,9 @@ def setTasks():
 
 # Checks all events and removes out-of-date events
 def checkActive():
-    PManager.checkActive()
+    PManager.passCheckActive()
 
 if __name__=="__main__":
     setTasks()
+    checkActive()
     app.run(host="127.0.0.1", port=8080, debug=True)

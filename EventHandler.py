@@ -7,6 +7,7 @@ class EventHandler:
         self.objIO = EventIO()
         self.objIO.loadData()
         self.events = self.objIO.getData()
+        self.oldEvents = self.objIO.getOldData()
     
     # Sends events to EventIO and saves data
     def saveChanges(self):
@@ -62,6 +63,16 @@ class EventHandler:
         for event in self.events:
             if event.isEvent(remEvent):
                 self.events.remove(event)
+                self.saveChanges()
+                return True
+        return False
+    
+    # Moves event to old events, then saves to file
+    def retireEvent(self, oldEvent):
+        for event in self.events:
+            if event.isEvent(oldEvent):
+                self.events.remove(event)
+                self.oldEvents.append(event)
                 self.saveChanges()
                 return True
         return False
