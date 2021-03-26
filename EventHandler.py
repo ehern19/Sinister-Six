@@ -131,4 +131,4 @@ class EventHandler:
     def checkActive(self):
         for event in self.events:
             if not event.isActive():
-                self.removeEvent(event)
+                self.retireEvent(event)

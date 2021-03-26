@@ -140,7 +140,8 @@ def newEvent():
 
 # Sets up APScheduler to run checkActive() every 12 hours
 def setTasks():
-    app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask")
+    # app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask") # For actual use, 12 hour intervals
+    app.apscheduler.add_job(func=checkActive, trigger="interval", seconds=10, id="checkActiveTask") # For debug use, 10 second intervals
 
 # Checks all events and removes out-of-date events
 def checkActive():
