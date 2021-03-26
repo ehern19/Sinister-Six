@@ -30,8 +30,8 @@ class ProcessManager:
     def passLeaveRSVP(self, username, eventName):
         return self.EHandler.removeRSVP(username, eventName)
     
-    def passNewEvent(self, name, time, date, location, tags, organizer):
-        newEvent = EventData(name, time, date, location, tags, [organizer])
+    def passNewEvent(self, name, time, date, location, zip, tags, organizer):
+        newEvent = EventData(name, time, date, location, zip, tags, [organizer])
         return self.EHandler.newEvent(newEvent)
 
     # Returns the named event
@@ -41,3 +41,22 @@ class ProcessManager:
     # Returns all events
     def getAllEvents(self):
         return self.EHandler.getAllEvents()
+
+    # Return appropriate search results
+    def searchEvents(self, searchType, searchValue, searchDate, searchTags):
+        if (searchType == "name"):
+            retEvents = self.EHandler.searchName(searchValue)
+        elif (searchType == "organizer"):
+            retEvents = self.EHandler.searchOrganizer(searchValue)
+        else:
+            retEvents = self.EHandler.searchZip(searchValue)
+        
+        # Refine search
+        if (not searchDate == ""):
+            retEvents = self.EHandler.refineSearchDate(retEvents, searchDate)
+        if (not searchTags == [""]):
+            retEvents = self.EHandler.refineSearchTags(retEvents, searchTags)
+
+        for event in retEvents:
+            event.printName()
+        return retEvents

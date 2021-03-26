@@ -58,12 +58,13 @@ def account():
     else:
         return redirect(url_for("index"))
 
+# New Account Page: Displays form to create a new account
+# If the user is currently logged in, redirects to their account page
 @app.route("/newAccount/", methods=["GET", "POST"])
 def newAccount():
     if ("Username" in session):
         return redirect(url_for("account", user=session["Username"]))
     elif (request.method == "POST"):
-        pass
         username = request.form.get("username")
         if (not username.isalnum()):
             return pages.newAccountHTML()
@@ -80,7 +81,17 @@ def newAccount():
 # TODO: Allow searching events
 @app.route("/events/", methods=["GET", "POST"])
 def events():
-    eventList = PManager.getAllEvents()
+    if ("searchValue" not in request.args):
+        print("not")
+        eventList = PManager.getAllEvents()
+    else:
+        print("searching")
+        searchType = request.args.get("searchType")
+        searchValue = request.args.get("searchValue", "")
+        searchDate = request.args.get("searchDate")
+        searchTags = request.args.getlist("tags")
+        eventList = PManager.searchEvents(searchType, searchValue, searchDate, searchTags)
+
     return pages.eventsHTML(eventList)
 
 # Event Details: Displays a single event's details
@@ -110,8 +121,9 @@ def newEvent():
         date = request.form.get("date")
         time = request.form.get("time")
         location = request.form.get("location")
+        zip = request.form.get("zip")
         tags = request.form.getlist("tags")
-        if (PManager.passNewEvent(name, time, date, location, tags, session["Username"])):
+        if (PManager.passNewEvent(name, time, date, location, zip, tags, session["Username"])):
             return redirect(url_for("eventDetails", name=name))
 
     todayStr = dateObj.today().strftime("%Y-%m-%d")

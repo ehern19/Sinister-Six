@@ -1,11 +1,12 @@
 # Event Data: Stores the data for one event
 
 class EventData:
-    def __init__(self, newName, newTime, newDate, newLocation, newTags, newRSVP):
+    def __init__(self, newName, newTime, newDate, newLocation, newZip, newTags, newRSVP):
         self.name = newName
         self.time = newTime
         self.date = newDate
         self.location = newLocation
+        self.zip = newZip
         self.tags = newTags
         self.organizer = newRSVP[0]
         self.RSVP = newRSVP[1:]
@@ -48,6 +49,22 @@ class EventData:
     def isOrganizerName(self, username):
         return username.lower() == self.organizer.lower()
 
+    # Returns True if given zip code matches the object's zip code
+    def inZipCode(self, zip):
+        return self.zip == zip
+    
+    # Returns True if given date matches the object's date
+    def isOnDate(self, date):
+        return self.date == date
+
+    # Returns True if given tag list is in the object's tag list 
+    # (Has all tags, can have more)
+    def hasTags(self, tags):
+        for tag in tags:
+            if (tag not in self.tags):
+                return False
+        return True
+
     # Add user to RSVP list (Returns True if successful)
     def addRSVP(self, username):
         if username in self.RSVP:
@@ -67,3 +84,6 @@ class EventData:
     # Printing for debugging
     def printAllData(self):
         print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.date}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVP}\n")
+    
+    def printName(self):
+        print(f"Event: {self.name}")

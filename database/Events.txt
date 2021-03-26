@@ -1,6 +1,6 @@
-Event1 10:00 1/1/2025 Fake_Place_Hall tag1 tag2 tag_3
+Event1 10:00 2025-01-01 Fake_Place_Hall 1234567 tag1 tag2 tag_3
 user1 user2
-Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall tag2 tag4
+Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall 1234567 tag2 tag4
 user1
-Event3 19:48 2021-04-26 Mississippi_River_Bridge tag1 tag2
+Event3 19:48 2021-04-26 Mississippi_River_Bridge 2222222 tag1 tag2
 user2

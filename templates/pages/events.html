@@ -1,4 +1,30 @@
 <section>
-    <!-- Search -->
-    Currently viewing {{searchParamaters}} events:
+    <form action="" method="GET">
+        Search By: 
+        <select name="searchType">
+            <option value="none" selected disabled hidden>
+                Select an Option
+            </option>
+            <option value="name" selected>Name</option>
+            <option value="organizer">Organizer</option>
+            <option value="zip">Zip Code</option>
+        </select>
+        <input type="date" name="searchDate">
+        <input type="text" name="searchValue"><br>
+        <input type="checkbox" name="tags" value="tag1">
+        <label for="tag1">Tag 1</label>
+        <input type="checkbox" name="tags" value="tag2">
+        <label for="tag2">Tag 2</label>
+        <input type="checkbox" name="tags" value="tag3">
+        <label for="tag3">Tag 3</label>
+        <input type="checkbox" name="tags" value="tag4">
+        <label for="tag4">Tag 4</label>
+        <input type="checkbox" name="tags" value="tag5">
+        <label for="tag5">Tag 5</label>
+        <input type="submit" value="search">
+    </form><br>
+</section>
+<section>
+    <!-- Currently viewing {{searchType}} events matching {{searchValues}}: -->
+    Events:
 </section><br>

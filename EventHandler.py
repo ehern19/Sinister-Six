@@ -65,15 +65,36 @@ class EventHandler:
                 retEvents.append(event)
         return retEvents
 
-    # Returns all events at given date/time (time not necessary)
-    def searchDate(self,date, time=None):
+    # Returns events with given organizer
+    def searchOrganizer(self, organizer):
         retEvents = []
-        if (time == None):
-            for event in self.events:
-                if (event.getDate() == date):
-                    retEvents.append(event)
-        else:
-            for event in self.events:
-                if (event.getDate() == date and event.getTime() == time):
-                    retEvents.append(event)
+        for event in self.events:
+            if event.isOrganizerName(organizer):
+                retEvents.append(event)
+        return retEvents
+
+    # Returns events in given zip code
+    def searchZip(self, zip):
+        retEvents = []
+        for event in self.events:
+            if event.inZipCode(zip):
+                retEvents.append(event)
+        return retEvents
+
+    # Returns events at given date that are in eventList
+    def refineSearchDate(self, eventList, date):
+        retEvents = []
+        for event in eventList:
+            if (event.isOnDate(date)):
+                retEvents.append(event)
+
+        return retEvents
+
+    # Returns events with given tags that are in eventList
+    def refineSearchTags(self, eventList, tags):
+        retEvents = []
+        for event in eventList:
+            if (event.hasTags(tags)):
+                retEvents.append(event)
+        
         return retEvents

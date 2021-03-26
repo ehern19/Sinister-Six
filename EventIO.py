@@ -21,13 +21,14 @@ class EventIO(DataIO):
                 eventTime = line.pop(0)
                 eventDate = line.pop(0)
                 eventLocation = line.pop(0)
+                eventZip = line.pop(0)
                 eventTags = line
                 
                 # Get next line of organizer and RSVPs
                 eventRSVP = next(inFile).strip().split()
                 
                 # Add new EventData object to this object's data list
-                self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventTags, eventRSVP))
+                self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP))
 
     # Save Event data to file from memory in object
     def saveData(self):
