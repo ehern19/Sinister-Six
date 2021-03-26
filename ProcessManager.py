@@ -43,7 +43,7 @@ class ProcessManager:
         return self.EHandler.getAllEvents()
 
     # Return appropriate search results
-    def searchEvents(self, searchType, searchValue, searchDate, searchTags):
+    def searchEvents(self, searchType, searchValue, searchDate = "", searchTags = [""]):
         if (searchType == "name"):
             retEvents = self.EHandler.searchName(searchValue)
         elif (searchType == "organizer"):
@@ -57,6 +57,10 @@ class ProcessManager:
         if (not searchTags == [""]):
             retEvents = self.EHandler.refineSearchTags(retEvents, searchTags)
 
-        for event in retEvents:
-            event.printName()
+        return retEvents
+
+    # Returns events with specific user in RSVP
+    def searchEventsRSVP(self, user):
+        username = user.getUsername()
+        retEvents = self.EHandler.searchRSVP(username)
         return retEvents

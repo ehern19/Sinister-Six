@@ -56,6 +56,10 @@ class EventData:
     # Returns True if given date matches the object's date
     def isOnDate(self, date):
         return self.date == date
+    
+    # Returns True if given username is in the object's RSVP list
+    def hasUserRSVP(self, username):
+        return username in self.RSVP
 
     # Returns True if given tag list is in the object's tag list 
     # (Has all tags, can have more)

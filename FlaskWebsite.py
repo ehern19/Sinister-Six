@@ -45,16 +45,17 @@ def account():
     accountName = request.args.get("user")
     if (accountName):
         account = PManager.passUsername(accountName)
+        userOrganizedEvents = PManager.searchEvents("organizer", account.getUsername())
         if (account == None):
             return pages.accountDNEHTML(accountName)
         elif ("Username" in session):
             user = PManager.passUsername(session["Username"])
-            return pages.accountHTML(account, user.isUser(account))
+            userRSVPEvents = PManager.searchEventsRSVP(user)
+            return pages.accountHTML(account, userOrganizedEvents, user.isUser(account), userRSVPEvents)
         else:
-            return pages.accountHTML(account, False)
+            return pages.accountHTML(account, userOrganizedEvents)
     elif ("Username" in session):
-        user = PManager.passUsername(session["Username"])
-        return pages.accountHTML(user, True)
+        return redirect(url_for("account", user=session["Username"]))
     else:
         return redirect(url_for("index"))
 
@@ -78,7 +79,7 @@ def newAccount():
     return pages.newAccountHTML()
 
 # Events Page: Displays all events by default
-# TODO: Allow searching events
+# Search at top of page: Changes what events get displayed
 @app.route("/events/", methods=["GET", "POST"])
 def events():
     if ("searchValue" not in request.args):

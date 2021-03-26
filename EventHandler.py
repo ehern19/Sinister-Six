@@ -73,6 +73,14 @@ class EventHandler:
                 retEvents.append(event)
         return retEvents
 
+    # Returns events with given username in RSVP list
+    def searchRSVP(self, username):
+        retEvents = []
+        for event in self.events:
+            if event.hasUserRSVP(username):
+                retEvents.append(event)
+        return retEvents
+
     # Returns events in given zip code
     def searchZip(self, zip):
         retEvents = []
