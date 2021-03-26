@@ -18,4 +18,8 @@
             {% endif %}
         {% endif %}
     </form>
+{% if(not isOrganizer) %}
 </section>
+{% else %}
+    RSVP List:<br>
+{% endif %}
