@@ -152,6 +152,33 @@ def newEvent():
     todayStr = dateObj.today().strftime("%Y-%m-%d")
     return pages.newEventHTML(todayStr)
 
+# Edit Event: Form that a user fills out to edit an event
+@app.route("/editEvent/", methods=["GET", "POST"])
+def editEvent():
+    eventName = request.args.get("name")
+    if (not eventName):
+        return redirect(url_for("events"))
+    if (not "Username" in session):
+        return redirect(url_for("login"))
+    event = PManager.getEvent(eventName)
+    if (not event.isOrganizerName(session["Username"])):
+        return redirect(url_for("events"))
+
+    if (request.method == "POST"):
+        pass
+        reset = "reset" in request.form
+        time = request.form.get("time")
+        location = request.form.get("location")
+        zip = request.form.get("zip")
+        tags = request.form.getlist("tags")
+        summary = request.form.get("summary")
+        if (PManager.passEditEvent(eventName, reset, time, location, zip, tags, summary)):
+            return redirect(url_for("eventDetails", name=eventName))
+        else:
+            return redirect(url_for("events"))
+    return pages.editEventHTML(event)
+    
+
 # Sets up APScheduler to run checkActive() every 12 hours
 def setTasks():
     # app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask") # For actual use, 12 hour intervals

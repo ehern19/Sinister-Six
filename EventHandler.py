@@ -78,6 +78,16 @@ class EventHandler:
                 return True
         return False
     
+    # Replaces event in memory, then saves to file
+    def replaceEvent(self, newEvent):
+        for event in self.events:
+            if event.isEvent(newEvent):
+                self.events.remove(event)
+                self.events.append(newEvent)
+                self.saveChanges()
+                return True
+        return False
+
     # Moves event to old events, then saves to file
     def retireEvent(self, oldEvent):
         for event in self.events:

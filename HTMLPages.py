@@ -122,3 +122,6 @@ class HTMLPages:
     
     def newEventHTML(self, todayStr):
         return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS))
+    
+    def editEventHTML(self, event):
+        return self._wrapHTML(render_template("pages/editEvent.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS))

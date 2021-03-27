@@ -77,11 +77,18 @@ class EventData:
     def setZip(self, newZip):
         self.zip = newZip
 
-    def newTags(self, newTags):
+    def setTags(self, newTags):
         self.tags = newTags
 
-    def newSummary(self, newSummary):
+    def setSummary(self, newSummary):
         self.summary = newSummary
+    
+    def resetOptional(self):
+        self.time = "TBD"
+        self.location = "TBD"
+        self.zip = "TBD"
+        self.tags = ["No Tags"]
+        self.summary = "No Summary"
     
     # Returns True if given event matches the object's name
     def isEvent(self, otherEvent):

@@ -38,8 +38,23 @@ class ProcessManager:
                 retRSVP.append(user)
         return retRSVP
     
+    def passEditEvent(self, eventName, reset, time, location, zip, tags, summary):
+        event = self.getEvent(eventName)
+        if (reset):
+            event.resetOptional()
+        if (not time == ""):
+            event.setTime(time)
+        if (not location == ""):
+            event.setLocation(location)
+        if (not zip == ""):
+            event.setZip(zip)
+        if (not tags == []):
+            event.setTags(tags)
+        if (not summary == ""):
+            event.setSummary(summary)
+        self.EHandler.replaceEvent(event)
+
     def passNewEvent(self, name, date, organizer, time="TBD", location="TBD", zip="TBD", tags=[], summary=""):
-        # newEvent = EventData(name, time, date, location, zip, tags, [organizer], summary)
         newEvent = EventData.EventBuilder(name, date, organizer)
         if (not time == "TBD"):
             newEvent.Time(time)
@@ -61,7 +76,7 @@ class ProcessManager:
         self.EHandler.checkActive()
 
     # Returns the named event
-    def getEvent(self, name):
+    def getEvent(self, name) -> EventData:
         return self.EHandler.getEvent(name)
     
     # Returns the named out-of-date event

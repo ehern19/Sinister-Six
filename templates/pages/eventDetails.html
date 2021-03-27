@@ -2,7 +2,10 @@
     <form action="" method="POST">
         Event: {{name}} <br><br>
         {% if(isOrganizer) %}
-            <input type="submit" name="remove" value="Delete Event"><br><br>
+            <input type="submit" name="remove" value="Delete Event">
+            <a href="{{ url_for('editEvent', name=name) }}">
+                <input type="button" value="Edit Event">
+            </a><br><br>
         {% endif %}
         Date/Time: {{date}}, {{time}} <br>
         Location: {{location}} <br>

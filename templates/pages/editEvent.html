@@ -1,0 +1,17 @@
+<section>
+    <form action="" method="POST">
+        Editing {{name}}<br><br>
+        <input type="checkbox" name="reset" value="reset">Reset Event Data<br>
+        Warning: This will delete ALL current event data except the name and date!<br><br>
+        Time (CST): <input type="time" name="time"><br>
+        Location: <input type="text" name="location" placeholder="Town Hall"><br>
+        Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345"><br><br>
+        Tags:<br>
+            {% for i in range(numTags) %}
+                <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}<br>
+            {% endfor %}<br>
+        Summary:<br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here"><br><br>
+        <input type="submit" name="edit" value="Confirm Event Changes">
+    </form>
+</section>
