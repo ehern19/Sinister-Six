@@ -2,9 +2,9 @@
     <form action="" method="POST">
         Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required><br>
         Date: <input type="date" name="date" min={{today}} required><br>
-        Time (CST): <input type="time" name="time" required><br>
-        Location: <input type="text" name="location" placeholder="Town Hall" required><br>
-        Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345" required><br>
+        Time (CST): <input type="time" name="time"><br>
+        Location: <input type="text" name="location" placeholder="Town Hall"><br>
+        Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345"><br>
         Tags:<br>
             <input type="checkbox" name="tags" value="tag1">tag1<br>
             <input type="checkbox" name="tags" value="tag2">tag2<br>

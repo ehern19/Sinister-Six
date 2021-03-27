@@ -2,7 +2,6 @@
 # Passes arguments from website to handlers and data from handlers to website
 # Where required, converts from website arguments to function arguments
 from datetime import datetime
-from os import name
 from EventHandler import EventHandler
 from LoginHandler import LoginHandler
 from EventData import EventData
@@ -39,8 +38,20 @@ class ProcessManager:
                 retRSVP.append(user)
         return retRSVP
     
-    def passNewEvent(self, name, time, date, location, zip, tags, organizer, summary):
-        newEvent = EventData(name, time, date, location, zip, tags, [organizer], summary)
+    def passNewEvent(self, name, date, organizer, time="TBD", location="TBD", zip="TBD", tags=[], summary=""):
+        # newEvent = EventData(name, time, date, location, zip, tags, [organizer], summary)
+        newEvent = EventData.EventBuilder(name, date, organizer)
+        if (not time == "TBD"):
+            newEvent.Time(time)
+        if (not location == "TBD"):
+            newEvent.Location(location)
+        if (not zip == "TBD"):
+            newEvent.Zip(zip)
+        if (not tags == []):
+            newEvent.Tags(tags)
+        if (not summary == ""):
+            newEvent.Summary(summary)
+        newEvent = newEvent.build()
         return self.EHandler.newEvent(newEvent)
 
     def passRemEvent(self, event):
