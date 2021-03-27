@@ -60,7 +60,7 @@ class EventData:
     # Returns True if given date matches the object's date
     def isOnDate(self, date):
         return self.date == date
-    
+        
     # Returns True if given username is in the object's RSVP list
     def hasUserRSVP(self, username):
         return username in self.RSVP
@@ -94,6 +94,14 @@ class EventData:
         else:
             self.RSVP.remove(user)
             return True
+
+    # Defines less than operator for EventData objects
+    # Defined to compare dates first, then names
+    # Used in sorting list of events
+    def __lt__(self, other):
+        thisDate = datetime.strptime(self.date, "%Y-%m-%d").date()
+        otherDate = datetime.strptime(other.date, "%Y-%m-%d").date()
+        return (thisDate, self.name) < (otherDate, other.name)
 
     # Printing for debugging
     def printAllData(self):

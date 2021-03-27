@@ -1,3 +1,9 @@
 OutEvent1 10:00 2015-01-01 Some_Place 12345 tag1
-user1
+user1 user2 user4
+Out-of-date event
+OutEvent2 10:00 2020-01-01 Some_Place 12345 tag1
+user1 user3 user5
+Out-of-date event
+OutEvent3 2:00 2018-01-01 Some_Place 12345 tag1
+user1 user2 user3 user4
 Out-of-date event

@@ -56,13 +56,17 @@ class ProcessManager:
     def getOldEvent(self, name):
         return self.EHandler.getOldEvent(name)
 
-    # Returns all events
+    # Returns all events after sorting by chronological order
     def getAllEvents(self):
-        return self.EHandler.getAllEvents()
+        retEvents = self.EHandler.getAllEvents()
+        retEvents.sort()
+        return retEvents
     
     # Returns all out-of-date events after sorting by chronological order
     def getOldEvents(self):
-        return self.EHandler.getOldEvents()
+        retEvents = self.EHandler.getOldEvents()
+        retEvents.sort()
+        return retEvents
 
     # Return appropriate search results
     def searchEvents(self, searchType, searchValue, searchDate = "", searchTags = [""]):
@@ -79,11 +83,13 @@ class ProcessManager:
         if (not searchTags == [""]):
             retEvents = self.EHandler.refineSearchTags(retEvents, searchTags)
 
+        retEvents.sort()
         return retEvents
 
     # Returns events with specific user in RSVP
     def searchEventsRSVP(self, user):
         username = user.getUsername()
         retEvents = self.EHandler.searchRSVP(username)
+        retEvents.sort()
         return retEvents
     
