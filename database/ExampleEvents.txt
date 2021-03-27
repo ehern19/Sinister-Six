@@ -1,15 +1,18 @@
-Event1 10:00 2025-01-01 Fake_Place_Hall 12345 tag2 tag_3
-user1 user2
+Event1 10:00 2025-01-01 Fake_Place_Hall 12345 Short_Duration_(<2_Hrs) Labor_Intensive
+user1 user2 user3 user4
 Event1 summary
-Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall 12345 tag4
+Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall 12345 Construction
 user1
 Event2 summary
-Event3 19:48 2021-04-26 Mississippi_River_Bridge 22222 tag2
+Event3 19:48 2021-04-26 Mississippi_River_Bridge 22222 Short_Duration_(<2_Hrs)
 user2 user1
 Event3 super duper amazing summary. I mean come on, look at this.
-Event4 03:31 2021-03-31 Hackers_Evil_Lair 12345 tag3
+Event4 03:31 2021-03-31 Hackers_Evil_Lair 12345 Labor_Intensive
 user5
 <marquee><a href="https://www.realpython.com">CLICK ME</a></marquee>
-OutEvent0 10:00 2020-01-01 Some_Place 12345 tag1
-user1
-Out-of-date event
+Event5 TBD 2021-03-29 TBD TBD No_Tags
+user2
+No Summary
+Event6 TBD 2021-03-31 TBD TBD Labor_Intensive Food_Bank
+user2
+No Summary

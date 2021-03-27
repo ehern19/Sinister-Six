@@ -1,7 +1,8 @@
 # HTML Pages: Functions that return the specific HTML pages
 from flask import render_template, session
-from EventData import EventData
-from UserData import UserData
+from dataClasses.EventData import EventData
+from dataClasses.UserData import UserData
+from dataClasses.tags import VALID_TAGS, DISPLAY_TAGS, NUM_TAGS
 
 class HTMLPages:
     # Wraps input HTML string with common header and footer
@@ -36,7 +37,7 @@ class HTMLPages:
         return self._wrapHTML(render_template("pages/accountDNE.html", username=accountName))
 
     def eventsHTML(self, eventList, searching="all"):
-        retHTML = render_template("pages/events.html", searchParamaters=searching)
+        retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS)
         retHTML = retHTML + self._eventShortHTML(eventList)
         return self._wrapHTML(retHTML)
 
@@ -48,7 +49,7 @@ class HTMLPages:
                                                  date=event.getDateStr(), 
                                                  time=event.getTimeStr(), 
                                                  location=event.getLocation(), 
-                                                 tags=event.getTags()
+                                                 tags=event.getTagStrs()
                                                  )
         return retHTML
 
@@ -65,7 +66,7 @@ class HTMLPages:
                                                  date=event.getDateStr(), 
                                                  time=event.getTimeStr(), 
                                                  location=event.getLocation(), 
-                                                 tags=event.getTags()
+                                                 tags=event.getTagStrs()
                                                  )
         return retHTML
 
@@ -81,7 +82,7 @@ class HTMLPages:
                                 time=event.getTimeStr(), 
                                 location=event.getLocation(), 
                                 organizer=event.getOrganizer(),
-                                tags=event.getTags(),
+                                tags=event.getTagStrs(),
                                 summary=event.getSummary(),
                                 isOrganizer=isOrganizer,
                                 inEvent=(username in event.getRSVP()),
@@ -104,7 +105,7 @@ class HTMLPages:
                                 time=event.getTimeStr(), 
                                 location=event.getLocation(), 
                                 organizer=event.getOrganizer(),
-                                tags=event.getTags(),
+                                tags=event.getTagStrs(),
                                 summary=event.getSummary(),
                                 isOrganizer=isOrganizer,
                                 )
@@ -120,4 +121,4 @@ class HTMLPages:
         return retHTML
     
     def newEventHTML(self, todayStr):
-        return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr))
+        return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS))

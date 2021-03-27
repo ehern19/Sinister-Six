@@ -4,8 +4,8 @@
 from datetime import datetime
 from EventHandler import EventHandler
 from LoginHandler import LoginHandler
-from EventData import EventData
-from UserData import UserData
+from dataClasses.EventData import EventData
+from dataClasses.UserData import UserData
 
 class ProcessManager:
     def __init__(self):

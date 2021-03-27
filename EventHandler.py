@@ -1,6 +1,6 @@
 # Event Handler: Stores event data and allows searching for events
 from EventIO import EventIO
-from EventData import EventData
+from dataClasses.EventData import EventData
 
 class EventHandler:
     def __init__(self):

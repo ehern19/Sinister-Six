@@ -10,18 +10,11 @@
             <option value="zip">Zip Code</option>
         </select>
         <input type="date" name="searchDate">
-        <input type="text" name="searchValue"><br>
-        <input type="checkbox" name="tags" value="tag1">
-        <label for="tag1">Tag 1</label>
-        <input type="checkbox" name="tags" value="tag2">
-        <label for="tag2">Tag 2</label>
-        <input type="checkbox" name="tags" value="tag3">
-        <label for="tag3">Tag 3</label>
-        <input type="checkbox" name="tags" value="tag4">
-        <label for="tag4">Tag 4</label>
-        <input type="checkbox" name="tags" value="tag5">
-        <label for="tag5">Tag 5</label>
-        <input type="submit" value="search">
+        <input type="text" name="searchValue">
+        <input type="submit" value="search"><br>
+        {% for i in range(numTags) %}
+            <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}
+        {% endfor %}<br>
     </form><br>
 </section>
 <section>

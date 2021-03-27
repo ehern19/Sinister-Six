@@ -2,7 +2,7 @@
 # Child of DataIO class
 
 from DataIO import DataIO
-from UserData import UserData
+from dataClasses.UserData import UserData
 
 # Data is stored as a list of UserData objects
 class UserIO(DataIO):

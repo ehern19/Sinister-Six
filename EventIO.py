@@ -2,7 +2,7 @@
 # Child of DataIO class
 
 from DataIO import DataIO
-from EventData import EventData
+from dataClasses.EventData import EventData
 
 # Data is stored as a list of EventData objects
 class EventIO(DataIO):
@@ -42,6 +42,8 @@ class EventIO(DataIO):
                 eventLocation = line.pop(0)
                 eventZip = line.pop(0)
                 eventTags = line
+                if (not eventTags == "No Tags"):
+                    eventTags = [entry.replace(' ', '_') for entry in eventTags]
                 
                 # Get next line of organizer and RSVPs
                 eventRSVP = next(inFile).strip().split()
@@ -74,13 +76,15 @@ class EventIO(DataIO):
                 line.append(event.getDateStr())
                 line.append(event.getLocation())
                 line.append(event.getZip())
-                tags = event.getTags()
+                tags = event.getTagStrs()
                 if (not tags == []):
-                    for tag in event.getTags():
+                    for tag in tags:
                         line.append(tag)
-                
+
                 # Replace any ' ' with '_'
                 line = [entry.replace(' ', '_') for entry in line]
+
+                
 
                 # Convert to single line string
                 line = ' '.join(line)

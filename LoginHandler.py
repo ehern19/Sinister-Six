@@ -1,6 +1,6 @@
 # Login Handler: Stores user data and allows checking if a login is valid
 from UserIO import UserIO
-from UserData import UserData
+from dataClasses.UserData import UserData
 
 class LoginHandler:
     def __init__(self):
