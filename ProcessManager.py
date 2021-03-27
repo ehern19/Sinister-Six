@@ -59,13 +59,13 @@ class ProcessManager:
 
     # Returns all events after sorting by chronological order
     def getAllEvents(self):
-        retEvents = self.EHandler.getAllEvents()
+        retEvents = self.EHandler.getAllEvents().copy()
         retEvents.sort()
         return retEvents
     
     # Returns all out-of-date events after sorting by chronological order
     def getOldEvents(self):
-        retEvents = self.EHandler.getOldEvents()
+        retEvents = self.EHandler.getOldEvents().copy()
         retEvents.sort()
         return retEvents
 
