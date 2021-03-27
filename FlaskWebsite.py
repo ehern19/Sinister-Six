@@ -1,5 +1,4 @@
 # Flask Website: "Main"
-from EventHandler import EventHandler
 from flask import Flask, request, session, redirect, url_for
 from flask_apscheduler import APScheduler, scheduler
 from datetime import date
@@ -146,9 +145,8 @@ def newEvent():
         zip = request.form.get("zip")
         tags = request.form.getlist("tags")
         summary = request.form.get("summary", "")
-        # if (summary == ""):
-        #     summary = "None"
-        if (PManager.passNewEvent(name, time, date, location, zip, tags, session["Username"], summary)):
+
+        if (PManager.passNewEvent(name, date, session["Username"], time, location, zip, tags, summary)):
             return redirect(url_for("eventDetails", name=name))
 
     todayStr = dateObj.today().strftime("%Y-%m-%d")

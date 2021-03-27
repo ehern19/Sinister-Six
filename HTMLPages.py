@@ -46,7 +46,7 @@ class HTMLPages:
             retHTML = retHTML + render_template("sections/eventShort.html", 
                                                  name=event.getName(), 
                                                  date=event.getDateStr(), 
-                                                 time=event.getTime(), 
+                                                 time=event.getTimeStr(), 
                                                  location=event.getLocation(), 
                                                  tags=event.getTags()
                                                  )
@@ -63,7 +63,7 @@ class HTMLPages:
             retHTML = retHTML + render_template("sections/eventShortArchived.html", 
                                                  name=event.getName(), 
                                                  date=event.getDateStr(), 
-                                                 time=event.getTime(), 
+                                                 time=event.getTimeStr(), 
                                                  location=event.getLocation(), 
                                                  tags=event.getTags()
                                                  )
@@ -78,7 +78,7 @@ class HTMLPages:
         retHTML = render_template("pages/eventDetails.html", 
                                 name=event.getName(), 
                                 date=event.getDateStr(), 
-                                time=event.getTime(), 
+                                time=event.getTimeStr(), 
                                 location=event.getLocation(), 
                                 organizer=event.getOrganizer(),
                                 tags=event.getTags(),
@@ -101,7 +101,7 @@ class HTMLPages:
         retHTML = render_template("pages/eventDetailsArchived.html", 
                                 name=event.getName(), 
                                 date=event.getDateStr(), 
-                                time=event.getTime(), 
+                                time=event.getTimeStr(), 
                                 location=event.getLocation(), 
                                 organizer=event.getOrganizer(),
                                 tags=event.getTags(),

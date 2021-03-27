@@ -31,18 +31,13 @@ class EventData:
     # Get methods for data stored in object
     def getName(self):
         return self.name
-    
-    def getTime(self):
-        return self.time
 
     def getTimeStr(self):
         if (self.time == "TBD"):
             return self.time
         else:
-            return self.time.strftime("%H:%M")
-
-    def getDate(self):
-        return self.date
+            time = self.time + self.CentralOffset
+            return time.strftime("%H:%M")
 
     def getDateStr(self):
         return self.date.strftime("%Y-%m-%d")
@@ -145,7 +140,7 @@ class EventData:
     # Defined to compare dates first, then times, then names
     # Used in sorting list of events
     def __lt__(self, other):
-        return (self.date, self.time.time(), self.name) < (other.date, self.time.time(), other.name)
+        return (self.date, self.getTimeStr(), self.name) < (other.date, self.getTimeStr(), other.name)
 
     # Printing for debugging
     def printAllData(self):
@@ -178,20 +173,33 @@ class EventData:
         
         # Optional Field Constructors
         def Time(self, newCentralTime):
-            centralTime = datetime.strptime(newCentralTime, "%H:%M")
-            self.time = centralTime - EventData.CentralOffset
-            return self
+            if (newCentralTime == "TBD" or newCentralTime == ""):
+                self.time = "TBD"
+                return self
+            else:
+                centralTime = datetime.strptime(newCentralTime, "%H:%M")
+                self.time = centralTime - EventData.CentralOffset
+                return self
         
         def Location(self, newLocation):
-            self.location = newLocation
+            if (newLocation == ""):
+                self.location = "TBD"
+            else:
+                self.location = newLocation
             return self
         
         def Zip(self, newZip):
-            self.zip = newZip
+            if (newZip == ""):
+                self.zip = "TBD"
+            else:
+                self.zip = newZip
             return self
 
         def Tags(self, newTags):
-            self.tags = newTags
+            if (newTags == []):
+                self.tags = ["No Tags"]
+            else:
+                self.tags = newTags
             return self
         
         def RSVP(self, newRSVP):
