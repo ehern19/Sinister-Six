@@ -45,7 +45,7 @@ class HTMLPages:
         for event in eventList:
             retHTML = retHTML + render_template("sections/eventShort.html", 
                                                  name=event.getName(), 
-                                                 date=event.getDate(), 
+                                                 date=event.getDateStr(), 
                                                  time=event.getTime(), 
                                                  location=event.getLocation(), 
                                                  tags=event.getTags()
@@ -62,7 +62,7 @@ class HTMLPages:
         for event in eventList:
             retHTML = retHTML + render_template("sections/eventShortArchived.html", 
                                                  name=event.getName(), 
-                                                 date=event.getDate(), 
+                                                 date=event.getDateStr(), 
                                                  time=event.getTime(), 
                                                  location=event.getLocation(), 
                                                  tags=event.getTags()
@@ -77,7 +77,7 @@ class HTMLPages:
         isOrganizer = (event.isOrganizerName(username))
         retHTML = render_template("pages/eventDetails.html", 
                                 name=event.getName(), 
-                                date=event.getDate(), 
+                                date=event.getDateStr(), 
                                 time=event.getTime(), 
                                 location=event.getLocation(), 
                                 organizer=event.getOrganizer(),
@@ -100,7 +100,7 @@ class HTMLPages:
         isOrganizer = (event.isOrganizerName(username))
         retHTML = render_template("pages/eventDetailsArchived.html", 
                                 name=event.getName(), 
-                                date=event.getDate(), 
+                                date=event.getDateStr(), 
                                 time=event.getTime(), 
                                 location=event.getLocation(), 
                                 organizer=event.getOrganizer(),

@@ -5,7 +5,7 @@ class EventData:
     def __init__(self, newName, newTime, newDate, newLocation, newZip, newTags, newRSVP, newSummary):
         self.name = newName
         self.time = newTime
-        self.date = newDate
+        self.date = datetime.strptime(newDate, "%Y-%m-%d").date()
         self.location = newLocation
         self.zip = newZip
         self.tags = newTags
@@ -22,6 +22,9 @@ class EventData:
 
     def getDate(self):
         return self.date
+
+    def getDateStr(self):
+        return self.date.strftime("%Y-%m-%d")
 
     def getLocation(self):
         return self.location
@@ -76,8 +79,7 @@ class EventData:
     # Returns True if the object's date is on or after the current date
     def isActive(self):
         now = date.today()
-        objDate = datetime.strptime(self.date, "%Y-%m-%d").date()
-        return now <= objDate
+        return now <= self.date
 
     # Add user to RSVP list (Returns True if successful)
     def addRSVP(self, username):
@@ -99,13 +101,11 @@ class EventData:
     # Defined to compare dates first, then names
     # Used in sorting list of events
     def __lt__(self, other):
-        thisDate = datetime.strptime(self.date, "%Y-%m-%d").date()
-        otherDate = datetime.strptime(other.date, "%Y-%m-%d").date()
-        return (thisDate, self.name) < (otherDate, other.name)
+        return (self.date, self.name) < (other.date, other.name)
 
     # Printing for debugging
     def printAllData(self):
-        print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.date}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVP}\n")
+        print(f"Event: {self.name}\n\tTime: {self.time}\n\tDate: {self.getDateStr()}\n\tLocation: {self.location}\n\tTags: {self.tags}\n\tOrganizer: {self.organizer}\n\tRSVP List: {self.RSVP}\n")
     
     def printName(self):
         print(f"Event: {self.name}")

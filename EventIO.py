@@ -23,31 +23,60 @@ class EventIO(DataIO):
 
     # Load Event data from file to memory in object
     def loadData(self):
-        with open(self.filePath, 'r') as inFile:
-            for line in inFile:
-                line = line.strip().split()
+        self._readData(self.filePath, self.data)
+        self._readData(self.filePathOld, self.oldData)
 
-                # Replace any '_' with ' '
-                line = [entry.replace('_', ' ') for entry in line]
+        # with open(self.filePath, 'r') as inFile:
+        #     for line in inFile:
+        #         line = line.strip().split()
 
-                # Separate the line into relevant categories
-                eventName = line.pop(0)
-                eventTime = line.pop(0)
-                eventDate = line.pop(0)
-                eventLocation = line.pop(0)
-                eventZip = line.pop(0)
-                eventTags = line
+        #         # Replace any '_' with ' '
+        #         line = [entry.replace('_', ' ') for entry in line]
+
+        #         # Separate the line into relevant categories
+        #         eventName = line.pop(0)
+        #         eventTime = line.pop(0)
+        #         eventDate = line.pop(0)
+        #         eventLocation = line.pop(0)
+        #         eventZip = line.pop(0)
+        #         eventTags = line
                 
-                # Get next line of organizer and RSVPs
-                eventRSVP = next(inFile).strip().split()
+        #         # Get next line of organizer and RSVPs
+        #         eventRSVP = next(inFile).strip().split()
 
-                # Get next line of Summary
-                eventSummary = next(inFile).strip()
+        #         # Get next line of Summary
+        #         eventSummary = next(inFile).strip()
                 
-                # Add new EventData object to this object's data list
-                self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
+        #         # Add new EventData object to this object's data list
+        #         self.data.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
         
-        with open(self.filePathOld, 'r') as inFile:
+        # with open(self.filePathOld, 'r') as inFile:
+        #     for line in inFile:
+        #         line = line.strip().split()
+
+        #         # Replace any '_' with ' '
+        #         line = [entry.replace('_', ' ') for entry in line]
+
+        #         # Separate the line into relevant categories
+        #         eventName = line.pop(0)
+        #         eventTime = line.pop(0)
+        #         eventDate = line.pop(0)
+        #         eventLocation = line.pop(0)
+        #         eventZip = line.pop(0)
+        #         eventTags = line
+                
+        #         # Get next line of organizer and RSVPs
+        #         eventRSVP = next(inFile).strip().split()
+
+        #         # Get next line of Summary
+        #         eventSummary = next(inFile).strip()
+                
+        #         # Add new EventData object to this object's data list
+        #         self.oldData.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
+
+    # Open file and read data to list
+    def _readData(self, filePath, appendList):
+        with open(filePath, 'r') as inFile:
             for line in inFile:
                 line = line.strip().split()
 
@@ -69,7 +98,7 @@ class EventIO(DataIO):
                 eventSummary = next(inFile).strip()
                 
                 # Add new EventData object to this object's data list
-                self.oldData.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
+                appendList.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
 
     # Save Event data to file from memory in object
     def saveData(self):
@@ -80,7 +109,7 @@ class EventIO(DataIO):
                 line = []
                 line.append(event.getName())
                 line.append(event.getTime())
-                line.append(event.getDate())
+                line.append(event.getDateStr())
                 line.append(event.getLocation())
                 line.append(event.getZip())
                 for tag in event.getTags():
@@ -113,7 +142,7 @@ class EventIO(DataIO):
                 line = []
                 line.append(event.getName())
                 line.append(event.getTime())
-                line.append(event.getDate())
+                line.append(event.getDateStr())
                 line.append(event.getLocation())
                 line.append(event.getZip())
                 for tag in event.getTags():

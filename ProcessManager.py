@@ -1,6 +1,7 @@
 # Process Manager: Provides methods that can be called by the website application
 # Passes arguments from website to handlers and data from handlers to website
 # Where required, converts from website arguments to function arguments
+from datetime import datetime
 from os import name
 from EventHandler import EventHandler
 from LoginHandler import LoginHandler
@@ -79,6 +80,7 @@ class ProcessManager:
         
         # Refine search
         if (not searchDate == ""):
+            searchDate = datetime.strptime(searchDate, "%Y-%m-%d").date()
             retEvents = self.EHandler.refineSearchDate(retEvents, searchDate)
         if (not searchTags == [""]):
             retEvents = self.EHandler.refineSearchTags(retEvents, searchTags)
