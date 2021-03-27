@@ -1,0 +1,16 @@
+<section>
+    Event: {{name}} <br><br>
+    Date/Time: {{date}}, {{time}} <br>
+    Location: {{location}} <br>
+    Organizer: {{organizer}}<br>
+    Tags: 
+        {% for tag in tags[:-1] %}
+            {{tag}}, 
+        {% endfor %}
+        {{tags[-1]}}<br>
+    Summary:<br> {{summary}}<br><br>
+{% if(not isOrganizer) %}
+</section>
+{% else %}
+    RSVP List:<br>
+{% endif %}

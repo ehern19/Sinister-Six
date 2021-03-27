@@ -51,10 +51,18 @@ class ProcessManager:
     # Returns the named event
     def getEvent(self, name):
         return self.EHandler.getEvent(name)
+    
+    # Returns the named out-of-date event
+    def getOldEvent(self, name):
+        return self.EHandler.getOldEvent(name)
 
     # Returns all events
     def getAllEvents(self):
         return self.EHandler.getAllEvents()
+    
+    # Returns all out-of-date events after sorting by chronological order
+    def getOldEvents(self):
+        return self.EHandler.getOldEvents()
 
     # Return appropriate search results
     def searchEvents(self, searchType, searchValue, searchDate = "", searchTags = [""]):

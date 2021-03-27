@@ -25,6 +25,17 @@ class EventHandler:
     def getAllEvents(self):
         return self.events
     
+    # Returns named out-of-date event
+    def getOldEvent(self, name):
+        for event in self.oldEvents:
+            if event.isEventname(name):
+                return event
+        return None
+
+    # Returns all out-of-date events
+    def getOldEvents(self):
+        return self.oldEvents
+    
     # Add user to event (Returns True if successful)
     def addRSVP(self, username, eventName):
         for event in self.events:

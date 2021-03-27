@@ -1,4 +1,5 @@
 # Flask Website: "Main"
+from EventHandler import EventHandler
 from flask import Flask, request, session, redirect, url_for
 from flask_apscheduler import APScheduler, scheduler
 from datetime import date
@@ -97,6 +98,12 @@ def events():
 
     return pages.eventsHTML(eventList)
 
+# Event Archive: Displays out-of-date events
+@app.route("/eventArchive/", methods=["GET", "POST"])
+def eventArchive():
+    eventList = PManager.getOldEvents()
+    return pages.eventArchiveHTML(eventList)
+
 # Event Details: Displays a single event's details
 # Allows joining/leaving an event
 @app.route("/eventDetails/", methods=["GET", "POST"])
@@ -115,6 +122,15 @@ def eventDetails():
                     return redirect(url_for("events"))
     trueRSVP = PManager.passGetRSVP(event)
     return pages.eventDetailedHTML(event, trueRSVP)
+
+# Event Details Archived: Displays an archived event's details
+# Does not allow editing event in any way (join/leave/delete)
+@app.route("/eventDetailsArchived/", methods=["GET", "POST"])
+def eventDetailsArchived():
+    eventName = request.args.get("name")
+    event = PManager.getOldEvent(eventName)
+    trueRSVP = PManager.passGetRSVP(event)
+    return pages.eventDetailedArchivedHTML(event, trueRSVP)
 
 # New Event: Form that a user fills out to create a new event
 # Current user is organizer

@@ -52,6 +52,23 @@ class HTMLPages:
                                                  )
         return retHTML
 
+    def eventArchiveHTML(self, eventList):
+        retHTML = render_template("pages/eventArchive.html")
+        retHTML = retHTML + self._eventShortArchivedHTML(eventList)
+        return self._wrapHTML(retHTML)
+    
+    def _eventShortArchivedHTML(self, eventList):
+        retHTML = ""
+        for event in eventList:
+            retHTML = retHTML + render_template("sections/eventShortArchived.html", 
+                                                 name=event.getName(), 
+                                                 date=event.getDate(), 
+                                                 time=event.getTime(), 
+                                                 location=event.getLocation(), 
+                                                 tags=event.getTags()
+                                                 )
+        return retHTML
+
     def eventDetailedHTML(self, event, trueRSVP):
         if ("Username" in session):
             username = session["Username"]
@@ -69,6 +86,27 @@ class HTMLPages:
                                 isOrganizer=isOrganizer,
                                 inEvent=(username in event.getRSVP()),
                                 loggedIn=("Username" in session)
+                                )
+        if (isOrganizer):
+            retHTML = retHTML + self._RSVPHTML(trueRSVP)
+            retHTML = retHTML + render_template("sections/endSection.html")
+        return self._wrapHTML(retHTML)
+    
+    def eventDetailedArchivedHTML(self, event, trueRSVP):
+        if ("Username" in session):
+            username = session["Username"]
+        else:
+            username = ""
+        isOrganizer = (event.isOrganizerName(username))
+        retHTML = render_template("pages/eventDetailsArchived.html", 
+                                name=event.getName(), 
+                                date=event.getDate(), 
+                                time=event.getTime(), 
+                                location=event.getLocation(), 
+                                organizer=event.getOrganizer(),
+                                tags=event.getTags(),
+                                summary=event.getSummary(),
+                                isOrganizer=isOrganizer,
                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
