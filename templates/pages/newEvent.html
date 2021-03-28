@@ -1,7 +1,10 @@
 <section>
     <form action="" method="POST">
         Create New Event<br><br>
-        Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required value={{name}}><br>
+        Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required value={{name}}><br>    
+        {% if(name) %}
+            Event Name is already taken, please use another.<br>
+        {% endif %}
         Date: <input type="date" name="date" min={{today}} required value={{date}}><br>
         Time (US Central): <input type="time" name="time" value={{time}}><br>
         Location: <input type="text" name="location" placeholder="Town Hall" value={{location}}><br>
@@ -15,7 +18,7 @@
                 {% endif %}
             {% endfor %}
         Summary:<br>
-        <input type="text" name="summary" placeholder="Type Event Summary Here"><br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here"><br><br>
         <input type="submit" name="create" value="Create New Event">
     </form>
 </section>
