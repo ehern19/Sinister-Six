@@ -1,5 +1,15 @@
 <form action="/account/" method="GET">
-    <input type="submit" name="user" value={{username}}><br>
-    Phone: {{ phone }}<br>
-    Email: {{ email }}<br>
+    <input type="submit" id={{username}} name="user" value={{username}}><br>
+    <label for={{username}}>
+        <table class="center">
+            <tr>
+                <td align="left">Phone:</td>
+                <td align="center">{{phone}}</td>
+            </tr>
+            <tr>
+                <td align="left">Email:</td>
+                <td align="center">{{email}}</td>
+            </tr>
+        </table>
+    </label>
 </form><br>

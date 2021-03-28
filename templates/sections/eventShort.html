@@ -1,12 +1,22 @@
 <section>
     <form action="/eventDetails/" method="GET">
-        <input type="submit" name="name" value={{name}}><br>
-        Date/Time: {{date}}, {{time}} <br>
-        Location: {{location}} <br>
-        Tags: 
+        <input type="submit" id={{name}} name="name" value={{name}}><br>
+        <label for={{name}}>
+            <table class="center">
+                <tr>
+                    <td align="left">Date/Time:</td>
+                    <td align="center">{{date}}, {{time}}</td>
+                </tr>
+                <tr>
+                    <td align="left">Location:</td>
+                    <td align="center">{{location}}</td>
+                </tr>
+            </table>
+            Tags: 
             {% for tag in tags[:-1] %}
                 {{tag}}, 
             {% endfor %}
             {{tags[-1]}}
+        </label>
     </form>
 </section><br>
