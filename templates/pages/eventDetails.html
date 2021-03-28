@@ -1,21 +1,41 @@
 <section>
     <form action="" method="POST">
-        Event: {{name}} <br><br>
+        <big>{{name}}</big>
+        <br><br>
         {% if(isOrganizer) %}
             <input type="submit" name="remove" value="Delete Event">
             <a href="{{ url_for('editEvent', name=name) }}">
                 <input type="button" value="Edit Event">
-            </a><br><br>
+            </a>
+            <br><br>
         {% endif %}
-        Date/Time: {{date}}, {{time}} <br>
-        Location: {{location}} <br>
-        Organizer: {{organizer}}<br>
-        Tags: 
+        <table class="center">
+            <th colspan="2">
+                Event Details:
+            </th>
+            <tr>
+                <td align="left">Date/Time:</td>
+                <td align="left">{{date}}, {{time}}</td>
+            </tr>
+            <tr>
+                <td align="left">Location:</td>
+                <td align="left">{{location}}</td>
+            </tr>
+            <tr>
+                <td align="left">Organizer:</td>
+                <td align="left">{{organizer}}</td>
+            </tr>
+        </table>
+        <br>
+        Tags:<br>
             {% for tag in tags[:-1] %}
                 {{tag}}, 
             {% endfor %}
-            {{tags[-1]}}<br>
-        Summary:<br> {{summary}}<br><br>
+            {{tags[-1]}}
+        <br><br>
+        Summary:<br> 
+        {{summary}}
+        <br><br>
         {% if(loggedIn and not isOrganizer) %}
             {% if(not inEvent) %}
                 <input type="submit" name="join" value="Join Event">

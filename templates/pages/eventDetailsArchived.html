@@ -1,14 +1,33 @@
 <section>
-    Event: {{name}} <br><br>
-    Date/Time: {{date}}, {{time}} <br>
-    Location: {{location}} <br>
-    Organizer: {{organizer}}<br>
-    Tags: 
-        {% for tag in tags[:-1] %}
-            {{tag}}, 
-        {% endfor %}
-        {{tags[-1]}}<br>
-    Summary:<br> {{summary}}<br><br>
+    <table class="center">
+        <big>{{name}}</big>
+        <br><br>
+        <th colspan="2">
+            Event Details:
+        </th>
+        <tr>
+            <td align="left">Date/Time:</td>
+            <td align="left">{{date}}, {{time}}</td>
+        </tr>
+        <tr>
+            <td align="left">Location:</td>
+            <td align="left">{{location}}</td>
+        </tr>
+        <tr>
+            <td align="left">Organizer:</td>
+            <td align="left">{{organizer}}</td>
+        </tr>
+    </table>
+    <br>
+    Tags:<br>
+    {% for tag in tags[:-1] %}
+        {{tag}}, 
+    {% endfor %}
+    {{tags[-1]}}
+    <br><br>
+    Summary:<br> 
+    {{summary}}
+    <br><br>
 {% if(not isOrganizer) %}
 </section>
 {% else %}
