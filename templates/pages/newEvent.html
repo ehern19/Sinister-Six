@@ -1,20 +1,43 @@
 <section>
     <form action="" method="POST">
+        {% if(recurring=="monthly" and day > 28) %}
+            {% set recurringErr = True %}
+        {% endif %}
         Create New Event<br><br>
         Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required value={{name}}><br>    
-        {% if(name) %}
+        {% if(name and not recurringErr) %}
             Event Name is already taken, please use another.<br>
         {% endif %}
         Date: <input type="date" name="date" min={{today}} required value={{date}}><br>
+        Reccuring: <select name="recurring">
+            {% if(recurring=="weekly") %}
+                <option value="none">None</option>
+                <option value="weekly" selected>Weekly</option>
+                <option value="monthly">Monthly</option>
+            {% elif(recurring=="monthly") %}
+                <option value="none">None</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly" selected>Monthly</option>
+            {% else %}
+                <option value="none" selected>None</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+            {% endif %}
+        </select><br>
+        {% if(recurringErr) %}
+            Monthly recurring events must be on the 28th or earlier.<br>
+        {% endif %}
         Time (US Central): <input type="time" name="time" value={{time}}><br>
         Location: <input type="text" name="location" placeholder="Town Hall" value={{location}}><br>
         Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345" value={{zip}}><br>
         Tags:<br>
             {% for i in range(numTags) %}
                 {% if(tagList[i] in tags) %}
-                    <input type="checkbox" name="tags" value={{tagList[i]}} checked>{{tagDisplay[i]}}<br>
+                    <input type="checkbox" id={{tagList[i]}} name="tags" value={{tagList[i]}} checked>
+                    <label for={{tagList[i]}}>{{tagDisplay[i]}}</label> <br>
                 {% else %}
-                    <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}<br>
+                    <input type="checkbox" id={{tagList[i]}} name="tags" value={{tagList[i]}}>
+                    <label for={{tagList[i]}}>{{tagDisplay[i]}}</label> <br>
                 {% endif %}
             {% endfor %}
         Summary:<br>

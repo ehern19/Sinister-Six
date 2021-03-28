@@ -65,6 +65,9 @@ class EventHandler:
         for event in self.events:
             if event.isEvent(newEvent):
                 return False
+        # Check if valid recurring (if monthly, only allows day <28)
+        if (not newEvent.isValidMonthly()):
+            return False
 
         self.events.append(newEvent)
         self.saveChanges()

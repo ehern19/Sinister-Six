@@ -55,8 +55,8 @@ class ProcessManager:
             event.setSummary(summary)
         return self.EHandler.replaceEvent(event)
 
-    def passNewEvent(self, name: str, date: str, organizer: str, time: str="TBD", location: str="TBD", zip: str="TBD", tags: List[str]=[], summary: str="") -> bool:
-        newEvent = EventData.EventBuilder(name, date, organizer)
+    def passNewEvent(self, name: str, date: str, organizer: str, recurring: str, time: str="TBD", location: str="TBD", zip: str="TBD", tags: List[str]=[], summary: str="") -> bool:
+        newEvent = EventData.EventBuilder(name, date, organizer, recurring)
         if (not time == "TBD"):
             newEvent.Time(time)
         if (not location == "TBD"):

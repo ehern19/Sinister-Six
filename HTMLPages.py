@@ -139,9 +139,11 @@ class HTMLPages:
             zip = request.form.get("zip")
             tags = request.form.getlist("tags")
             summary = request.form.get("summary", "")
+            recurring = request.form.get("recurring")
+            day = int(date[-2:])
 
             return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary))
+                    name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary, recurring=recurring, day=day))
         return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
                     name="", date="", time="", location="", zip="", tags="", summary=""))
     

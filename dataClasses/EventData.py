@@ -1,5 +1,6 @@
 # Event Data: Stores the data for one event
 from datetime import date, datetime, timedelta
+from dateutil import relativedelta
 from pytz import timezone
 from typing import List
 
@@ -47,6 +48,9 @@ class EventData:
 
     def getSummary(self) -> str:
         return self.summary
+    
+    def getRecurring(self) -> str:
+        return self.recurring
     
     # Set methods for optional data stored in object
     # Used when editing events
@@ -110,6 +114,12 @@ class EventData:
             return True
         else:
             return self.time.time() < now.time()
+    
+    def isValidMonthly(self):
+        if (self.recurring == "monthly"):
+            return self.date.day <= 28
+        else:
+            return True
 
     # Add user to RSVP list (Returns True if successful)
     def addRSVP(self, username: str) -> bool:
@@ -138,11 +148,12 @@ class EventData:
         pass
 
 # EventBuilder Methods (Moved to allow defining of arguments/return variables)
-def EB__init__(self, newName, newDate, newOrganizer) -> EventData.EventBuilder:
+def EB__init__(self, newName, newDate, newOrganizer, newRecurring) -> EventData.EventBuilder:
     # Required Fields
     self.name = newName
     self.date = datetime.strptime(newDate, "%Y-%m-%d").date()
     self.organizer = newOrganizer
+    self.recurring = newRecurring
 
     # Optional Fields
     self.time = "TBD"
@@ -152,7 +163,7 @@ def EB__init__(self, newName, newDate, newOrganizer) -> EventData.EventBuilder:
     self.rsvp = []
     self.summary = "No Summary"
         
-def EB__new__(cls, newName: str, newDate: str, newOrganizer: str) -> EventData.EventBuilder:
+def EB__new__(cls, newName: str, newDate: str, newOrganizer: str, newRecurring: str) -> EventData.EventBuilder:
     return super(EventData.EventBuilder, cls).__new__(cls)
 
 def EBbuild(self) -> EventData.EventBuilder:
@@ -214,6 +225,7 @@ def ED__init__(self, builder: EventData.EventBuilder) -> None:
     self.name = builder.name
     self.date = builder.date
     self.organizer = builder.organizer
+    self.recurring = builder.recurring
 
     # Optional Fields
     self.time = builder.time
@@ -227,6 +239,34 @@ def ED__init__(self, builder: EventData.EventBuilder) -> None:
 def EDisEvent(self, otherEvent: EventData) -> bool:
     return otherEvent.getName().lower() == self.name.lower()
         
+# Returns a new event with the same data except for date based on recurring
+def EDgetNextRecurringEvent(self: EventData) -> EventData:
+    if (self.recurring == "none"):
+        return None
+    elif (self.recurring == "weekly"):
+        date = self.date + relativedelta.relativedelta(weeks=1)
+    else:
+        date = self.date + relativedelta.relativedelta(months=1)
+
+    name = self.name
+    organizer = self.organizer
+    recurring = self.recurring
+    time = self.getTimeStr()
+    location = self.location
+    zip = self.zip
+    tags = self.tags
+    summary = self.summary
+
+    event = (EventData.EventBuilder(name, date, organizer, recurring)
+                .Time(time)
+                .Location(location)
+                .Zip(zip)
+                .Tags(tags)
+                .summary(summary)
+                .build()
+            )
+    return event
+
 # Defines less than operator for EventData objects
 # Defined to compare dates first, then times, then names
 # Used in sorting list of events
@@ -234,6 +274,7 @@ def ED__lt__(self, other: EventData) -> bool:
     return (self.date, self.getTimeStr(), self.name) < (other.date, self.getTimeStr(), other.name)
 
 EventData.__init__ = ED__init__
+EventData.getNextRecurringEvent = EDgetNextRecurringEvent
 EventData.isEvent = EDisEvent
 EventData.__lt__ = ED__lt__
 

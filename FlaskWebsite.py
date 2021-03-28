@@ -145,8 +145,9 @@ def newEvent():
         zip = request.form.get("zip")
         tags = request.form.getlist("tags")
         summary = request.form.get("summary", "")
+        recurring = request.form.get("recurring")
 
-        if (PManager.passNewEvent(name, date, session["Username"], time, location, zip, tags, summary)):
+        if (PManager.passNewEvent(name, date, session["Username"], recurring, time, location, zip, tags, summary)):
             return redirect(url_for("eventDetails", name=name))
 
     todayStr = dateObj.today().strftime("%Y-%m-%d")

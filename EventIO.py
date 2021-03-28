@@ -42,6 +42,7 @@ class EventIO(DataIO):
                 eventDate = line.pop(0)
                 eventLocation = line.pop(0)
                 eventZip = line.pop(0)
+                eventRecurring = line.pop(0)
                 eventTags = line
                 if (not eventTags == "No Tags"):
                     eventTags = [entry.replace(' ', '_') for entry in eventTags]
@@ -54,7 +55,7 @@ class EventIO(DataIO):
                 
                 # Add new EventData object to this object's data list
                 # appendList.append(EventData(eventName, eventTime, eventDate, eventLocation, eventZip, eventTags, eventRSVP, eventSummary))
-                event = EventData.EventBuilder(eventName, eventDate, eventRSVP[0]).Time(eventTime).Location(eventLocation).Zip(eventZip).Summary(eventSummary)
+                event = EventData.EventBuilder(eventName, eventDate, eventRSVP[0], eventRecurring).Time(eventTime).Location(eventLocation).Zip(eventZip).Summary(eventSummary)
                 if (not eventTags == "No Tags"):
                     event.Tags(eventTags)
                 if (not eventRSVP[1:] == []):
@@ -77,6 +78,7 @@ class EventIO(DataIO):
                 line.append(event.getDateStr())
                 line.append(event.getLocation())
                 line.append(event.getZip())
+                line.append(event.getRecurring())
                 tags = event.getTagStrs()
                 if (not tags == []):
                     for tag in tags:
