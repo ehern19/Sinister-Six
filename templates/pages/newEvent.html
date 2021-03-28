@@ -8,7 +8,11 @@
         Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345" value={{zip}}><br>
         Tags:<br>
             {% for i in range(numTags) %}
-                <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}<br>
+                {% if(tagList[i] in tags) %}
+                    <input type="checkbox" name="tags" value={{tagList[i]}} checked>{{tagDisplay[i]}}<br>
+                {% else %}
+                    <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}<br>
+                {% endif %}
             {% endfor %}
         Summary:<br>
         <input type="text" name="summary" placeholder="Type Event Summary Here"><br>
