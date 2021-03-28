@@ -22,3 +22,6 @@ No Summary
 Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall 12345 none Construction
 user1
 Event2 summary
+OldRecurring 15:00 2021-04-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE

@@ -7,3 +7,24 @@ Out-of-date event
 OutEvent3 12:00 2018-01-01 Some_Place 12345 tag1 No_Tags
 user1 user2 user3 user4
 Out-of-date event
+OldRecurring 15:00 2020-09-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1 user5 user4
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+OldRecurring 15:00 2020-10-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+OldRecurring 15:00 2020-11-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+OldRecurring 15:00 2020-12-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+OldRecurring 15:00 2021-01-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+OldRecurring 15:00 2021-02-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+OldRecurring 15:00 2021-03-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE

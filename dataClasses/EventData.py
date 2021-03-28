@@ -115,7 +115,12 @@ class EventData:
         else:
             return self.time.time() < now.time()
     
-    def isValidMonthly(self):
+    # Returns True if the object is a recurring event
+    def isRecurring(self):
+        return not self.recurring == "none"
+
+    # Returns True if the object is a valid monthly recurring event or is not a monthly recurring event
+    def isValidRecurring(self):
         if (self.recurring == "monthly"):
             return self.date.day <= 28
         else:
@@ -249,6 +254,7 @@ def EDgetNextRecurringEvent(self: EventData) -> EventData:
         date = self.date + relativedelta.relativedelta(months=1)
 
     name = self.name
+    date = date.strftime("%Y-%m-%d")
     organizer = self.organizer
     recurring = self.recurring
     time = self.getTimeStr()
@@ -260,9 +266,8 @@ def EDgetNextRecurringEvent(self: EventData) -> EventData:
     event = (EventData.EventBuilder(name, date, organizer, recurring)
                 .Time(time)
                 .Location(location)
-                .Zip(zip)
-                .Tags(tags)
-                .summary(summary)
+                .Zip(zip).Tags(tags)
+                .Summary(summary)
                 .build()
             )
     return event

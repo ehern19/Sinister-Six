@@ -66,7 +66,7 @@ class EventHandler:
             if event.isEvent(newEvent):
                 return False
         # Check if valid recurring (if monthly, only allows day <28)
-        if (not newEvent.isValidMonthly()):
+        if (not newEvent.isValidRecurring()):
             return False
 
         self.events.append(newEvent)
@@ -96,6 +96,8 @@ class EventHandler:
     def retireEvent(self, oldEvent: EventData) -> bool:
         for event in self.events:
             if event.isEvent(oldEvent):
+                if oldEvent.isRecurring():
+                    self.events.append(oldEvent.getNextRecurringEvent())
                 self.events.remove(event)
                 self.oldEvents.append(event)
                 self.saveChanges()
