@@ -1,37 +1,54 @@
 <section>
     <form action="" method="GET">
-        Search By: 
-        <select name="searchType">
-            {% if(searchType=="name") %}
-                <option value="name" selected>Name</option>
-                <option value="organizer">Organizer</option>
-                <option value="zip">Zip Code</option>
-            {% elif(searchType=="organizer") %}
-                <option value="name">Name</option>
-                <option value="organizer" selected>Organizer</option>
-                <option value="zip">Zip Code</option>
-            {% elif(searchType=="zip") %}
-                <option value="name">Name</option>
-                <option value="organizer">Organizer</option>
-                <option value="zip" selected>Zip Code</option>
-            {% else %}
-                <option value="name">Name</option>
-                <option value="organizer">Organizer</option>
-                <option value="zip">Zip Code</option>
-            {% endif %}
-        </select>
-        <input type="date" name="searchDate" value={{searchDate}}>
-        <input type="text" name="searchValue" value={{searchValue}}>
-        <input type="submit" value="search"><br>
-        {% for i in range(numTags) %}
-            {% if(tagList[i] in tags) %}
-                <input type="checkbox" name="tags" value={{tagList[i]}} checked>{{tagDisplay[i]}}
-            {% else %}
-                <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}
-            {% endif %}
-        {% endfor %}<br>
+        <table class="center">
+            <th colspan="4">
+                Search By:
+            </th>
+            <tr>
+                <td align="left">
+                    <select name="searchType">
+                        {% if(searchType=="name") %}
+                            <option value="name" selected>Name</option>
+                            <option value="organizer">Organizer</option>
+                            <option value="zip">Zip Code</option>
+                        {% elif(searchType=="organizer") %}
+                            <option value="name">Name</option>
+                            <option value="organizer" selected>Organizer</option>
+                            <option value="zip">Zip Code</option>
+                        {% elif(searchType=="zip") %}
+                            <option value="name">Name</option>
+                            <option value="organizer">Organizer</option>
+                            <option value="zip" selected>Zip Code</option>
+                        {% else %}
+                            <option value="name">Name</option>
+                            <option value="organizer">Organizer</option>
+                            <option value="zip">Zip Code</option>
+                        {% endif %}
+                    </select>
+                </td>
+                <td><input type="date" name="searchDate" value={{searchDate}}></td>
+                <td><input type="text" name="searchValue" value={{searchValue}}></td>
+                <td><input type="submit" value="search"></td>
+            </tr>
+        </table>
+        <table class="center">
+            {% for i in range(numTags) %}
+                {% if(i % 4 == 0 and i != 0) %}
+                    </tr>
+                    <tr>
+                {% endif %}
+                {% if(tagList[i] in tags) %}
+                    <td align="left"><input type="checkbox" id={{tagList[i]}} name="tags" value={{tagList[i]}} checked></td>
+                    <td align="left"><label for={{tagList[i]}}>{{tagDisplay[i]}}</label></td>
+                {% else %}
+                    <td align="left"><input type="checkbox" id={{tagList[i]}} name="tags" value={{tagList[i]}}></td>
+                    <td align="left"><label for={{tagList[i]}}>{{tagDisplay[i]}}</label></td>
+                {% endif %}
+            {% endfor %}
+            </tr>
+        </table>
     </form><br>
 </section>
 <section>
-    Events:
+    <big>Events:</big>
 </section><br>
