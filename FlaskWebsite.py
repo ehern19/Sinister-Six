@@ -150,7 +150,7 @@ def newEvent():
             return redirect(url_for("eventDetails", name=name))
 
     todayStr = dateObj.today().strftime("%Y-%m-%d")
-    return pages.newEventHTML(todayStr)
+    return pages.newEventHTML(todayStr, request.form)
 
 # Edit Event: Form that a user fills out to edit an event
 @app.route("/editEvent/", methods=["GET", "POST"])

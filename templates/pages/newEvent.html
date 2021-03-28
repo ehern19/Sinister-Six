@@ -1,11 +1,11 @@
 <section>
     <form action="" method="POST">
         Create New Event<br><br>
-        Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required><br>
-        Date: <input type="date" name="date" min={{today}} required><br>
-        Time (CST): <input type="time" name="time"><br>
-        Location: <input type="text" name="location" placeholder="Town Hall"><br>
-        Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345"><br>
+        Event Name: <input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required value={{name}}><br>
+        Date: <input type="date" name="date" min={{today}} required value={{date}}><br>
+        Time (US Central): <input type="time" name="time" value={{time}}><br>
+        Location: <input type="text" name="location" placeholder="Town Hall" value={{location}}><br>
+        Zip Code: <input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345" value={{zip}}><br>
         Tags:<br>
             {% for i in range(numTags) %}
                 <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}<br>

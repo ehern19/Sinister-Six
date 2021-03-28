@@ -39,7 +39,7 @@ class ProcessManager:
                 retRSVP.append(user)
         return retRSVP
     
-    def passEditEvent(self, eventName: str, reset: bool, time: str, location: str, zip: str, tags: List[str], summary: str) -> None:
+    def passEditEvent(self, eventName: str, reset: bool, time: str, location: str, zip: str, tags: List[str], summary: str) -> bool:
         event = self.getEvent(eventName)
         if (reset):
             event.resetOptional()
@@ -53,7 +53,7 @@ class ProcessManager:
             event.setTags(tags)
         if (not summary == ""):
             event.setSummary(summary)
-        self.EHandler.replaceEvent(event)
+        return self.EHandler.replaceEvent(event)
 
     def passNewEvent(self, name: str, date: str, organizer: str, time: str="TBD", location: str="TBD", zip: str="TBD", tags: List[str]=[], summary: str="") -> bool:
         newEvent = EventData.EventBuilder(name, date, organizer)

@@ -1,6 +1,8 @@
 # HTML Pages: Functions that return the specific HTML pages
 from flask import render_template, session
 from typing import List
+
+from flask.globals import request
 from dataClasses.EventData import EventData
 from dataClasses.UserData import UserData
 from dataClasses.tags import VALID_TAGS, DISPLAY_TAGS, NUM_TAGS
@@ -121,8 +123,20 @@ class HTMLPages:
             retHTML = retHTML + render_template("sections/userRSVP.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail())
         return retHTML
     
-    def newEventHTML(self, todayStr: str):
-        return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS))
+    def newEventHTML(self, todayStr: str, form):
+        if (request.form):
+            name = request.form.get("name")
+            date = request.form.get("date")
+            time = request.form.get("time")
+            location = request.form.get("location")
+            zip = request.form.get("zip")
+            tags = request.form.getlist("tags")
+            summary = request.form.get("summary", "")
+
+            return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
+                    name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary))
+        return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
+                    name="", date="", time="", location="", zip="", tags="", summary=""))
     
     def editEventHTML(self, event: EventData):
         return self._wrapHTML(render_template("pages/editEvent.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS))
