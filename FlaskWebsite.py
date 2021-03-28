@@ -185,7 +185,7 @@ def setTasks():
     app.apscheduler.add_job(func=checkActive, trigger="interval", seconds=10, id="checkActiveTask") # For debug use, 10 second intervals
 
 # Checks all events and removes out-of-date events
-def checkActive():
+def checkActive() -> bool:
     PManager.passCheckActive()
 
 if __name__=="__main__":

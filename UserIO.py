@@ -8,7 +8,7 @@ from dataClasses.UserData import UserData
 class UserIO(DataIO):
     filePath = DataIO.databasePath + DataIO.userdataFilename
     # Load User data from file to memory in object
-    def loadData(self):
+    def loadData(self) -> None:
         with open(self.filePath, 'r') as inFile:
             for line in inFile:
                 line = line.strip().split()
@@ -23,7 +23,7 @@ class UserIO(DataIO):
                 self.data.append(UserData(username, password, phone, email))
         
     # Save User data to file from memory in object
-    def saveData(self):
+    def saveData(self) -> None:
         with open(self.filePath, 'w') as outFile:
             for user in self.data:
                 # Create a list with username, password, email, and phone

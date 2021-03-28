@@ -1,6 +1,7 @@
 # Event IO: Store and retrieve event data from file
 # Child of DataIO class
 
+from typing import List
 from DataIO import DataIO
 from dataClasses.EventData import EventData
 
@@ -14,20 +15,20 @@ class EventIO(DataIO):
         self.oldData = []
     
     # Get method for data stored in OldData (inactive events)
-    def getOldData(self):
+    def getOldData(self) -> List[EventData]:
         return self.oldData
 
     # Set method for data stored in oldData (inactive events)
-    def setOldData(self, newData):
+    def setOldData(self, newData: List[EventData]) -> None:
         self.oldData = newData
 
     # Load Event data from file to memory in object
-    def loadData(self):
+    def loadData(self) -> None:
         self._readData(self.filePath, self.data)
         self._readData(self.filePathOld, self.oldData)
 
     # Open file and read data to list
-    def _readData(self, filePath, appendList):
+    def _readData(self, filePath: str, appendList: List[EventData]) -> None:
         with open(filePath, 'r') as inFile:
             for line in inFile:
                 line = line.strip().split()
@@ -62,11 +63,11 @@ class EventIO(DataIO):
                 appendList.append(event)
 
     # Save Event data to file from memory in object
-    def saveData(self):
+    def saveData(self) -> None:
         self._writeData(self.filePath, self.data)
         self._writeData(self.filePathOld, self.oldData)
         
-    def _writeData(self, filePath, outList):
+    def _writeData(self, filePath: str, outList: List[EventData]) -> None:
         with open(filePath, 'w') as outFile:
             for event in outList:
                 # Create a list with name, time, date, location, and tags
