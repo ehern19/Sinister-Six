@@ -45,6 +45,9 @@ class EventData:
 
     def getRSVP(self) -> List[str]:
         return self.RSVP
+    
+    def getRSVPNum(self) -> int:
+        return len(self.RSVP)
 
     def getSummary(self) -> str:
         return self.summary

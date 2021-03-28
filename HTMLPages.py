@@ -12,8 +12,13 @@ class HTMLPages:
                 + inHTML 
                 + render_template("footer.html"))
 
-    def indexHTML(self):
-        return self._wrapHTML(render_template("pages/index.html"))
+    def indexHTML(self, popularEvents):
+        retHTML = render_template("pages/index.html")
+        retHTML = retHTML + render_template("sections/popularEvents.html")
+        retHTML = retHTML + self._eventShortHTML(popularEvents)
+        retHTML = retHTML + render_template("sections/endSection.html")
+        return self._wrapHTML(retHTML)
+
 
     def loginHTML(self, attemptedLogin: bool=False):
         return self._wrapHTML(render_template("pages/login.html", failedLogin=attemptedLogin))

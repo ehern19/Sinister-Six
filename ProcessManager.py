@@ -95,6 +95,10 @@ class ProcessManager:
         retEvents = self.EHandler.getOldEvents().copy()
         retEvents.sort()
         return retEvents
+    
+    # Returns 3 popular events (highest # RSVP's)
+    def getPopularEvents(self) -> List[EventData]:
+        return self.EHandler.searchPopular()
 
     # Return appropriate search results
     def searchEvents(self, searchType: str, searchValue: str, searchDate: str="", searchTags: List[str]=[""]) -> List[EventData]:

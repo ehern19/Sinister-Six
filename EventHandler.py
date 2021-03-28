@@ -153,6 +153,26 @@ class EventHandler:
                 retEvents.append(event)
         
         return retEvents
+
+    # Returns 3 events with the most RSVP's
+    def searchPopular(self):
+        retEvents = []
+        currentPopular = None
+        if (len(self.events) <= 3):
+            return self.events
+        for i in range(3):
+            numRSVP = 0
+            for event in self.events:
+                currentNameList = [entry.getName() for entry in retEvents]
+                if (event.getName() in currentNameList):
+                    continue
+                else:
+                    eventRSVPNum = event.getRSVPNum()
+                    if (eventRSVPNum > numRSVP):
+                        numRSVP = eventRSVPNum
+                        currentPopular = event
+            retEvents.append(currentPopular)
+        return retEvents
     
     # Checks all events and removes out-of-date events
     def checkActive(self) -> bool:

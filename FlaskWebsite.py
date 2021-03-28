@@ -21,7 +21,8 @@ dateObj = date
 # Index/Home Page
 @app.route("/", methods=["GET", "POST"])
 def index():
-    return pages.indexHTML()
+    popularEvents = PManager.getPopularEvents()
+    return pages.indexHTML(popularEvents)
 
 # Login Page: Enter username+Password to log in
 # If a user is already logged in, redirects to their account page
