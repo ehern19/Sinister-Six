@@ -38,7 +38,16 @@ class HTMLPages:
         return self._wrapHTML(render_template("pages/accountDNE.html", username=accountName))
 
     def eventsHTML(self, eventList: List[EventData], searching: str="all"):
-        retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS)
+        if (request.args):
+            searchType = request.args.get("searchType")
+            date = request.args.get("searchDate")
+            text = request.args.get("searchValue")
+            tags = request.args.getlist("tags")
+            retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
+                    searchType=searchType, searchDate=date, searchValue=text, tags=tags)
+        else:
+            retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
+                    searchType="", searchDate="", searchValue="", tags=[])
         retHTML = retHTML + self._eventShortHTML(eventList)
         return self._wrapHTML(retHTML)
 

@@ -2,18 +2,33 @@
     <form action="" method="GET">
         Search By: 
         <select name="searchType">
-            <option value="none" selected disabled hidden>
-                Select an Option
-            </option>
-            <option value="name" selected>Name</option>
-            <option value="organizer">Organizer</option>
-            <option value="zip">Zip Code</option>
+            {% if(searchType=="name") %}
+                <option value="name" selected>Name</option>
+                <option value="organizer">Organizer</option>
+                <option value="zip">Zip Code</option>
+            {% elif(searchType=="organizer") %}
+                <option value="name">Name</option>
+                <option value="organizer" selected>Organizer</option>
+                <option value="zip">Zip Code</option>
+            {% elif(searchType=="zip") %}
+                <option value="name">Name</option>
+                <option value="organizer">Organizer</option>
+                <option value="zip" selected>Zip Code</option>
+            {% else %}
+                <option value="name">Name</option>
+                <option value="organizer">Organizer</option>
+                <option value="zip">Zip Code</option>
+            {% endif %}
         </select>
-        <input type="date" name="searchDate">
-        <input type="text" name="searchValue">
+        <input type="date" name="searchDate" value={{searchDate}}>
+        <input type="text" name="searchValue" value={{searchValue}}>
         <input type="submit" value="search"><br>
         {% for i in range(numTags) %}
-            <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}
+            {% if(tagList[i] in tags) %}
+                <input type="checkbox" name="tags" value={{tagList[i]}} checked>{{tagDisplay[i]}}
+            {% else %}
+                <input type="checkbox" name="tags" value={{tagList[i]}}>{{tagDisplay[i]}}
+            {% endif %}
         {% endfor %}<br>
     </form><br>
 </section>

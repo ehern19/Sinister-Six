@@ -88,7 +88,7 @@ def newAccount():
 def events():
     if ("searchValue" not in request.args):
         eventList = PManager.getAllEvents()
-    else:
+    elif (request.method == "GET"):
         searchType = request.args.get("searchType")
         searchValue = request.args.get("searchValue", "")
         searchDate = request.args.get("searchDate")
