@@ -112,6 +112,9 @@ def account():
     accountName = request.args.get("user")
     if (accountName):
         account = PManager.passUsername(accountName)
+        if (not account):
+            session.pop("Username", None)
+            return redirect(url_for("login"))
         userOrganizedEvents = PManager.searchEvents("organizer", account.getUsername())
         if (account == None):
             return pages.accountDNEHTML(accountName)
@@ -137,6 +140,7 @@ def newAccount():
         password = request.form.get("password")
         phone = request.form.get("phone")
         email = request.form.get("email")
+        zip = request.form.get("zip", "")
         if ("image" in request.files):
             imageFile = request.files["image"]
             if (PManager.allowedImageFile(imageFile.filename)):
@@ -145,7 +149,7 @@ def newAccount():
             else:
                 return pages.newAccountHTML(badImage=True)
         
-        if (PManager.passNewUser(username, password, phone, email)):
+        if (PManager.passNewUser(username, password, phone, email, zip)):
             session["Username"] = username
             return redirect(url_for("account", user=username))
         else:

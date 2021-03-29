@@ -45,9 +45,10 @@ class UserIO(DataIO):
                 password = line.pop(0)
                 phone = line.pop(0)
                 email = line.pop(0)
+                zip = line.pop(0)
 
                 # Add new UserData object to this object's data list
-                self.data.append(UserData(username, password, phone, email))
+                self.data.append(UserData(username, password, phone, email, zip))
         
     # Save User data to file from memory in object
     def saveData(self) -> None:
@@ -59,6 +60,7 @@ class UserIO(DataIO):
                 line.append(user.getPassword())
                 line.append(user.getPhone())
                 line.append(user.getEmail())
+                line.append(user.getZip())
 
                 # Convert to single line string
                 line = ' '.join(line)

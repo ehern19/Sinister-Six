@@ -152,8 +152,8 @@ class EmailHandler:
 
 if __name__=="__main__":
     testEvent = EventData.EventBuilder("Event0", "2021-03-30", "user0", "none").RSVP(["user1", "user2"]).build()
-    testUsers = [UserData("user1", "pw1", "111-111-1111", "csc3380.receive+user1@gmail.com"),
-                 UserData("user2", "pw2", "222-222-2222", "csc3380.receive+user2@gmail.com")]
+    testUsers = [UserData("user1", "pw1", "111-111-1111", "csc3380.receive+user1@gmail.com", "12345"),
+                 UserData("user2", "pw2", "222-222-2222", "csc3380.receive+user2@gmail.com", "12345")]
 
     app = Flask(__name__)    
     EmHandler = EmailHandler()

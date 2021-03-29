@@ -81,8 +81,8 @@ class ProcessManager:
     def passUsername(self, username: str) -> UserData:
         return self.LHandler.getUser(username)
 
-    def passNewUser(self, username: str, password: str, phone: str, email: str) -> bool:
-        newUser = UserData(username, password, phone, email)
+    def passNewUser(self, username: str, password: str, phone: str, email: str, zip: str) -> bool:
+        newUser = UserData(username, password, phone, email, zip)
         return self.LHandler.newUser(newUser)
     
     def passEditUser(self, username: str, phone: str, email: str) -> bool:

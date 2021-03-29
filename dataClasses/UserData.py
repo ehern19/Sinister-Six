@@ -1,11 +1,12 @@
 # User Data: Stores the data for one user
 
 class UserData:
-    def __init__(self, newUsername: str, newPassword: str, newPhone: str, newEmail: str):
+    def __init__(self, newUsername: str, newPassword: str, newPhone: str, newEmail: str, newZip: str):
         self.username = newUsername
         self.password = newPassword
         self.phone = newPhone
         self.email = newEmail
+        self.zip = newZip
     
     # Get methods for data in object
     def getUsername(self) -> str:
@@ -19,6 +20,9 @@ class UserData:
 
     def getEmail(self) -> str:
         return self.email
+    
+    def getZip(self) -> str:
+        return self.zip
     
     # Set methods for editable data in object
     def setPhone(self, newPhone) -> None:
