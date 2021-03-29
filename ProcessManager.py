@@ -176,6 +176,10 @@ class ProcessManager:
     # Returns list of events that start within 1 day
     def getOneDayEvents(self) -> List[EventData]:
         return self.EHandler.getOneDayEvents()
+    
+    # Returns list of events that start within 1 week
+    def getOneWeekEvents(self) -> List[EventData]:
+        return self.EHandler.getOneWeekEvents()
 
     # Return appropriate search results
     def searchEvents(self, searchType: str, searchValue: str, searchDate: str="", searchTags: List[str]=[""]) -> List[EventData]:

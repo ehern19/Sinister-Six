@@ -108,6 +108,14 @@ class EventHandler:
                 retEvents.append(event)
         return retEvents
     
+    # Returns events starting within 1 week
+    def getOneWeekEvents(self) -> List[EventData]:
+        retEvents = []
+        for event in self.events:
+            if event.isNextWeek():
+                retEvents.append(event)
+        return retEvents
+    
     # Add user to event (Returns True if successful)
     def addRSVP(self, username: str, eventName: str) -> bool:
         for event in self.events:

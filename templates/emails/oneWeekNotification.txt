@@ -1,0 +1,5 @@
+Hello {{username}},
+An event you signed up for, {{eventName}}, starts next week ({{date}})!
+Visit this link to see more information about the event:<br>
+{{host}}/eventDetails/?name={{eventName}}
+We hope to see you there!

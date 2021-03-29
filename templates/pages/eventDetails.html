@@ -11,6 +11,12 @@
             <a href="{{ url_for('editEvent', name=name) }}">
                 <input type="button" value="Edit Event">
             </a>
+            <a href="{{url_for('emailCreator', name=name)}}">
+                <input type="button" value="Add Notification Email">
+            </a>
+            <a href="{{url_for('sendInvites', name=name)}}">
+                <input type="button" value="Send Invitations to Event">
+            </a>
             <br><br>
         {% endif %}
         <table class="center">
@@ -57,4 +63,5 @@
 {% else %}
     RSVP List:
     <br><br>
+
 {% endif %}

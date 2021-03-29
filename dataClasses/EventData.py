@@ -102,6 +102,13 @@ class EventData:
         today = datetime.today().date()
         tomorrow = today + relativedelta.relativedelta(days=1)
         return (self.date == today or self.date == tomorrow)
+
+    # Returns True if the object's date is within the next day (today or tomorrow)
+    def isNextWeek(self) -> bool:
+        today = datetime.today().date()
+        oneWeek = today + relativedelta.relativedelta(weeks=1)
+        return True
+        return (today < self.date < oneWeek)
         
     # Returns True if given username is in the object's RSVP list
     def hasUserRSVP(self, username: str) -> bool:

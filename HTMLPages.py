@@ -103,7 +103,6 @@ class HTMLPages:
         if (user and user.hasZip()):
             zip = user.getZip()
             showNear = True
-            print(url_for('events', searchType='zip', searchValue=zip))
         if (request.args):
             searchType = request.args.get("searchType")
             date = request.args.get("searchDate")
@@ -172,6 +171,16 @@ class HTMLPages:
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
             retHTML = retHTML + render_template("snippets/endSection.html")
         return self._wrapHTML(retHTML)
+
+    def eventCustomEmail(self, event: EventData):
+        if ("Username" in session):
+            username = session["Username"]
+        else:
+            username = ""
+        isOrganizer = (event.isOrganizerName(username))
+        email = event
+        return self._wrapHTML(render_template("pages/emailCreator.html"))
+
     
     def eventDetailedArchivedHTML(self, event: EventData, trueRSVP: List[UserData]):
         if ("Username" in session):
@@ -192,6 +201,12 @@ class HTMLPages:
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
             retHTML = retHTML + render_template("snippets/endSection.html")
+        return self._wrapHTML(retHTML)
+    
+    def sendInvitesHTML(self, eventName: str, rsvp: List[UserData]):
+        retHTML = render_template("pages/sendInvites.html", eventName=eventName)
+        retHTML = retHTML + self._RSVPHTML(rsvp)
+        retHTML = retHTML + render_template("snippets/endSection.html")
         return self._wrapHTML(retHTML)
     
     def _RSVPHTML(self, RSVP: List[UserData]):

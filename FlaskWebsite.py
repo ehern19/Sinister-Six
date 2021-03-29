@@ -67,6 +67,9 @@ from dataClasses.extras import DATABASE_PATH, USER_IMAGES, EVENT_IMAGES
 app = Flask(__name__)
 app.secret_key = "secure"
 
+hostName = "127.0.0.1"
+port = 8080
+
 # For automatic timed scripts (removing out-of-date events)
 scheduler = APScheduler()
 scheduler.init_app(app)
@@ -74,7 +77,7 @@ scheduler.start()
 
 PManager = ProcessManager()
 pages = HTMLPages()
-EmHandler = EmailHandler()
+EmHandler = EmailHandler(hostName + ':' + str(port))
 
 dateObj = date
 
@@ -256,12 +259,13 @@ def newEvent():
         recurring = request.form.get("recurring")
         if ("image" in request.files):
             imageFile = request.files["image"]
-            if (PManager.allowedImageFile(imageFile.filename)):
-                imageName = PManager.getNextEventImgName(name)
-                imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
-            else:
-                todayStr = dateObj.today().strftime("%Y-%m-%d")
-                return pages.newEventHTML(todayStr, badImage=True)
+            if (imageFile):
+                if (PManager.allowedImageFile(imageFile.filename)):
+                    imageName = PManager.getNextEventImgName(name)
+                    imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
+                else:
+                    todayStr = dateObj.today().strftime("%Y-%m-%d")
+                    return pages.newEventHTML(todayStr, badImage=True)
 
         if (PManager.passNewEvent(name, date, session["Username"], recurring, time, location, zip, tags, summary)):
             return redirect(url_for("eventDetails", name=name))
@@ -303,14 +307,57 @@ def editEvent():
         else:
             return redirect(url_for("events"))
     return pages.editEventHTML(event)
+
+# Email Creator: Allows custom notification emails
+@app.route("/emailCreator/", methods=["GET", "POST"])
+def emailCreator():
+    if (request.method == "GET"):
+        eventName = request.args.get("name")
+        event = PManager.getEvent(eventName)
+        return pages.eventCustomEmail(event)
+
+# Send Invites: Allows user to invite other users to their event
+@app.route("/sendInvites/", methods=["GET", "POST"])
+def sendInvites():
+    if (not "Username" in session):
+        return redirect("login")
+    if (not request.args):
+        return redirect(url_for("account"))
+    else:
+        eventName = request.args.get("name")
+        event = PManager.getEvent(eventName)
+        if (not event.isOrganizerName(session["Username"])):
+            return redirect("eventDetails", name=eventName)
+        organizer = PManager.passUsername(session["Username"])
     
+    if (request.method == "POST"):
+        inviteeName = request.form.get("username")
+        invitee = PManager.passUsername(inviteeName)
+        if (invitee):
+            EmHandler.sendInvitation(event, [invitee])
+
+    invitedNames = EmHandler.getInvited(eventName)
+    invited = [organizer]
+    for name in invitedNames:
+        invited.append(PManager.passUsername(name))
+    rsvp = PManager.passGetRSVP(event)
+    for user in rsvp:
+        alreadyInvited = False
+        for invitedUser in invited:
+            if user.isUsername(invitedUser.getUsername()):
+                alreadyInvited = True
+        if (not alreadyInvited):
+            invited.append(user)
+    return pages.sendInvitesHTML(eventName, invited)
 
 # Sets up APScheduler to run checkActive() every 12 hours
 def setTasks():
     # app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask") # For actual use, 12 hour intervals
     app.apscheduler.add_job(func=checkActive, trigger="interval", seconds=10, id="checkActiveTask") # For debug use, 10 second intervals
-    # app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", hours=12, id="sendOneDayNotificationTask") # For debug use, 12 hour intervals
+    # app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", hours=12, id="sendOneDayNotificationTask") # For actual use, 12 hour intervals
     app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", seconds=10, id="sendOneDayNotificationTask") # For debug use, 10 second intervals
+    # app.apscheduler.add_job(func=oneWeekNotifications, trigger="interval", hours=12, id="sendOneWeekNotificationTask") # For debug use, 12 hour intervals
+    app.apscheduler.add_job(func=oneWeekNotifications, trigger="interval", seconds=10, id="sendOneWeekNotificationTask") # For debug use, 10 second intervals
 
 # Checks all events and removes out-of-date events
 def checkActive() -> None:
@@ -329,9 +376,18 @@ def oneDayNotifications() -> None:
         rsvp = PManager.passGetRSVP(event)
         EmHandler.oneDayNotification(event, rsvp)
 
+# Checks all events and sends notifications for those starting within 1 week
+def oneWeekNotifications() -> None:
+    events = PManager.getOneWeekEvents()
+    for event in events:
+        rsvp = PManager.passGetRSVP(event)
+        EmHandler.oneWeekNotification(event, rsvp)
+
 if __name__=="__main__":
     updateNotificationsSent()
     setTasks()
     checkActive()
     oneDayNotifications()
-    app.run(host="127.0.0.1", port=8080, debug=True)
+    oneWeekNotifications()
+    app.run(host=hostName, port=port, debug=True)
+    # app.run(host=hostName, port=port)
