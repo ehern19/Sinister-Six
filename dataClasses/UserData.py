@@ -1,7 +1,7 @@
 # User Data: Stores the data for one user
 
 class UserData:
-    def __init__(self, newUsername: str, newPassword: str, newPhone: str, newEmail: str, newZip: str):
+    def __init__(self, newUsername: str, newPassword: str, newPhone: str, newEmail: str, newZip: str=""):
         self.username = newUsername
         self.password = newPassword
         self.phone = newPhone

@@ -45,7 +45,11 @@ class UserIO(DataIO):
                 password = line.pop(0)
                 phone = line.pop(0)
                 email = line.pop(0)
-                zip = line.pop(0)
+                temp = line.pop(0)
+                if (not temp == "No_Zip"):
+                    zip = temp
+                else:
+                    zip = ""
 
                 # Add new UserData object to this object's data list
                 self.data.append(UserData(username, password, phone, email, zip))
@@ -60,7 +64,10 @@ class UserIO(DataIO):
                 line.append(user.getPassword())
                 line.append(user.getPhone())
                 line.append(user.getEmail())
-                line.append(user.getZip())
+                if (user.hasZip()):
+                    line.append(user.getZip())
+                else:
+                    line.append("No_Zip")
 
                 # Convert to single line string
                 line = ' '.join(line)
