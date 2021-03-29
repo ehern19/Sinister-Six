@@ -80,7 +80,7 @@ class HTMLPages:
         imageName = self._getCurrentUserImgName(user.getUsername())
         imageName = USER_IMAGES + imageName
         if (isUser):
-            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName)) + retHTML
+            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName), zip=user.getZip(), hasZip=user.hasZip()) + retHTML
             retHTML = retHTML + render_template("snippets/accountEventRSVP.html")
             retHTML = retHTML + self._eventShortHTML(userRSVPEvents)
             retHTML = retHTML + render_template("snippets/endSection.html")

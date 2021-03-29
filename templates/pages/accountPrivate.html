@@ -17,6 +17,12 @@
             <td align="left">Email:</td>
             <td align="center">{{ email }}</td>
         </tr>
+        {% if(hasZip) %}
+        <tr>
+            <td align="left">Zip Code:</td>
+            <td align="center">{{ zip }}</td>
+        </tr>
+        {% endif %}
     </table>
     <form action="" method="POST">
         <input type="submit" name="logout" value="Log Out">
