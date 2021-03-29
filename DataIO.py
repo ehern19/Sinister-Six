@@ -28,8 +28,6 @@
 # The function returns true if a user is removed from the list for the event, and if not 
 # it returns false and removes the user.
 
-
-
 class DataIO:
     # File path/names to read/write data from/to
     databasePath = "database\\"

@@ -27,12 +27,6 @@
 #
 # "writeData": Writes the data from the list into the database file.
 
-
-
-
-# Event IO: Store and retrieve event data from file
-# Child of DataIO class
-
 from typing import List
 from DataIO import DataIO
 from dataClasses.EventData import EventData

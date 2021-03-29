@@ -16,12 +16,6 @@
 #
 # "saveData": Saves the data of the user from an object stored in the memory to a file.
 
-
-
-
-# User IO: Store and retrieve user data from file
-# Child of DataIO class
-
 from DataIO import DataIO
 from dataClasses.UserData import UserData
 

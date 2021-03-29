@@ -62,7 +62,6 @@
 #
 # "checkActive": Scans every event and removed passed events.
 
-
 from typing import List
 from EventIO import EventIO
 from dataClasses.EventData import EventData

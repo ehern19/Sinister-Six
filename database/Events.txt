@@ -14,7 +14,7 @@ Event10 16:30 2021-03-31 At_Home 01010 none Long_Duration_(>2_Hrs)
 user10
 Zoom call!
 LateJoin TBD 2021-03-29 TBD TBD none No_Tags
-user3 user1
+user3 user1 abc
 No Summary
 OldRecurring 15:00 2021-04-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
 user1

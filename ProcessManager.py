@@ -60,10 +60,6 @@
 #
 # "getNextUserImageName": Gets the name of the next image associated with a specified user.
 
-
-# Process Manager: Provides methods that can be called by the website application
-# Passes arguments from website to handlers and data from handlers to website
-# Where required, converts from website arguments to function arguments
 import os
 from datetime import datetime
 from typing import List
@@ -88,6 +84,16 @@ class ProcessManager:
     def passNewUser(self, username: str, password: str, phone: str, email: str) -> bool:
         newUser = UserData(username, password, phone, email)
         return self.LHandler.newUser(newUser)
+    
+    def passEditUser(self, username: str, phone: str, email: str) -> bool:
+        if (not phone and not email):
+            return True
+        user = self.passUsername(username)
+        if (phone):
+            user.setPhone(phone)
+        if (email):
+            user.setEmail(email)
+        return self.LHandler.replaceUser(user)
 
     # Takes user input from web page and passes it to EventHandler
     def passRSVP(self, username: str, eventName: str) -> bool:
@@ -207,13 +213,23 @@ class ProcessManager:
             return False
     
     # Returns the next image filename (<event>.jpg# + 1) for a given event name
-    def getNextImgName(self, eventName: str) -> str:
+    def getNextEventImgName(self, eventName: str) -> str:
         eventPath = DATABASE_PATH + EVENT_IMAGES
-        userPath = DATABASE_PATH + USER_IMAGES
         version = 0
         baseName = eventName + ".jpg"
         imageName = baseName + str(version)
-        while(os.path.isfile(eventPath + imageName) or os.path.isfile(userPath + imageName)):
+        while(os.path.isfile(eventPath + imageName)):
+            version = version + 1
+            imageName = baseName + str(version)
+        return imageName
+    
+    # Returns the next image filename (<event>.jpg# + 1) for a given user name
+    def getNextUserImgName(self, username: str) -> str:
+        userPath = DATABASE_PATH + USER_IMAGES
+        version = 0
+        baseName = username + ".jpg"
+        imageName = baseName + str(version)
+        while(os.path.isfile(userPath + imageName)):
             version = version + 1
             imageName = baseName + str(version)
         return imageName
