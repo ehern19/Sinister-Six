@@ -58,6 +58,13 @@ class EmailHandler:
         self.port = 465
         self.context = ssl.create_default_context()
         self.notifiedList: List[List[str]] = []
+        self.onStartup()
+    
+    # Check if files exist, make them if not
+    def onStartup(self):
+        if (not os.path.exists(self.notifiedListPath)):
+            newFile = open(self.notifiedListPath, 'w')
+            newFile.close()
     
     # Load list of event notifications already sent out
     def loadNotifiedList(self, activeEvents: List[EventData]) -> None:

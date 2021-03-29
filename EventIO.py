@@ -27,6 +27,7 @@
 #
 # "writeData": Writes the data from the list into the database file.
 
+import os
 from typing import List
 from DataIO import DataIO
 from dataClasses.EventData import EventData
@@ -39,7 +40,17 @@ class EventIO(DataIO):
     def __init__(self):
         super().__init__()
         self.oldData = []
+        self.onStartup()
     
+    # Check if files exist, make them if not
+    def onStartup(self):
+        if (not os.path.exists(self.filePath)):
+            newFile = open(self.filePath, 'w')
+            newFile.close()
+        if (not os.path.exists(self.filePathOld)):
+            newFile = open(self.filePathOld, 'w')
+            newFile.close()
+
     # Get method for data stored in OldData (inactive events)
     def getOldData(self) -> List[EventData]:
         return self.oldData
