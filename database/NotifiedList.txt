@@ -1,1 +1,2 @@
 Event7 one_day
+LateJoin one_day

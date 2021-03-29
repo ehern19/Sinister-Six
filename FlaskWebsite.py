@@ -116,7 +116,10 @@ def eventDetails():
         if ("Username" in session):
             username = session["Username"]
             if ("join" in request.form):
-                PManager.passRSVP(username, eventName)
+                if (PManager.passRSVP(username, eventName)):
+                    if (event.isNextDay()):
+                        currentUser = PManager.passUsername(session["Username"])
+                        EmHandler.oneUserOneDayNotification(event, currentUser)
             elif ("leave" in request.form):
                 PManager.passLeaveRSVP(username, eventName)
             elif ("remove" in request.form):
@@ -188,7 +191,7 @@ def setTasks():
     # app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask") # For actual use, 12 hour intervals
     app.apscheduler.add_job(func=checkActive, trigger="interval", seconds=10, id="checkActiveTask") # For debug use, 10 second intervals
     # app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", hours=12, id="sendOneDayNotificationTask") # For debug use, 12 hour intervals
-    app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", seconds=120, id="sendOneDayNotificationTask") # For debug use, 2 minute intervals
+    app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", seconds=10, id="sendOneDayNotificationTask") # For debug use, 10 second intervals
 
 # Checks all events and removes out-of-date events
 def checkActive() -> None:

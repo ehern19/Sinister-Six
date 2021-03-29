@@ -73,6 +73,23 @@ class EmailHandler:
                 server.sendmail(self.senderEmail, receiverEmail, message.as_string())
         self.notifiedList.append([event.getName(), "one day"])
 
+    # Send email notification to one user for an event that happens the next day
+    # Will only send if a notification has already been sent for the event
+    def oneUserOneDayNotification(self, event: EventData, user: UserData) -> None:
+        alreadyNotified = False
+        for entry in self.notifiedList:
+            if (event.isEventname(entry[0])):
+                if (entry[1] == "one day"):
+                    alreadyNotified = True
+        if (not alreadyNotified):
+            return
+        else:
+            with smtplib.SMTP_SSL("smtp.gmail.com", self.port, context=self.context) as server:
+                server.login(self.senderEmail, self.password)
+                receiverEmail = user.getEmail()
+                message = self._oneDayNotificationMsg(event, user)
+                server.sendmail(self.senderEmail, receiverEmail, message.as_string())
+
     # Returns MIMEMultipart for email notification for an event that happens the next day
     def _oneDayNotificationMsg(self, event: EventData, user: UserData) -> MIMEMultipart:
         message = MIMEMultipart("alternative")

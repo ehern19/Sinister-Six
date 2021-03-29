@@ -31,6 +31,6 @@ Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
 Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall 12345 none Short_Duration_(<2_Hrs) Construction Moving
 user1
 Event2 summary
-Event7 22:20 2021-03-29 TBD TBD none
+Event7 22:20 2021-03-29 TBD TBD none No_Tags
 user2
 No Summary
