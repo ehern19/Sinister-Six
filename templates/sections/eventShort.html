@@ -1,22 +1,46 @@
-<section>
-    <form action="/eventDetails/" method="GET">
-        <input type="submit" id={{name}} name="name" value={{name}}><br>
+<td>
+    <div class="cell">
         <label for={{name}}>
+        <form action="/eventDetails/" method="GET">
+            <input type="submit" class="bigName" id={{name}} name="name" value={{name}}><br>
             <table class="center">
                 <tr>
-                    <td align="left">Date/Time:</td>
-                    <td align="center">{{date}}, {{time}}</td>
+                    <td align="left">
+                        <label for={{name}}>
+                            Date/Time:
+                        </label>
+                    </td>
+                    <td align="center">
+                        <label for={{name}}>
+                            {{date}}, {{time}}
+                        </label>
+                    </td>
                 </tr>
                 <tr>
-                    <td align="left">Location:</td>
-                    <td align="center">{{location}}</td>
-                </tr>
-            </table>
-            Tags: 
-            {% for tag in tags[:-1] %}
-                {{tag}}, 
-            {% endfor %}
-            {{tags[-1]}}
+                    <td align="left">
+                        <label for={{name}}>
+                            Location:
+                        </label>
+                    </td>
+                    <td align="center">
+                        <label for={{name}}>
+                            {{location}}
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+                <label for={{name}}>
+                Tags: 
+                {% for tag in tags[:-1] %}
+                    {{tag}}, 
+                {% endfor %}
+                {{tags[-1]}}
+            </label>
+        </form>
         </label>
-    </form>
-</section><br>
+    </div>
+</td>
+{% if(endRow) %}
+    </tr>
+    <tr>
+{% endif %}
