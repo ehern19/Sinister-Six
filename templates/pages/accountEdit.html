@@ -1,0 +1,29 @@
+<section>
+    <table class="center" style="border: 5px solid rgb(253, 208, 35);">
+        <big>Editing {{name}}</big>
+        <form action="" method="POST" enctype="multipart/form-data">
+            <tr>
+                <td align="right">Phone Number:</td>
+                <td align="left"><input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="123-456-7890" placeholder="123-456-7890">
+            </tr>
+            <tr>
+                <td align="right">Email:</td>
+                <td align="left"><input type="email" name="email" placeholder="newuser@fakemail.com">
+            </tr>
+            <tr>
+                <td align="center" colspan="2">Profile Image:</td>
+            </tr>
+            <tr>
+                <td align="right" colspan="2"><input type="file" name="image"></td>
+            </tr>
+            {% if(badImage) %}
+                <tr>
+                    <td align="center" colspan="2">Please upload a .jpg, .jpeg, or .png file.</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td align="center" colspan="2"><input class="btn" type="submit" value="Confirm Account Changes"></td>
+            </tr>
+        </form>
+    </table>
+</section>

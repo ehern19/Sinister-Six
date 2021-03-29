@@ -81,11 +81,45 @@ def newAccount():
         password = request.form.get("password")
         phone = request.form.get("phone")
         email = request.form.get("email")
+        if ("image" in request.files):
+            imageFile = request.files["image"]
+            if (PManager.allowedImageFile(imageFile.filename)):
+                imageName = PManager.getNextUserImgName(username)
+                imageFile.save(DATABASE_PATH + USER_IMAGES + imageName)
+            else:
+                return pages.newAccountHTML(badImage=True)
+        
         if (PManager.passNewUser(username, password, phone, email)):
             session["Username"] = username
             return redirect(url_for("account", user=username))
+        else:
+            return pages.newAccountHTML(badName=True)
 
     return pages.newAccountHTML()
+
+# Edit Account: Form a user fills out to edit their account
+@app.route("/editAccount/", methods=["GET", "POST"])
+def editAccount():
+    pass
+    if (not "Username" in session):
+        return redirect(url_for("login"))
+    elif (request.method == "POST"):
+        username = session["Username"]
+        phone = request.form.get("phone", None)
+        email = request.form.get("email", None)
+        if ("image" in request.files):
+            imageFile = request.files["image"]
+            if (imageFile):
+                if (PManager.allowedImageFile(imageFile.filename)):
+                    imageName = PManager.getNextUserImgName(username)
+                    imageFile.save(DATABASE_PATH + USER_IMAGES + imageName)
+                else:
+                    return pages.editAccountHTML(badImage=True)
+        
+        if (PManager.passEditUser(username, phone, email)):
+            return redirect(url_for("account", user=username))
+
+    return pages.editAccountHTML()
 
 # Events Page: Displays all events by default
 # Search at top of page: Changes what events get displayed
@@ -158,7 +192,7 @@ def newEvent():
         if ("image" in request.files):
             imageFile = request.files["image"]
             if (PManager.allowedImageFile(imageFile.filename)):
-                imageName = PManager.getNextImgName(name)
+                imageName = PManager.getNextEventImgName(name)
                 imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
             else:
                 todayStr = dateObj.today().strftime("%Y-%m-%d")
@@ -195,7 +229,7 @@ def editEvent():
         if ("image" in request.files):
             imageFile = request.files["image"]
             if (PManager.allowedImageFile(imageFile.filename)):
-                imageName = PManager.getNextImgName(eventName)
+                imageName = PManager.getNextEventImgName(eventName)
                 imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
             else:
                 return pages.editEventHTML(event, badImage=True)

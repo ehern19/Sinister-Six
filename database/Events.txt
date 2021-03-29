@@ -19,12 +19,12 @@ No Summary
 OldRecurring 15:00 2021-04-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
 user1
 Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
-Event1 10:00 2025-01-01 Fake_Place_Hall 12345 none Short_Duration_(<2_Hrs) Labor_Intensive
-user1 user2 user3 user4
-Event1 summary
 Event7 TBD 2021-03-29 TBD TBD none No_Tags
 user2 user3
 No Summary
 Event3 19:48 2021-04-26 Mississippi_River_Bridge 22222 none Labor_Intensive
 user2 user1 user3
 Event3 super duper amazing summary. I mean come on, look at this.
+Event1 10:00 2025-01-01 Fake_Place_Hall 12345 none Short_Duration_(<2_Hrs) Labor_Intensive
+user1 user2 user3 user4
+Event1 summary

@@ -28,6 +28,17 @@ class LoginHandler:
         self.objIO.saveData()
         return True
 
+    # Replace matching user in memory with input user (matches by username), then save to file
+    # Returns True if user is replaced
+    def replaceUser(self, newUser: UserData) -> bool:
+        for user in self.users:
+            if (user.isUser(newUser)):
+                user = newUser
+                self.objIO.setData(self.users)
+                self.objIO.saveData()
+                return True
+        return False
+
     # Return True if given username and password match
     def isValidLogin(self, username: str, password: str) -> bool:
         for user in self.users:

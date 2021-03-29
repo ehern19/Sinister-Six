@@ -28,17 +28,22 @@ class HTMLPages:
         retHTML = render_template("sections/accountEventOrganizer.html", isUser=isUser)
         retHTML = retHTML + self._eventShortHTML(userEvents)
         retHTML = retHTML + render_template("sections/endSection.html")
+        imageName = self._getCurrentUserImgName(user.getUsername())
+        imageName = USER_IMAGES + imageName
         if (isUser):
-            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail()) + retHTML
+            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName)) + retHTML
             retHTML = retHTML + render_template("sections/accountEventRSVP.html")
             retHTML = retHTML + self._eventShortHTML(userRSVPEvents)
             retHTML = retHTML + render_template("sections/endSection.html")
         else:
-            retHTML = render_template("pages/accountPublic.html", username=user.getUsername()) + retHTML
+            retHTML = render_template("pages/accountPublic.html", username=user.getUsername(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName)) + retHTML
         return self._wrapHTML(retHTML)
 
-    def newAccountHTML(self):
-        return self._wrapHTML(render_template("pages/accountNew.html"))
+    def newAccountHTML(self, badName: bool=False, badImage: bool=False):
+        return self._wrapHTML(render_template("pages/accountNew.html", badName=badName, badImage=badImage))
+
+    def editAccountHTML(self, badImage: bool=False):
+        return self._wrapHTML(render_template("pages/accountEdit.html", badImage=badImage))
 
     def accountDNEHTML(self, accountName: str):
         return self._wrapHTML(render_template("pages/accountDNE.html", username=accountName))
@@ -92,7 +97,7 @@ class HTMLPages:
         else:
             username = ""
         isOrganizer = (event.isOrganizerName(username))
-        imageName = self._getCurrentImgName(event.getName())
+        imageName = self._getCurrentEventImgName(event.getName())
         imageName = EVENT_IMAGES + imageName
         retHTML = render_template("pages/eventDetails.html", 
                                 name=event.getName(), 
@@ -152,21 +157,32 @@ class HTMLPages:
             recurring = request.form.get("recurring")
             day = int(date[-2:])
 
-            return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
+            return self._wrapHTML(render_template("pages/eventNew.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
                     name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary, recurring=recurring, day=day, badName=badName, badImage=badImage))
-        return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
+        return self._wrapHTML(render_template("pages/eventNew.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
                     name="", date="", time="", location="", zip="", tags="", summary=""))
     
     def editEventHTML(self, event: EventData, badImage: bool=False):
-        return self._wrapHTML(render_template("pages/editEvent.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS, badImage=badImage))
+        return self._wrapHTML(render_template("pages/eventEdit.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS, badImage=badImage))
     
-    def _getCurrentImgName(self, eventName: str) -> str:
+    def _getCurrentEventImgName(self, eventName: str) -> str:
         eventPath = DATABASE_PATH + EVENT_IMAGES
-        userPath = DATABASE_PATH + USER_IMAGES
         version = 0
         baseName = eventName + ".jpg"
         imageName = baseName + str(version)
-        while(os.path.isfile(eventPath + imageName) or os.path.isfile(userPath + imageName)):
+        while(os.path.isfile(eventPath + imageName)):
+            version = version + 1
+            imageName = baseName + str(version)
+        version = version - 1
+        imageName = baseName + str(version)
+        return imageName
+
+    def _getCurrentUserImgName(self, username: str) -> str:
+        userPath = DATABASE_PATH + USER_IMAGES
+        version = 0
+        baseName = username + ".jpg"
+        imageName = baseName + str(version)
+        while(os.path.isfile(userPath + imageName)):
             version = version + 1
             imageName = baseName + str(version)
         version = version - 1

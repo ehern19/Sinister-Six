@@ -20,6 +20,13 @@ class UserData:
     def getEmail(self) -> str:
         return self.email
     
+    # Set methods for editable data in object
+    def setPhone(self, newPhone) -> None:
+        self.phone = newPhone
+    
+    def setEmail(self, newEmail) -> None:
+        self.email = newEmail
+    
     # Returns True if given username matches the object's username
     def isUsername(self, otherUsername: str) -> bool:
         return otherUsername.lower() == self.username.lower()

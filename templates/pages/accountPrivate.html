@@ -1,6 +1,10 @@
 <section>
     <big>{{ username }}</big>
     <br>
+    {% if(hasImage) %}
+        <img src="{{ url_for('static', filename=image) }}" alt={{name}}>
+        <br><br>
+    {% endif %}
     <table class="center">
         <th colspan="2">
             Contact Info
@@ -16,5 +20,8 @@
     </table>
     <form action="" method="POST">
         <input type="submit" name="logout" value="Log Out">
+        <a href="{{ url_for('editAccount') }}">
+            <input type="button" value="Edit Account">
+        </a>
     </form>
 </section><br>

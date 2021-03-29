@@ -9,6 +9,11 @@
                 <td align="right">Username:</td>
                 <td align="left"><input type="text" name="username" pattern="[a-zA-Z0-9]{1,20}" title="Letters and Numbers Only" placeholder="username" required></td>
             </tr>
+            {% if(badName) %}
+                <tr>
+                    <td align="center" colspan="2">Username taken.</td>
+                </tr>
+            {% endif %}
             <tr>
                 <td align="right">Password:</td>
                 <td align="left"><input type="password" name="password" placeholder="password" required>
@@ -21,6 +26,17 @@
                 <td align="right">Email:</td>
                 <td align="left"><input type="email" name="email" placeholder="newuser@fakemail.com" required>
             </tr>
+            <tr>
+                <td align="center" colspan="2">Profile Image:</td>
+            </tr>
+            <tr>
+                <td align="right" colspan="2"><input type="file" name="image"></td>
+            </tr>
+            {% if(badImage) %}
+                <tr>
+                    <td align="center" colspan="2">Please upload a .jpg, .jpeg, or .png file.</td>
+                </tr>
+            {% endif %}
             <tr>
                 <td align="center" colspan="2"><input class="btn" type="submit" value="Create Account"></td>
             </tr>

@@ -1,0 +1,84 @@
+<section>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% if(recurring=="monthly" and day > 28) %}
+            {% set recurringErr = True %}
+        {% endif %}
+        <table class="center">
+            <th colspan="2">
+                <big>Create New Event</big>
+            </th>
+            <tr>
+                <td align="left">Event Name:</td>
+                <td align="left"><input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required value={{name}}></td>
+            </tr>
+            {% if(badName) %}
+                <tr>
+                    <td colspan="2">Event Name is already taken, please use another.</td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td align="left">Date:</td>
+                <td align="left"><input type="date" name="date" min={{today}} required value={{date}}></td>
+            </tr>
+            <tr>
+                <td align="left">Recurring:</td>
+                <td align="left">
+                    <select name="recurring">
+                        {% if(recurring=="weekly") %}
+                            <option value="none">None</option>
+                            <option value="weekly" selected>Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        {% elif(recurring=="monthly") %}
+                            <option value="none">None</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                        {% else %}
+                            <option value="none" selected>None</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                        {% endif %}
+                    </select>
+                </td>
+            </tr>
+                {% if(recurringErr) %}
+                    <tr>
+                        <td colspan="2">Monthly recurring events must be on the 28th or earlier.</td>
+                    </tr>
+                {% endif %}
+            <tr>
+                <td align="left">Time:</td>
+                <td align="left"><input type="time" name="time" value={{time}}> (US Central)</td>
+            </tr>
+            <tr>
+                <td align="left">Location:</td>
+                <td align="left"><input type="text" name="location" placeholder="Town Hall" value={{location}}></td>
+            </tr>
+            <tr>
+                <td align="left">Zip Code:</td>
+                <td align="left"><input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345" value={{zip}}></td>
+            </tr>
+        </table>
+        <table class="center">
+            <th colspan="2">
+                Tags:
+            </th>
+            {% for i in range(numTags) %}
+                <tr>
+                    <td align="left"><input type="checkbox" id={{tagList[i]}} name="tags" value={{tagList[i]}}></td>
+                    <td align="left"><label for={{tagList[i]}}>{{tagDisplay[i]}}</label></td>
+                </tr>
+            {% endfor %}<br>
+        </table>
+        <br>
+        Summary:<br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here">
+        <br><br>
+        Event Image: <input type="file" name="image">
+        {% if(badImage) %}
+            <br>
+            Please upload a .jpg, .jpeg, or .png file.
+        {% endif %}
+        <br><br>
+        <input class="btn" type="submit" name="create" value="Create New Event">
+    </form>
+</section>

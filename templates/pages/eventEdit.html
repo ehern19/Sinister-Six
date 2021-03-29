@@ -1,0 +1,45 @@
+<section>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <big>Editing {{name}}</big>
+        <br><br>
+        <input type="checkbox" name="reset" value="reset">Reset Event Data<br>
+        Warning: This will delete ALL current event data except the name and date!<br><br>
+        
+        <table class="center">
+            <tr>
+                <td align="left">Time:</td>
+                <td align="left"><input type="time" name="time"> (US Central)</td>
+            </tr>
+            <tr>
+                <td align="left">Location:</td>
+                <td align="left"><input type="text" name="location" placeholder="Town Hall"></td>
+            </tr>
+            <tr>
+                <td align="left">Zip Code:</td>
+                <td align="left"><input type="number" name="zip" pattern="[0-9]{5}" placeholder="12345"></td>
+            </tr>
+        </table>
+        <br>
+        <table class="center">
+            <th colspan="2">
+                Tags:
+            </th>
+            {% for i in range(numTags) %}
+                <tr>
+                    <td align="left"><input type="checkbox" id={{tagList[i]}} name="tags" value={{tagList[i]}}></td>
+                    <td align="left"><label for={{tagList[i]}}>{{tagDisplay[i]}}</label></td>
+                </tr>
+            {% endfor %}<br>
+        </table><br>
+        Summary:<br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here">
+        <br><br>
+        Event Image: <input type="file" name="image">
+        {% if(badImage) %}
+            <br>
+            Please upload a .jpg, .jpeg, or .png file.
+        {% endif %}
+        <br><br>
+        <input class="btn" type="submit" name="edit" value="Confirm Event Changes">
+    </form>
+</section>
