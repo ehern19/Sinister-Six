@@ -48,7 +48,12 @@
             </tr>
         </table>
     </form>
-    <br>
+    {% if(showNear) %}
+        <a href="{{ url_for('events', searchType='zip', searchDate='', searchValue=zip) }}">
+            <input type="submit" value="Find Events Near You">
+        </a>
+    {% endif %}
+    <br><br>
 </section>
 <section>
     <big>Events:</big>

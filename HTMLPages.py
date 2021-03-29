@@ -97,17 +97,23 @@ class HTMLPages:
     def accountDNEHTML(self, accountName: str):
         return self._wrapHTML(render_template("pages/accountDNE.html", username=accountName))
 
-    def eventsHTML(self, eventList: List[EventData], searching: str="all"):
+    def eventsHTML(self, eventList: List[EventData], searching: str="all", user: UserData=None):
+        zip = None
+        showNear = False
+        if (user and user.hasZip()):
+            zip = user.getZip()
+            showNear = True
+            print(url_for('events', searchType='zip', searchValue=zip))
         if (request.args):
             searchType = request.args.get("searchType")
             date = request.args.get("searchDate")
             text = request.args.get("searchValue")
             tags = request.args.getlist("tags")
             retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    searchType=searchType, searchDate=date, searchValue=text, tags=tags)
+                    searchType=searchType, searchDate=date, searchValue=text, tags=tags, zip=zip, showNear=showNear)
         else:
             retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    searchType="", searchDate="", searchValue="", tags=[])
+                    searchType="", searchDate="", searchValue="", tags=[], zip=zip, showNear=showNear)
         retHTML = retHTML + self._eventShortHTML(eventList)
         return self._wrapHTML(retHTML)
 

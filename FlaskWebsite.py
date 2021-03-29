@@ -190,12 +190,16 @@ def events():
         eventList = PManager.getAllEvents()
     elif (request.method == "GET"):
         searchType = request.args.get("searchType")
-        searchValue = request.args.get("searchValue", "")
+        searchValue = request.args.get("searchValue")
         searchDate = request.args.get("searchDate")
         searchTags = request.args.getlist("tags")
         eventList = PManager.searchEvents(searchType, searchValue, searchDate, searchTags)
-
-    return pages.eventsHTML(eventList)
+    
+    if ("Username" in session):
+        user = PManager.passUsername(session["Username"])
+        return pages.eventsHTML(eventList, user=user)
+    else:
+        return pages.eventsHTML(eventList)
 
 # Event Archive: Displays out-of-date events
 @app.route("/eventArchive/", methods=["GET", "POST"])
