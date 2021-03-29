@@ -1,3 +1,24 @@
+#                                           Summary:
+# This class manages data flow by storing and returning user data from our
+# "database" file.
+#
+#
+#
+#                                          Data Members:
+#
+# userName, password, phone, email.
+#
+#
+#
+#                                           Methods:
+#
+# "loadData": Loads the data of the user from a file to an object stored in the memory.
+#
+# "saveData": Saves the data of the user from an object stored in the memory to a file.
+
+
+
+
 # User IO: Store and retrieve user data from file
 # Child of DataIO class
 
