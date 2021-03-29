@@ -1,38 +1,4 @@
-#                                       Summary:
-#
-# This class handles and regulates the sending of emails to each user out from our program.
-# It allows for sending emails, tracking what has been sent, eliminating events from notification lists,
-# and preventing spam.
-#
-#
-#
-#                                      Data members:
-#
-# notifiedList, password, senderEmail, eventName, notificationType
-#
-#
-#
-#                                       Methods:
-#
-# "init": The "constructor" class, it initializes each one.
-#
-# "loadNotifiedList": It creates and loads a list of notifications that have already
-# been sent out, along with handling events that are no longer active.
-#
-# "saveNotifiedList": It saves the notified list.
-#
-# "removeNotified": If an event does not need notifications sent out,
-# it removes the event from the list
-#
-# "oneDayNotification": Will send out event information for events happening 
-# the next day.
-#
-# "oneDayUserNotification": Specifically sends an email to the user about an upcoming event,
-# provided that one has already been sent for that event.
-#
-# "oneDayNotificationMsg": Returns a value for messages sent out for the one day
-# notification.
-
+# Email Handler: Sends email notifications out
 import smtplib, ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
