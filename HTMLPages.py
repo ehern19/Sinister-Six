@@ -106,6 +106,7 @@ class HTMLPages:
                                 inEvent=(username in event.getRSVP()),
                                 loggedIn=("Username" in session),
                                 image=imageName,
+                                hasImage=os.path.isfile(DATABASE_PATH + imageName)
                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)

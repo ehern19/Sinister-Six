@@ -2,8 +2,10 @@
     <form action="" method="POST">
         <big>{{name}}</big>
         <br><br>
-        <img src="{{ url_for('static', filename=image) }}" alt={{name}}>
-        <br><br>
+        {% if(hasImage) %}
+            <img src="{{ url_for('static', filename=image) }}" alt={{name}}>
+            <br><br>
+        {% endif %}
         {% if(isOrganizer) %}
             <input type="submit" name="remove" value="Delete Event">
             <a href="{{ url_for('editEvent', name=name) }}">
