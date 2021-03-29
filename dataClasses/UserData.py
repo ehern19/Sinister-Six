@@ -31,9 +31,16 @@ class UserData:
     def setEmail(self, newEmail) -> None:
         self.email = newEmail
     
+    def setZip(self, newZip) -> None:
+        self.zip = newZip
+    
     # Returns True if given username matches the object's username
     def isUsername(self, otherUsername: str) -> bool:
         return otherUsername.lower() == self.username.lower()
+    
+    # Returns True if object has a zip code
+    def hasZip(self) -> bool:
+        return not self.zip == ""
 
     # Returns True if given password matches correct password
     def checkPassword(self, otherPassword: str) -> bool:

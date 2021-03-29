@@ -85,14 +85,16 @@ class ProcessManager:
         newUser = UserData(username, password, phone, email, zip)
         return self.LHandler.newUser(newUser)
     
-    def passEditUser(self, username: str, phone: str, email: str) -> bool:
-        if (not phone and not email):
+    def passEditUser(self, username: str, phone: str, email: str, zip: str) -> bool:
+        if (not phone and not email and not zip):
             return True
         user = self.passUsername(username)
         if (phone):
             user.setPhone(phone)
         if (email):
             user.setEmail(email)
+        if (zip):
+            user.setZip(zip)
         return self.LHandler.replaceUser(user)
 
     # Takes user input from web page and passes it to EventHandler

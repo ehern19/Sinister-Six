@@ -167,6 +167,7 @@ def editAccount():
         username = session["Username"]
         phone = request.form.get("phone", None)
         email = request.form.get("email", None)
+        zip = request.form.get("zip", None)
         if ("image" in request.files):
             imageFile = request.files["image"]
             if (imageFile):
@@ -176,7 +177,7 @@ def editAccount():
                 else:
                     return pages.editAccountHTML(badImage=True)
         
-        if (PManager.passEditUser(username, phone, email)):
+        if (PManager.passEditUser(username, phone, email, zip)):
             return redirect(url_for("account", user=username))
 
     return pages.editAccountHTML()
