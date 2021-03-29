@@ -1,0 +1,39 @@
+<div>
+    <form action="/eventDetailsArchived/" method="GET">
+        <input type="submit" id={{name}} name="name" value={{name}}><br>
+        <table class="center">
+            <tr>
+                <td align="left">
+                    <label for={{name}}>
+                        Date/Time:
+                    </label>
+                </td>
+                <td align="center">
+                    <label for={{name}}>
+                        {{date}}, {{time}}
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td align="left">
+                    <label for={{name}}>
+                        Location:
+                    </label>
+                </td>
+                <td align="center">
+                    <label for={{name}}>
+                        {{location}}
+                    </label>
+                </td>
+            </tr>
+        </table>
+        <label for={{name}}>
+        Tags: 
+        {% for tag in tags[:-1] %}
+            {{tag}}, 
+        {% endfor %}
+        {{tags[-1]}}
+        </label>
+    </form>
+</div>
+<br>

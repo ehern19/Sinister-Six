@@ -64,9 +64,9 @@ class HTMLPages:
 
     def indexHTML(self, popularEvents):
         retHTML = render_template("pages/index.html")
-        retHTML = retHTML + render_template("sections/popularEvents.html")
+        retHTML = retHTML + render_template("snippets/popularEvents.html")
         retHTML = retHTML + self._eventShortHTML(popularEvents)
-        retHTML = retHTML + render_template("sections/endSection.html")
+        retHTML = retHTML + render_template("snippets/endSection.html")
         return self._wrapHTML(retHTML)
 
 
@@ -74,16 +74,16 @@ class HTMLPages:
         return self._wrapHTML(render_template("pages/login.html", failedLogin=attemptedLogin))
     
     def accountHTML(self, user: UserData, userEvents: List[EventData], isUser: bool=False, userRSVPEvents: List[EventData]=[]):
-        retHTML = render_template("sections/accountEventOrganizer.html", isUser=isUser)
+        retHTML = render_template("snippets/accountEventOrganizer.html", isUser=isUser)
         retHTML = retHTML + self._eventShortHTML(userEvents)
-        retHTML = retHTML + render_template("sections/endSection.html")
+        retHTML = retHTML + render_template("snippets/endSection.html")
         imageName = self._getCurrentUserImgName(user.getUsername())
         imageName = USER_IMAGES + imageName
         if (isUser):
             retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName)) + retHTML
-            retHTML = retHTML + render_template("sections/accountEventRSVP.html")
+            retHTML = retHTML + render_template("snippets/accountEventRSVP.html")
             retHTML = retHTML + self._eventShortHTML(userRSVPEvents)
-            retHTML = retHTML + render_template("sections/endSection.html")
+            retHTML = retHTML + render_template("snippets/endSection.html")
         else:
             retHTML = render_template("pages/accountPublic.html", username=user.getUsername(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName)) + retHTML
         return self._wrapHTML(retHTML)
@@ -114,7 +114,7 @@ class HTMLPages:
     def _eventShortHTML(self, eventList: List[EventData]):
         retHTML = ""
         for event in eventList:
-            retHTML = retHTML + render_template("sections/eventShort.html", 
+            retHTML = retHTML + render_template("snippets/eventShort.html", 
                                                  name=event.getName(), 
                                                  date=event.getDateStr(), 
                                                  time=event.getTimeStr(), 
@@ -131,7 +131,7 @@ class HTMLPages:
     def _eventShortArchivedHTML(self, eventList: List[EventData]):
         retHTML = ""
         for event in eventList:
-            retHTML = retHTML + render_template("sections/eventShortArchived.html", 
+            retHTML = retHTML + render_template("snippets/eventShortArchived.html", 
                                                  name=event.getName(), 
                                                  date=event.getDateStr(), 
                                                  time=event.getTimeStr(), 
@@ -164,7 +164,7 @@ class HTMLPages:
                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
-            retHTML = retHTML + render_template("sections/endSection.html")
+            retHTML = retHTML + render_template("snippets/endSection.html")
         return self._wrapHTML(retHTML)
     
     def eventDetailedArchivedHTML(self, event: EventData, trueRSVP: List[UserData]):
@@ -185,13 +185,13 @@ class HTMLPages:
                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
-            retHTML = retHTML + render_template("sections/endSection.html")
+            retHTML = retHTML + render_template("snippets/endSection.html")
         return self._wrapHTML(retHTML)
     
     def _RSVPHTML(self, RSVP: List[UserData]):
         retHTML = ""
         for user in RSVP:
-            retHTML = retHTML + render_template("sections/userRSVP.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail())
+            retHTML = retHTML + render_template("snippets/userRSVP.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail())
         return retHTML
     
     def newEventHTML(self, todayStr: str, badName: bool=False, badImage: bool=False):
