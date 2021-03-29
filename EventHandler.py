@@ -5,10 +5,10 @@ from dataClasses.EventData import EventData
 
 class EventHandler:
     def __init__(self):
-        self.objIO = EventIO()
+        self.objIO: EventIO = EventIO()
         self.objIO.loadData()
-        self.events = self.objIO.getData()
-        self.oldEvents = self.objIO.getOldData()
+        self.events: List[EventData] = self.objIO.getData()
+        self.oldEvents: List[EventData] = self.objIO.getOldData()
     
     # Sends events to EventIO and saves data
     def saveChanges(self) -> None:
@@ -36,6 +36,14 @@ class EventHandler:
     # Returns all out-of-date events
     def getOldEvents(self) -> List[EventData]:
         return self.oldEvents
+    
+    # Returns events starting within 1 day
+    def getOneDayEvents(self) -> List[EventData]:
+        retEvents = []
+        for event in self.events:
+            if event.isNextDay():
+                retEvents.append(event)
+        return retEvents
     
     # Add user to event (Returns True if successful)
     def addRSVP(self, username: str, eventName: str) -> bool:
@@ -175,7 +183,10 @@ class EventHandler:
         return retEvents
     
     # Checks all events and removes out-of-date events
-    def checkActive(self) -> bool:
+    def checkActive(self) -> List[EventData]:
+        retEvents = []
         for event in self.events:
             if not event.isActive():
+                retEvents.append(event)
                 self.retireEvent(event)
+        return retEvents

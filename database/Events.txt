@@ -16,12 +16,12 @@ No Summary
 Event3 19:48 2021-04-26 Mississippi_River_Bridge 22222 none Labor_Intensive
 user2 user1
 Event3 super duper amazing summary. I mean come on, look at this.
-Event7 TBD 2021-03-29 TBD TBD none No_Tags
-user2
-No Summary
-Event2 15:35 2021-03-29 Patrick_F._Taylor_Hall 12345 none Construction
-user1
-Event2 summary
 OldRecurring 15:00 2021-04-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
 user1
 Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+Event10 16:30 2021-03-31 At_Home 01010 none Long_Duration_(>2_Hrs)
+user10
+Zoom call!
+Event7 TBD 2021-03-29 TBD TBD none
+user2 user3
+No Summary

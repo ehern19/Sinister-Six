@@ -4,6 +4,7 @@ from flask_apscheduler import APScheduler, scheduler
 from datetime import date
 from ProcessManager import ProcessManager
 from HTMLPages import HTMLPages
+from EmailHandler import EmailHandler
 
 app = Flask(__name__)
 app.secret_key = "secure"
@@ -15,6 +16,7 @@ scheduler.start()
 
 PManager = ProcessManager()
 pages = HTMLPages()
+EmHandler = EmailHandler()
 
 dateObj = date
 
@@ -119,6 +121,7 @@ def eventDetails():
                 PManager.passLeaveRSVP(username, eventName)
             elif ("remove" in request.form):
                 if (PManager.passRemEvent(event)):
+                    EmHandler.removeNotified([event])
                     return redirect(url_for("events"))
     trueRSVP = PManager.passGetRSVP(event)
     return pages.eventDetailedHTML(event, trueRSVP)
@@ -184,12 +187,29 @@ def editEvent():
 def setTasks():
     # app.apscheduler.add_job(func=checkActive, trigger="interval", hours=12, id="checkActiveTask") # For actual use, 12 hour intervals
     app.apscheduler.add_job(func=checkActive, trigger="interval", seconds=10, id="checkActiveTask") # For debug use, 10 second intervals
+    # app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", hours=12, id="sendOneDayNotificationTask") # For debug use, 12 hour intervals
+    app.apscheduler.add_job(func=oneDayNotifications, trigger="interval", seconds=120, id="sendOneDayNotificationTask") # For debug use, 2 minute intervals
 
 # Checks all events and removes out-of-date events
-def checkActive() -> bool:
-    PManager.passCheckActive()
+def checkActive() -> None:
+    retiredEvents = PManager.passCheckActive()
+    EmHandler.removeNotified(retiredEvents)
+
+# Sends active events to EmailHandler to update the notifications sent list
+def updateNotificationsSent() -> None:
+    activeEvents = PManager.getAllEvents()
+    EmHandler.loadNotifiedList(activeEvents)
+
+# Checks all events and sends notifications for those starting within 1 day
+def oneDayNotifications() -> None:
+    events = PManager.getOneDayEvents()
+    for event in events:
+        rsvp = PManager.passGetRSVP(event)
+        EmHandler.oneDayNotification(event, rsvp)
 
 if __name__=="__main__":
+    updateNotificationsSent()
     setTasks()
     checkActive()
+    oneDayNotifications()
     app.run(host="127.0.0.1", port=8080, debug=True)

@@ -73,8 +73,8 @@ class ProcessManager:
     def passRemEvent(self, event: EventData) -> bool:
         return self.EHandler.removeEvent(event)
         
-    def passCheckActive(self) -> bool:
-        self.EHandler.checkActive()
+    def passCheckActive(self) -> List[EventData]:
+        return self.EHandler.checkActive()
 
     # Returns the named event
     def getEvent(self, name: str) -> EventData:
@@ -99,6 +99,11 @@ class ProcessManager:
     # Returns 3 popular events (highest # RSVP's)
     def getPopularEvents(self) -> List[EventData]:
         return self.EHandler.searchPopular()
+
+    # Returns list of events that start within 1 day
+    def getOneDayEvents(self) -> List[EventData]:
+        return self.EHandler.getOneDayEvents()
+        
 
     # Return appropriate search results
     def searchEvents(self, searchType: str, searchValue: str, searchDate: str="", searchTags: List[str]=[""]) -> List[EventData]:

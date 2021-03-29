@@ -96,6 +96,12 @@ class EventData:
     # Returns True if given date matches the object's date
     def isOnDate(self, date: date) -> bool:
         return self.date == date
+    
+    # Returns True if the object's date is within the next day (today or tomorrow)
+    def isNextDay(self) -> bool:
+        today = datetime.today().date()
+        tomorrow = today + relativedelta.relativedelta(days=1)
+        return (self.date == today or self.date == tomorrow)
         
     # Returns True if given username is in the object's RSVP list
     def hasUserRSVP(self, username: str) -> bool:
@@ -114,6 +120,8 @@ class EventData:
         now = datetime.now() - self.CentralOffset
         today = now.date()
         if (today < self.date):
+            return True
+        elif (self.time == "TBD"):
             return True
         else:
             return self.time.time() < now.time()
