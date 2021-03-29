@@ -15,15 +15,3 @@ DATABASE_PATH = "static/"
 IMAGE_PATH = "images/"
 USER_IMAGES = IMAGE_PATH + "users/"
 EVENT_IMAGES = IMAGE_PATH + "events/"
-
-# Check if uploaded image is of an allowed filetype
-# Returns the file extension if it is, False otherwise
-def allowedImageFile(filename):
-    if ('.' in filename):
-        extension = filename.rsplit('.', 1)[1].lower()
-        if (extension in ["png", "jpg", "jpeg"]):
-            return '.' + extension
-        else:
-            return False
-    else:
-        return False

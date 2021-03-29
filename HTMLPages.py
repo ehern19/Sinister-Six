@@ -92,8 +92,8 @@ class HTMLPages:
         else:
             username = ""
         isOrganizer = (event.isOrganizerName(username))
-        imageName = EVENT_IMAGES + event.getName() + ".jpg"
-        print(imageName)
+        imageName = self._getCurrentImgName(event.getName())
+        imageName = EVENT_IMAGES + imageName
         retHTML = render_template("pages/eventDetails.html", 
                                 name=event.getName(), 
                                 date=event.getDateStr(), 
@@ -158,3 +158,16 @@ class HTMLPages:
     
     def editEventHTML(self, event: EventData, badImage: bool=False):
         return self._wrapHTML(render_template("pages/editEvent.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS, badImage=badImage))
+    
+    def _getCurrentImgName(self, eventName: str) -> str:
+        eventPath = DATABASE_PATH + EVENT_IMAGES
+        userPath = DATABASE_PATH + USER_IMAGES
+        version = 0
+        baseName = eventName + ".jpg"
+        imageName = baseName + str(version)
+        while(os.path.isfile(eventPath + imageName) or os.path.isfile(userPath + imageName)):
+            version = version + 1
+            imageName = baseName + str(version)
+        version = version - 1
+        imageName = baseName + str(version)
+        return imageName

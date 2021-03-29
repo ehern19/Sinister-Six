@@ -11,7 +11,7 @@ Event8 TBD 2021-03-31 TBD TBD monthly Labor_Intensive Food_Bank
 user2
 No Summary
 Event3 19:48 2021-04-26 Mississippi_River_Bridge 22222 none Labor_Intensive
-user2 user1
+user2 user1 user3
 Event3 super duper amazing summary. I mean come on, look at this.
 Event10 16:30 2021-03-31 At_Home 01010 none Long_Duration_(>2_Hrs)
 user10

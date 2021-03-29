@@ -6,7 +6,7 @@ from datetime import date
 from ProcessManager import ProcessManager
 from HTMLPages import HTMLPages
 from EmailHandler import EmailHandler
-from dataClasses.extras import allowedImageFile, DATABASE_PATH, USER_IMAGES, EVENT_IMAGES
+from dataClasses.extras import DATABASE_PATH, USER_IMAGES, EVENT_IMAGES
 
 app = Flask(__name__)
 app.secret_key = "secure"
@@ -157,8 +157,8 @@ def newEvent():
         recurring = request.form.get("recurring")
         if ("image" in request.files):
             imageFile = request.files["image"]
-            if (allowedImageFile(imageFile.filename)):
-                imageName = name + ".jpg"
+            if (PManager.allowedImageFile(imageFile.filename)):
+                imageName = PManager.getNextImgName(name)
                 imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
             else:
                 todayStr = dateObj.today().strftime("%Y-%m-%d")
@@ -194,8 +194,8 @@ def editEvent():
         summary = request.form.get("summary")
         if ("image" in request.files):
             imageFile = request.files["image"]
-            if (allowedImageFile(imageFile.filename)):
-                imageName = eventName + ".jpg"
+            if (PManager.allowedImageFile(imageFile.filename)):
+                imageName = PManager.getNextImgName(eventName)
                 imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
             else:
                 return pages.editEventHTML(event, badImage=True)

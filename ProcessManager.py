@@ -1,12 +1,14 @@
 # Process Manager: Provides methods that can be called by the website application
 # Passes arguments from website to handlers and data from handlers to website
 # Where required, converts from website arguments to function arguments
+import os
 from datetime import datetime
 from typing import List
 from EventHandler import EventHandler
 from LoginHandler import LoginHandler
 from dataClasses.EventData import EventData
 from dataClasses.UserData import UserData
+from dataClasses.extras import DATABASE_PATH, EVENT_IMAGES, USER_IMAGES
 
 class ProcessManager:
     def __init__(self):
@@ -103,7 +105,6 @@ class ProcessManager:
     # Returns list of events that start within 1 day
     def getOneDayEvents(self) -> List[EventData]:
         return self.EHandler.getOneDayEvents()
-        
 
     # Return appropriate search results
     def searchEvents(self, searchType: str, searchValue: str, searchDate: str="", searchTags: List[str]=[""]) -> List[EventData]:
@@ -131,3 +132,25 @@ class ProcessManager:
         retEvents.sort()
         return retEvents
     
+    # Returns True if filename extension is of an allowed filetype
+    def allowedImageFile(self, filename: str) -> bool:
+        if ('.' in filename):
+            extension = filename.rsplit('.', 1)[1].lower()
+            if (extension in ["png", "jpg", "jpeg"]):
+                return True
+            else:
+                return False
+        else:
+            return False
+    
+    # Returns the next image filename (<event>.jpg# + 1) for a given event name
+    def getNextImgName(self, eventName: str) -> str:
+        eventPath = DATABASE_PATH + EVENT_IMAGES
+        userPath = DATABASE_PATH + USER_IMAGES
+        version = 0
+        baseName = eventName + ".jpg"
+        imageName = baseName + str(version)
+        while(os.path.isfile(eventPath + imageName) or os.path.isfile(userPath + imageName)):
+            version = version + 1
+            imageName = baseName + str(version)
+        return imageName
