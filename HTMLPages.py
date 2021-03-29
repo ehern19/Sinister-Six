@@ -1,9 +1,10 @@
 # HTML Pages: Functions that return the specific HTML pages
-from flask import render_template, session, request
+import os
+from flask import render_template, session, request, url_for
 from typing import List
 from dataClasses.EventData import EventData
 from dataClasses.UserData import UserData
-from dataClasses.tags import VALID_TAGS, DISPLAY_TAGS, NUM_TAGS
+from dataClasses.extras import VALID_TAGS, DISPLAY_TAGS, NUM_TAGS, DATABASE_PATH, USER_IMAGES, EVENT_IMAGES
 
 class HTMLPages:
     # Wraps input HTML string with common header and footer
@@ -91,6 +92,8 @@ class HTMLPages:
         else:
             username = ""
         isOrganizer = (event.isOrganizerName(username))
+        imageName = EVENT_IMAGES + event.getName() + ".jpg"
+        print(imageName)
         retHTML = render_template("pages/eventDetails.html", 
                                 name=event.getName(), 
                                 date=event.getDateStr(), 
@@ -101,7 +104,8 @@ class HTMLPages:
                                 summary=event.getSummary(),
                                 isOrganizer=isOrganizer,
                                 inEvent=(username in event.getRSVP()),
-                                loggedIn=("Username" in session)
+                                loggedIn=("Username" in session),
+                                image=imageName,
                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
@@ -135,7 +139,7 @@ class HTMLPages:
             retHTML = retHTML + render_template("sections/userRSVP.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail())
         return retHTML
     
-    def newEventHTML(self, todayStr: str):
+    def newEventHTML(self, todayStr: str, badName: bool=False, badImage: bool=False):
         if (request.form):
             name = request.form.get("name")
             date = request.form.get("date")
@@ -148,9 +152,9 @@ class HTMLPages:
             day = int(date[-2:])
 
             return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary, recurring=recurring, day=day))
+                    name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary, recurring=recurring, day=day, badName=badName, badImage=badImage))
         return self._wrapHTML(render_template("pages/newEvent.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
                     name="", date="", time="", location="", zip="", tags="", summary=""))
     
-    def editEventHTML(self, event: EventData):
-        return self._wrapHTML(render_template("pages/editEvent.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS))
+    def editEventHTML(self, event: EventData, badImage: bool=False):
+        return self._wrapHTML(render_template("pages/editEvent.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS, badImage=badImage))

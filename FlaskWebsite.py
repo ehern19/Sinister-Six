@@ -1,10 +1,12 @@
 # Flask Website: "Main"
+import os
 from flask import Flask, request, session, redirect, url_for
 from flask_apscheduler import APScheduler, scheduler
 from datetime import date
 from ProcessManager import ProcessManager
 from HTMLPages import HTMLPages
 from EmailHandler import EmailHandler
+from dataClasses.extras import allowedImageFile, DATABASE_PATH, USER_IMAGES, EVENT_IMAGES
 
 app = Flask(__name__)
 app.secret_key = "secure"
@@ -153,9 +155,20 @@ def newEvent():
         tags = request.form.getlist("tags")
         summary = request.form.get("summary", "")
         recurring = request.form.get("recurring")
+        if ("image" in request.files):
+            imageFile = request.files["image"]
+            if (allowedImageFile(imageFile.filename)):
+                imageName = name + ".jpg"
+                imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
+            else:
+                todayStr = dateObj.today().strftime("%Y-%m-%d")
+                return pages.newEventHTML(todayStr, badImage=True)
 
         if (PManager.passNewEvent(name, date, session["Username"], recurring, time, location, zip, tags, summary)):
             return redirect(url_for("eventDetails", name=name))
+        else:
+            todayStr = dateObj.today().strftime("%Y-%m-%d")
+            return pages.newEventHTML(todayStr, badName=True)
 
     todayStr = dateObj.today().strftime("%Y-%m-%d")
     return pages.newEventHTML(todayStr)
@@ -179,6 +192,13 @@ def editEvent():
         zip = request.form.get("zip")
         tags = request.form.getlist("tags")
         summary = request.form.get("summary")
+        if ("image" in request.files):
+            imageFile = request.files["image"]
+            if (allowedImageFile(imageFile.filename)):
+                imageName = eventName + ".jpg"
+                imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
+            else:
+                return pages.editEventHTML(event, badImage=True)
         if (PManager.passEditEvent(eventName, reset, time, location, zip, tags, summary)):
             return redirect(url_for("eventDetails", name=eventName))
         else:

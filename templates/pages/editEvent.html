@@ -1,5 +1,5 @@
 <section>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         <big>Editing {{name}}</big>
         <br><br>
         <input type="checkbox" name="reset" value="reset">Reset Event Data<br>
@@ -32,7 +32,14 @@
             {% endfor %}<br>
         </table><br>
         Summary:<br>
-        <input type="text" name="summary" placeholder="Type Event Summary Here"><br><br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here">
+        <br><br>
+        Event Image: <input type="file" name="image">
+        {% if(badImage) %}
+            <br>
+            Please upload a .jpg, .jpeg, or .png file.
+        {% endif %}
+        <br><br>
         <input class="btn" type="submit" name="edit" value="Confirm Event Changes">
     </form>
 </section>

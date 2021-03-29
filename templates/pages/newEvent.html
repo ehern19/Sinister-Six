@@ -1,5 +1,5 @@
 <section>
-    <form action="" method="POST">
+    <form action="" method="POST" enctype="multipart/form-data">
         {% if(recurring=="monthly" and day > 28) %}
             {% set recurringErr = True %}
         {% endif %}
@@ -11,7 +11,7 @@
                 <td align="left">Event Name:</td>
                 <td align="left"><input type="text" name="name" pattern="[a-zA-Z0-9]{1,20}" placeholder="Event Name" required value={{name}}></td>
             </tr>
-            {% if(name and not recurringErr) %}
+            {% if(badName) %}
                 <tr>
                     <td colspan="2">Event Name is already taken, please use another.</td>
                 </tr>
@@ -71,7 +71,14 @@
         </table>
         <br>
         Summary:<br>
-        <input type="text" name="summary" placeholder="Type Event Summary Here"><br><br>
+        <input type="text" name="summary" placeholder="Type Event Summary Here">
+        <br><br>
+        Event Image: <input type="file" name="image" required>
+        {% if(badImage) %}
+            <br>
+            Please upload a .jpg, .jpeg, or .png file.
+        {% endif %}
+        <br><br>
         <input class="btn" type="submit" name="create" value="Create New Event">
     </form>
 </section>

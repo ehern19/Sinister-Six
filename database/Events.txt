@@ -1,6 +1,3 @@
-Event1 10:00 2025-01-01 Fake_Place_Hall 12345 none Short_Duration_(<2_Hrs) Labor_Intensive
-user1 user2 user3 user4
-Event1 summary
 Event4 03:31 2021-03-31 Hackers_Evil_Lair 12345 none Labor_Intensive
 user5
 <marquee><a href="https://www.realpython.com">CLICK ME</a></marquee>
@@ -16,9 +13,6 @@ No Summary
 Event3 19:48 2021-04-26 Mississippi_River_Bridge 22222 none Labor_Intensive
 user2 user1
 Event3 super duper amazing summary. I mean come on, look at this.
-OldRecurring 15:00 2021-04-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
-user1
-Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
 Event10 16:30 2021-03-31 At_Home 01010 none Long_Duration_(>2_Hrs)
 user10
 Zoom call!
@@ -28,3 +22,9 @@ No Summary
 LateJoin TBD 2021-03-29 TBD TBD none No_Tags
 user3 user1
 No Summary
+OldRecurring 15:00 2021-04-20 SPAAAAAAACE 00000 monthly Long_Duration_(>2_Hrs)
+user1
+Gotta get to SPAAAAAAAAAAAAAAAAAAAAAAAAAAACE
+Event1 10:00 2025-01-01 Fake_Place_Hall 12345 none Short_Duration_(<2_Hrs) Labor_Intensive
+user1 user2 user3 user4
+Event1 summary
