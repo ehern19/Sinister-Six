@@ -1,6 +1,65 @@
-# Process Manager: Provides methods that can be called by the website application
-# Passes arguments from website to handlers and data from handlers to website
-# Where required, converts from website arguments to function arguments
+#                                            Summary:
+# This class is the go between for the handler classes and the frontend website, 
+# converting arguments when required.
+#
+#
+#
+#                                           Data Members:
+#
+# EHandler, LHandler
+#
+#
+#
+#                                            Methods:
+#
+# "init": This is the class' constructor, it intializes and calls the handler classes.
+#
+# "passLogin": Gets the login input from the webpage and passes it to the handler.
+#
+# "passUsername": Gets the username input from the webpage and passes it to the handler.
+#
+# "passNewUser": Gets the newUser input from the webpage and passes it to the handler.
+#
+# "passEditUser": Gets the user input from the webpage and passes it to the handler for editing.
+#
+# "passRSVP": Gets the RSVP input from the webpage and passes it to the handler.
+#
+# "passLeaveRSVP": Gets the RSVP input from the webpage and passes it to the handler for leaving.
+#
+# "passGetRSVP": Gets the RSVP input from the webpage and passes it to the handler for the user.
+#
+# "passEDitEvent": Gets the event info from the webpage and passes it to the handler for editing.
+#
+# "passNewEvent": Gets the new event info from the webpage and passes it to the handler.
+#
+# "passRemEvent": Gets the remaining event info from the webpage and passes it to the handler.
+#
+# "passCheckActive":Passes events to the checkActive method.
+#
+# "getEvent": Returns the event info.
+#
+# "getOldEvents": Gets info for old events.
+#
+# "getAllEvents": Gets info for all events, and sorts them by chronological
+# order.
+#
+# "getOldEvents": Gets info for all passed events, and sorts them by chronological
+# order.
+#
+# "getPopularEvents": Gets info for the three events with the most RSVPs.
+#
+# "getOneDayEvents": Gets info for all events starting within 24 hours.
+#
+# "searchEvents": Searches for events by specified parameters.
+#
+# "searchEventsRSVP": Searches for events that have a specified user RSVP'd.
+#
+# "allowImageFile": Returns true if the image uploaded is allowed.
+#
+# "getNextEventImgName": Gets the name for the image associated with a given event.
+#
+# "getNextUserImageName": Gets the name of the next image associated with a specified user.
+
 import os
 from datetime import datetime
 from typing import List

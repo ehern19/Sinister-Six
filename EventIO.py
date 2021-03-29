@@ -1,5 +1,31 @@
-# Event IO: Store and retrieve event data from file
-# Child of DataIO class
+#                                     Summary:
+#
+# This class reads the event data from the file, and stores them in a list as objects.
+#
+#
+#
+#                                     Data Members:
+# 
+# EventData, newData, oldData, eventName, eventTime, eventLocation, eventZIP, eventDate,
+# eventRecurring, eventTags, eventSummary, eventRSVP.
+#
+#
+#
+#                                      Methods:
+# "init": The class' "constructor".
+#
+# "getOldData": Passes data for old or passed/inactive events.
+#
+# "setOldData": Sets data for old or passed/inactive events.
+#
+# "loadData": Passes event data from our "database" into an object
+# for storage in memory.
+#
+# "readData": Opens the "database" and inserts data from events into a list.
+#
+# "saveData": Passes event data from object in memory to the databse file.
+#
+# "writeData": Writes the data from the list into the database file.
 
 from typing import List
 from DataIO import DataIO

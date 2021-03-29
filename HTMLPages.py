@@ -1,4 +1,53 @@
-# HTML Pages: Functions that return the specific HTML pages
+#                                             Summary:
+#
+# This class contains the methods for loading the HTML pages for our website.
+#
+#
+#
+#                                            Data Members:
+#
+# retHTML, name, date, time, location, ZIP, tags, day, recurring, summary
+#
+#
+#
+#                                             Methods:
+#
+# "wrapHTML": Formats the HTML string with the default common header and footer.
+#
+# "indexHTML": Returns the HTML templates plus the render.
+#
+# "loginHTML": Loads the HTML for the login page.
+#
+# "accountHTML": Loads the HTML for the account page.
+#
+# "newAccountHTML": Loads the HTML for the account creation page.
+#
+# "editAccountHTML": Loads HTML for the account editing page.
+#
+# "accountDNEHTML": Loads HTML for the account DNE page.
+#
+# "eventsHTML": Loads HTML for the event page
+#
+# "eventShortHTML": Loads HTML for the event short page.
+#
+# "eventArchiveHTML": Loads HTML for the event archive page.
+#
+# "eventShortArchive": Loads HTML for the short event archive page.
+#
+# "eventDetailedHTML": Loads HTML for the detailed event page.
+#
+# "eventDetailedArchiveHTML": Loads HTML for the detailed event archive page.
+#
+# "RSVPHTML": Loads HTML for the RSVP page.
+#
+# "newEventHTML": Loads HTML for the event creation page.
+#
+# "editEventHTML": Loads HTML for the event edit page.
+#
+# "getCurrentEventImgName": Method returns the image associated with the current event.
+#
+# "getCurrentUserImgName": This returns the image attached to the logged in user.
+
 import os
 from flask import render_template, session, request, url_for
 from typing import List
