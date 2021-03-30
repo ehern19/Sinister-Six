@@ -64,7 +64,7 @@ class HTMLPages:
                 + render_template("footer.html"))
 
     def indexHTML(self, popularEvents):
-        retHTML = render_template("pages/index.html")
+        retHTML = render_template("pages/index.html", loggedIn=("Username" in session))
         retHTML = retHTML + render_template("snippets/popularEvents.html")
         retHTML = retHTML + self._eventShortHTML(popularEvents)
         retHTML = retHTML + render_template("snippets/endSection.html")
@@ -76,17 +76,29 @@ class HTMLPages:
     
     def accountHTML(self, user: UserData, userEvents: List[EventData], isUser: bool=False, userRSVPEvents: List[EventData]=[]):
         retHTML = render_template("snippets/accountEventOrganizer.html", isUser=isUser)
-        retHTML = retHTML + self._eventShortHTML(userEvents)
+        retHTML = retHTML + self._eventShortGridHTML(userEvents)
         retHTML = retHTML + render_template("snippets/endSection.html")
         imageName = self._getCurrentUserImgName(user.getUsername())
         imageName = USER_IMAGES + imageName
         if (isUser):
-            retHTML = render_template("pages/accountPrivate.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName), zip=user.getZip(), hasZip=user.hasZip()) + retHTML
+            retHTML = render_template("pages/accountPrivate.html",
+                                       username=user.getUsername(),
+                                       phone=user.getPhone(),
+                                       email=user.getEmail(),
+                                       image=imageName,
+                                       hasImage=os.path.isfile(DATABASE_PATH + imageName),
+                                       zip=user.getZip(),
+                                       hasZip=user.hasZip()
+                                     ) + retHTML
             retHTML = retHTML + render_template("snippets/accountEventRSVP.html")
-            retHTML = retHTML + self._eventShortHTML(userRSVPEvents)
+            retHTML = retHTML + self._eventShortGridHTML(userRSVPEvents)
             retHTML = retHTML + render_template("snippets/endSection.html")
         else:
-            retHTML = render_template("pages/accountPublic.html", username=user.getUsername(), image=imageName, hasImage=os.path.isfile(DATABASE_PATH + imageName)) + retHTML
+            retHTML = render_template("pages/accountPublic.html",
+                                       username=user.getUsername(),
+                                       image=imageName,
+                                       hasImage=os.path.isfile(DATABASE_PATH + imageName)
+                                     ) + retHTML
         return self._wrapHTML(retHTML)
 
     def newAccountHTML(self, badName: bool=False, badImage: bool=False):
@@ -109,11 +121,29 @@ class HTMLPages:
             date = request.args.get("searchDate")
             text = request.args.get("searchValue")
             tags = request.args.getlist("tags")
-            retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    searchType=searchType, searchDate=date, searchValue=text, tags=tags, zip=zip, showNear=showNear)
+            retHTML = render_template("pages/events.html",
+                                       tagList=VALID_TAGS,
+                                       tagDisplay=DISPLAY_TAGS,
+                                       numTags=NUM_TAGS,
+                                       searchType=searchType,
+                                       searchDate=date,
+                                       searchValue=text,
+                                       tags=tags,
+                                       zip=zip,
+                                       showNear=showNear
+                                     )
         else:
-            retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    searchType="", searchDate="", searchValue="", tags=[], zip=zip, showNear=showNear)
+            retHTML = render_template("pages/events.html",
+                                       tagList=VALID_TAGS,
+                                       tagDisplay=DISPLAY_TAGS,
+                                       numTags=NUM_TAGS,
+                                       searchType="",
+                                       searchDate="",
+                                       searchValue="",
+                                       tags=[],
+                                       zip=zip,
+                                       showNear=showNear
+                                     )
         retHTML = retHTML + self._eventShortGridHTML(eventList)
         return self._wrapHTML(retHTML)
 
@@ -126,23 +156,34 @@ class HTMLPages:
                                                  time=event.getTimeStr(), 
                                                  location=event.getLocation(), 
                                                  tags=event.getTagStrs()
-                                                 )
+                                               )
         return retHTML
 
     def _eventShortGridHTML(self, eventList: List[EventData]):
-        retHTML = render_template("snippets/eventGridStart.html")
+        gridHTML = render_template("snippets/eventGridStart.html")
+        columnHTML = render_template("snippets/eventColumnStart.html")
         eventCount = 1
         for event in eventList:
-            retHTML = retHTML + render_template("snippets/eventShortGrid.html", 
-                                                 name=event.getName(), 
-                                                 date=event.getDateStr(), 
-                                                 time=event.getTimeStr(), 
-                                                 location=event.getLocation(), 
-                                                 tags=event.getTagStrs(),
-                                                 endRow=eventCount%3 == 0
+            gridHTML = gridHTML + render_template("snippets/eventShortGrid.html", 
+                                                   name=event.getName(), 
+                                                   date=event.getDateStr(), 
+                                                   time=event.getTimeStr(), 
+                                                   location=event.getLocation(), 
+                                                   tags=event.getTagStrs(),
+                                                   endRow=eventCount%3 == 0
                                                  )
+            columnHTML = columnHTML + render_template("snippets/eventShortGrid.html", 
+                                                       name=event.getName(), 
+                                                       date=event.getDateStr(), 
+                                                       time=event.getTimeStr(), 
+                                                       location=event.getLocation(), 
+                                                       tags=event.getTagStrs(),
+                                                       endRow=eventCount%2 == 0
+                                                     )
             eventCount = eventCount + 1
-        retHTML = retHTML + render_template("snippets/eventGridEnd.html")
+        gridHTML = gridHTML + render_template("snippets/eventTableEnd.html")
+        columnHTML = columnHTML + render_template("snippets/eventTableEnd.html")
+        retHTML = gridHTML + columnHTML
         return retHTML
 
     def eventArchiveHTML(self, eventList: List[EventData]):
@@ -151,15 +192,30 @@ class HTMLPages:
         return self._wrapHTML(retHTML)
     
     def _eventShortArchivedHTML(self, eventList: List[EventData]):
-        retHTML = ""
+        gridHTML = render_template("snippets/eventGridStart.html")
+        columnHTML = render_template("snippets/eventColumnStart.html")
+        eventCount = 1
         for event in eventList:
-            retHTML = retHTML + render_template("snippets/eventShortArchived.html", 
-                                                 name=event.getName(), 
-                                                 date=event.getDateStr(), 
-                                                 time=event.getTimeStr(), 
-                                                 location=event.getLocation(), 
-                                                 tags=event.getTagStrs()
+            gridHTML = gridHTML + render_template("snippets/eventShortArchived.html", 
+                                                   name=event.getName(), 
+                                                   date=event.getDateStr(), 
+                                                   time=event.getTimeStr(), 
+                                                   location=event.getLocation(), 
+                                                   tags=event.getTagStrs(),
+                                                   endRow=eventCount%3 == 0
                                                  )
+            columnHTML = columnHTML + render_template("snippets/eventShortArchived.html", 
+                                                       name=event.getName(), 
+                                                       date=event.getDateStr(), 
+                                                       time=event.getTimeStr(), 
+                                                       location=event.getLocation(), 
+                                                       tags=event.getTagStrs(),
+                                                       endRow=eventCount%2 == 0
+                                                     )
+            eventCount = eventCount + 1
+        gridHTML = gridHTML + render_template("snippets/eventTableEnd.html")
+        columnHTML = columnHTML + render_template("snippets/eventTableEnd.html")
+        retHTML = gridHTML + columnHTML
         return retHTML
 
     def eventDetailedHTML(self, event: EventData, trueRSVP: List[UserData]):
@@ -171,19 +227,19 @@ class HTMLPages:
         imageName = self._getCurrentEventImgName(event.getName())
         imageName = EVENT_IMAGES + imageName
         retHTML = render_template("pages/eventDetails.html", 
-                                name=event.getName(), 
-                                date=event.getDateStr(), 
-                                time=event.getTimeStr(), 
-                                location=event.getLocation(), 
-                                organizer=event.getOrganizer(),
-                                tags=event.getTagStrs(),
-                                summary=event.getSummary(),
-                                isOrganizer=isOrganizer,
-                                inEvent=(username in event.getRSVP()),
-                                loggedIn=("Username" in session),
-                                image=imageName,
-                                hasImage=os.path.isfile(DATABASE_PATH + imageName)
-                                )
+                                   name=event.getName(), 
+                                   date=event.getDateStr(),
+                                   time=event.getTimeStr(),
+                                   location=event.getLocation(), 
+                                   organizer=event.getOrganizer(),
+                                   tags=event.getTagStrs(),
+                                   summary=event.getSummary(),
+                                   isOrganizer=isOrganizer,
+                                   inEvent=(username in event.getRSVP()),
+                                   loggedIn=("Username" in session),
+                                   image=imageName,
+                                   hasImage=os.path.isfile(DATABASE_PATH + imageName)
+                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
             retHTML = retHTML + render_template("snippets/endSection.html")
@@ -206,15 +262,15 @@ class HTMLPages:
             username = ""
         isOrganizer = (event.isOrganizerName(username))
         retHTML = render_template("pages/eventDetailsArchived.html", 
-                                name=event.getName(), 
-                                date=event.getDateStr(), 
-                                time=event.getTimeStr(), 
-                                location=event.getLocation(), 
-                                organizer=event.getOrganizer(),
-                                tags=event.getTagStrs(),
-                                summary=event.getSummary(),
-                                isOrganizer=isOrganizer,
-                                )
+                                   name=event.getName(), 
+                                   date=event.getDateStr(), 
+                                   time=event.getTimeStr(), 
+                                   location=event.getLocation(), 
+                                   organizer=event.getOrganizer(),
+                                   tags=event.getTagStrs(),
+                                   summary=event.getSummary(),
+                                   isOrganizer=isOrganizer,
+                                 )
         if (isOrganizer):
             retHTML = retHTML + self._RSVPHTML(trueRSVP)
             retHTML = retHTML + render_template("snippets/endSection.html")
@@ -229,7 +285,11 @@ class HTMLPages:
     def _RSVPHTML(self, RSVP: List[UserData]):
         retHTML = ""
         for user in RSVP:
-            retHTML = retHTML + render_template("snippets/userRSVP.html", username=user.getUsername(), phone=user.getPhone(), email=user.getEmail())
+            retHTML = retHTML + render_template("snippets/userRSVP.html",
+                                                 username=user.getUsername(),
+                                                 phone=user.getPhone(),
+                                                 email=user.getEmail()
+                                               )
         return retHTML
     
     def newEventHTML(self, todayStr: str, badName: bool=False, badImage: bool=False):
@@ -244,13 +304,45 @@ class HTMLPages:
             recurring = request.form.get("recurring")
             day = int(date[-2:])
 
-            return self._wrapHTML(render_template("pages/eventNew.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    name=name, date=date, time=time, location=location, zip=zip, tags=tags, summary=summary, recurring=recurring, day=day, badName=badName, badImage=badImage))
-        return self._wrapHTML(render_template("pages/eventNew.html", today=todayStr, tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
-                    name="", date="", time="", location="", zip="", tags="", summary=""))
+            return self._wrapHTML(render_template("pages/eventNew.html", 
+                                                   today=todayStr,
+                                                   tagList=VALID_TAGS,
+                                                   tagDisplay=DISPLAY_TAGS,
+                                                   numTags=NUM_TAGS,
+                                                   name=name,
+                                                   date=date,
+                                                   time=time,
+                                                   location=location,
+                                                   zip=zip,
+                                                   tags=tags,
+                                                   summary=summary,
+                                                   recurring=recurring,
+                                                   day=day,
+                                                   badName=badName,
+                                                   badImage=badImage)
+                                                 )
+        return self._wrapHTML(render_template("pages/eventNew.html",
+                                               today=todayStr,
+                                               tagList=VALID_TAGS,
+                                               tagDisplay=DISPLAY_TAGS,
+                                               numTags=NUM_TAGS,
+                                               name="",
+                                               date="",
+                                               time="",
+                                               location="",
+                                               zip="",
+                                               tags="",
+                                               summary="")
+                                             )
     
     def editEventHTML(self, event: EventData, badImage: bool=False):
-        return self._wrapHTML(render_template("pages/eventEdit.html", name=event.getName(), tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS, badImage=badImage))
+        return self._wrapHTML(render_template("pages/eventEdit.html",
+                                               name=event.getName(),
+                                               tagList=VALID_TAGS,
+                                               tagDisplay=DISPLAY_TAGS,
+                                               numTags=NUM_TAGS,
+                                               badImage=badImage)
+                                             )
     
     def _getCurrentEventImgName(self, eventName: str) -> str:
         eventPath = DATABASE_PATH + EVENT_IMAGES

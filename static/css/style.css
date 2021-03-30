@@ -1,9 +1,47 @@
-input[type=text], input[type=password], input[type=submit], input[type=button], input[type=email], input[type=tel], input[type=date], input[type=time], input[type=number], input[type=checkbox], select
+input[type=text], input[type=password], input[type=button], input[type=email], input[type=tel], input[type=time], input[type=number], input[type=checkbox]
 {
     border: 3px solid rgb(253, 208, 35);
     border-radius: 8px;
     text-align: center;
     vertical-align: middle;
+    height: 18px;
+}
+input[type=submit]
+{
+    border: 3px solid rgb(253, 208, 35);
+    border-radius: 8px;
+    text-align: center;
+    vertical-align: middle;
+    background-color: rgb(70, 29, 124);
+    color:rgb(253, 208, 35);
+}
+input[type=date]
+{
+    border: 3px solid rgb(253, 208, 35);
+    border-radius: 8px;
+    text-align: center;
+    vertical-align: middle;
+    min-height: 21px;    
+}
+select
+{
+    border: 3px solid rgb(253, 208, 35);
+    border-radius: 8px;
+    text-align: center;
+    vertical-align: middle;
+    height: 27px;
+}
+p
+{
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    font-size: 20px;
+    max-width: 600px;
+    background-color: rgb(70, 29, 124);
+    border: 6px solid rgb(253, 208, 35);
+    border-radius: 8px;
+    padding: 0.5%;
 }
 table
 {
@@ -67,10 +105,53 @@ a.new:hover
     border: 6px solid cadetblue;
     border-radius: 8px;
     max-width: 250px;
+    min-width: 200px;
     padding: 1%;
+}
+.eventBlock
+{
+    max-width: 250px;
+    min-width: 200px;
+    background-color: brown;
+    border: 6px solid cadetblue;
+    border-radius: 8px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.75%;
+}
+.eventTable
+{
+    margin-left: auto; 
+    margin-right: auto;
+    border-spacing: 10px 10px;
+}
+.tagList
+{
+    text-align: left;
+}
+.detailGrid
+{
+    width: 120px;
+    vertical-align: top;
 }
 .bigName
 {
-    font-size: large;
+    font-size: 20px;
     font-weight: bolder;
+}
+.twoTable
+{
+    margin-left: auto; 
+    margin-right: auto;
+    border-spacing: 10px 10px;
+    display: none;
+}
+
+@media screen and (max-width: 700px) {
+    .eventTable {
+        display: none;
+    }
+    .twoTable {
+        display: block;
+    }
 }

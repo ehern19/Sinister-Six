@@ -1,5 +1,36 @@
-<section>
-    Welcome to Volunteers-R-Us!<br>
-    This is a description blah blah blah<br>
-</section>
-<br>
+<div>
+    <h3>
+        Welcome to Volunteers-R-Us!
+    </h3>
+    <p>
+        Our website allows volunteers to find many opportunities to do good in the world! Join us by creating an account, or start browsing the events that others have posted. If you find one you want to participate in, feel free to explore further by clicking on it. Then, if you decide you want to join it, click the join button at the bottom of the details page!
+    </p>
+    <nav class="nav2">
+        {% if(loggedIn) %}
+            <a href="{{ url_for('account') }}">
+                <button class="btn">
+                    Account
+                </button>
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}">
+                <button class="btn">
+                    Login!
+                </button>
+            </a>
+        {% endif %}
+    </nav>
+    <p>
+        If you are an event organizer, you can create your own opportunity by filling out our New Event form. As easy as that, users will be able to find your events and join in. In case you wanted to invite someone back to your next event, you can send an invite from your event's details screen!
+    </p>
+    <nav class="nav2">
+        <a href="{{ url_for('newEvent') }}">
+            <button class="btn">
+                New Event
+            </button>
+        </a>
+    </nav>
+    <p>
+        For starters, take a look at our three most popular events right now!
+    </p>
+</div>

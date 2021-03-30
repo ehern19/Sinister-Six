@@ -1,56 +1,56 @@
 <td class="cell">
-    <div>
-        <label for={{name}}>
+    <label for={{name}}>
         <form action="/eventDetails/" method="GET">
             <input type="submit" class="bigName" id={{name}} name="name" value={{name}}><br>
             <table class="center">
                 <tr>
-                    <td align="left">
+                    <td align="left" class="detailGrid">
                         <label for={{name}}>
                             Date:
                         </label>
                     </td>
-                    <td align="center">
+                    <td align="center" class="detailGrid">
                         <label for={{name}}>
                             {{date}}
                         </label>
                     </td>
                 </tr>
                 <tr>
-                    <td align="left">
+                    <td align="left" class="detailGrid">
                         <label for={{name}}>
                             Time:
                         </label>
                     </td>
-                    <td align="center">
+                    <td align="center" class="detailGrid">
                         <label for={{name}}>
                             {{time}}
                         </label>
                     </td>
                 </tr>
                 <tr>
-                    <td align="left">
+                    <td align="left" class="detailGrid">
                         <label for={{name}}>
                             Location:
                         </label>
                     </td>
-                    <td align="center">
+                    <td align="center" class="detailGrid">
                         <label for={{name}}>
                             {{location}}
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-                <label for={{name}}>
-                Tags: 
-                {% for tag in tags[:-1] %}
-                    {{tag}}, 
-                {% endfor %}
-                {{tags[-1]}}
+                        </label>
+                    </td>
+                </tr>
+            </table>
+            <label for={{name}}>
+                <div class="tagList">
+                    Tags:
+                    {% for tag in tags[:-1] %}
+                        {{tag}},
+                    {% endfor %}
+                    {{tags[-1]}}
+                </div>
             </label>
         </form>
-        </label>
-    </div>
+    </label>
 </td>
 {% if(endRow) %}
     </tr>
