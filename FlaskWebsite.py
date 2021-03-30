@@ -297,11 +297,12 @@ def editEvent():
         summary = request.form.get("summary")
         if ("image" in request.files):
             imageFile = request.files["image"]
-            if (PManager.allowedImageFile(imageFile.filename)):
-                imageName = PManager.getNextEventImgName(eventName)
-                imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
-            else:
-                return pages.editEventHTML(event, badImage=True)
+            if (imageFile):
+                if (PManager.allowedImageFile(imageFile.filename)):
+                    imageName = PManager.getNextEventImgName(eventName)
+                    imageFile.save(DATABASE_PATH + EVENT_IMAGES + imageName)
+                else:
+                    return pages.editEventHTML(event, badImage=True)
         if (PManager.passEditEvent(eventName, reset, time, location, zip, tags, summary)):
             return redirect(url_for("eventDetails", name=eventName))
         else:

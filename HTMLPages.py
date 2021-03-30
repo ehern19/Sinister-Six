@@ -53,12 +53,13 @@ from flask import render_template, session, request, url_for
 from typing import List
 from dataClasses.EventData import EventData
 from dataClasses.UserData import UserData
-from dataClasses.extras import VALID_TAGS, DISPLAY_TAGS, NUM_TAGS, DATABASE_PATH, USER_IMAGES, EVENT_IMAGES
+from dataClasses.extras import CSS_PATH, VALID_TAGS, DISPLAY_TAGS, NUM_TAGS, DATABASE_PATH, USER_IMAGES, EVENT_IMAGES, STATIC_PATH
 
 class HTMLPages:
     # Wraps input HTML string with common header and footer
     def _wrapHTML(self, inHTML: bool):
-        return (render_template("header.html", loggedIn=("Username" in session)) 
+        stylesheet = self._getCurrentStylesheetName()
+        return (render_template("header.html", loggedIn=("Username" in session), style=stylesheet) 
                 + inHTML 
                 + render_template("footer.html"))
 
@@ -113,7 +114,7 @@ class HTMLPages:
         else:
             retHTML = render_template("pages/events.html", tagList=VALID_TAGS, tagDisplay=DISPLAY_TAGS, numTags=NUM_TAGS,
                     searchType="", searchDate="", searchValue="", tags=[], zip=zip, showNear=showNear)
-        retHTML = retHTML + self._eventShortHTML(eventList)
+        retHTML = retHTML + self._eventShortGridHTML(eventList)
         return self._wrapHTML(retHTML)
 
     def _eventShortHTML(self, eventList: List[EventData]):
@@ -126,6 +127,22 @@ class HTMLPages:
                                                  location=event.getLocation(), 
                                                  tags=event.getTagStrs()
                                                  )
+        return retHTML
+
+    def _eventShortGridHTML(self, eventList: List[EventData]):
+        retHTML = render_template("snippets/eventGridStart.html")
+        eventCount = 1
+        for event in eventList:
+            retHTML = retHTML + render_template("snippets/eventShortGrid.html", 
+                                                 name=event.getName(), 
+                                                 date=event.getDateStr(), 
+                                                 time=event.getTimeStr(), 
+                                                 location=event.getLocation(), 
+                                                 tags=event.getTagStrs(),
+                                                 endRow=eventCount%3 == 0
+                                                 )
+            eventCount = eventCount + 1
+        retHTML = retHTML + render_template("snippets/eventGridEnd.html")
         return retHTML
 
     def eventArchiveHTML(self, eventList: List[EventData]):
@@ -258,3 +275,16 @@ class HTMLPages:
         version = version - 1
         imageName = baseName + str(version)
         return imageName
+    
+    def _getCurrentStylesheetName(self) -> str:
+        version = 1
+        baseName = STATIC_PATH + CSS_PATH
+        stylePath = baseName + "style.css"
+        if (not os.path.isfile(baseName + "style" + str(version) + ".css")):
+            return CSS_PATH + "style" + ".css"
+        while(os.path.isfile(stylePath)):
+            stylePath = baseName + "style" + str(version) + ".css"
+            version = version + 1
+        version = version - 2
+        stylePath = CSS_PATH + "style" + str(version) + ".css"
+        return stylePath
