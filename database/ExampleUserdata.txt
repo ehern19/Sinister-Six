@@ -1,2 +1,0 @@
-user1 pw1 111-111-1111 user1@fakemail.com
-user2 pw2 222-222-2222 user2@fakemail.com
